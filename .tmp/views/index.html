@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TITLE!!</title>
+
+    <link rel="stylesheet" href="css/materialize.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/icons.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="css/master.css" media="screen" title="no title" charset="utf-8">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav>
+      <div class="blue nav-wrapper">
+        <span class="brand-logo">LOGO HERE</span>
+        <!-- TEMPORARY ACTION FORM -->
+        <form action="homepage.html#/home" class="login-form">
+          <ul class="right tab-element hide-on-med-and-down">
+            <!-- horrible, please fix -->
+            <a href="homepage.html#/home" id="login" class="btn btn-full waves-effect waves-light blue">Log in</a>
+          </ul>
+          <div class="right tab-element tab-input hide-on-med-and-down">
+            <input type="password" id="password" class="fade" placeholder="Password"/>
+          </div>
+          <div class="right tab-element tab-input hide-on-med-and-down">
+            <input type="text" id="username" class="fade" placeholder="Username"/>
+          </div>
+        </form>
+      </div>
+    </nav>
+
+    <!-- Main -->
+    <div class="container-main">
+      <div class="row">
+        <div class="col s12 m12 l7">
+          <div class="col s12 m12 l11 offset-l1">
+            <div class="card-panel signup-panel">
+              <h5>Join the network.</h5>
+              <div class="divider"></div>
+
+              <p>Fill in the information sheet below to create an account.</p>
+
+              <form class="signup-form">
+                <div class="input-field">
+                  <input id="username" type="text"/>
+                  <label for="username">Username</label>
+                </div>
+
+                <div class="input-field">
+                  <input id="password" type="password"/>
+                  <label for="password">Password</label>
+                </div>
+
+                <div class="input-field">
+                  <input id="password2" type="password"/>
+                  <label for="password2">Confirm Password</label>
+                </div>
+
+                <div class="col s12 m12 l4 no-padding">
+                  <div class="input-field">
+                    <input id="first-name" type="text"/>
+                    <label for="first-name">First Name</label>
+                  </div>
+                </div>
+
+                <div class="col s12 m12 l4 no-padding">
+                  <div class="input-field">
+                    <input id="middle-name" type="text"/>
+                    <label for="middle-name">Middle Name</label>
+                  </div>
+                </div>
+
+                <div class="col s12 m12 l4 no-padding">
+                  <div class="input-field">
+                    <input id="last-name" type="text"/>
+                    <label for="last-name">Last Name</label>
+                  </div>
+                </div>
+
+                <div style="clear:both"></div>
+
+                <button class="btn waves-effect waves-light blue center" type="submit">Sign up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col l5 container-tagline center-text hide-on-med-and-down">
+          <h3 class="tagline">All professionals: connected.</h3>
+        </div>
+      </div>
+    </div>
+
+    <script src="javascript/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="javascript/materialize.js" type="text/javascript"></script>
+  </body>
+</html>

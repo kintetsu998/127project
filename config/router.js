@@ -1,20 +1,12 @@
 // config/router.js
-var student = require('./../controllers/student');
-var degreeProgram = require('./../controllers/degree-program');
-
+var hello = require('./../controllers/hello');
 module.exports = function (router) {
-	router.route('/students')
-		.get(student.find);
-
-	router.route('/degree-programs')
-		.get(degreeProgram.find)
-		.post(degreeProgram.insert)
-		.delete(degreeProgram.remove);
-
-	router.route('/degree-programs/:id')
-		.get(degreeProgram.findOne)
-		.put(degreeProgram.update);
-
+	router.route('/')
+		.get(hello.print);
+	router.route('/homepage.html')
+		.get(function (req, res, next){
+			res.render('homepage.html');
+		});
+	
 	return router;
 };
-
