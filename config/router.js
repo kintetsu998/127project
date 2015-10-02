@@ -1,12 +1,10 @@
 // config/router.js
-var hello = require('./../controllers/hello');
+var PageController = require('./../controllers/PageController');
 module.exports = function (router) {
 	router.route('/')
-		.get(hello.print);
-	router.route('/homepage.html')
-		.get(function (req, res, next){
-			res.render('homepage.html');
-		});
-	
+		.get(PageController.index);
+	router.route('/homepage')
+		.get(PageController.homepage);
+
 	return router;
 };
