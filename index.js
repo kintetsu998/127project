@@ -9,7 +9,7 @@ app.use(require('body-parser')());
 app.use(require('method-override')());
 
 // view engine setup
-app.set('views', path.join(__dirname, '.tmp/views'));
+app.set('views', path.join(__dirname, 'views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(express.static(path.join(__dirname, '/public')));
@@ -21,4 +21,3 @@ var server = app.listen(5000, function () {
 
 	console.log('Example app listening at http://%s:%s', host, port);
 });
-
