@@ -19,7 +19,8 @@
     "git": "~0.1.5",
     "supertest": "~1.1.0",
     "should": "~7.1.0",
-    "should-http": "0.0.4"
+    "should-http": "0.0.4",
+    "pg": "~4.4.2"
   },
   "devDependencies": {},
   "repository": {
