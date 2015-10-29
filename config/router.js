@@ -7,8 +7,11 @@ module.exports = function (router) {
 	router.route('/homepage')
 		.get(PageController.homepage);
 
-	router.route('/test')
-		.get(PageController.sampleDB);
+	router.route('/users')
+		.get(PageController.getUsers);
+
+	router.route('/job')
+		.get(PageController.getJob);
 
 	return router;
 };
