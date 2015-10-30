@@ -43,7 +43,7 @@ CREATE TABLE job (
     closedat date,
     username character varying(20) NOT NULL,
     createdat date NOT NULL,
-    approvedat date NOT NULL
+    approvedat date
 );
 
 
@@ -86,19 +86,12 @@ CREATE TABLE users (
     picture character varying(40),
     isadmin bit(1) NOT NULL,
     createdat date NOT NULL,
-    approvedat date NOT NULL,
-    country character varying(15) NOT NULL
+    country character varying(15) NOT NULL,
+    approvedat date
 );
 
 
 ALTER TABLE public.users OWNER TO proj127;
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: proj127
---
-
-ALTER TABLE ONLY civillian ALTER COLUMN id SET DEFAULT nextval('civillian_id_seq'::regclass);
-
 
 --
 -- Name: jobid; Type: DEFAULT; Schema: public; Owner: proj127
@@ -108,29 +101,14 @@ ALTER TABLE ONLY job ALTER COLUMN jobid SET DEFAULT nextval('job_jobid_seq'::reg
 
 
 --
--- Data for Name: civillian; Type: TABLE DATA; Schema: public; Owner: proj127
---
-
-COPY civillian (id, name) FROM stdin;
-1	Carlo
-2	Brian
-3	Margarette
-\.
-
-
---
--- Name: civillian_id_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
---
-
-SELECT pg_catalog.setval('civillian_id_seq', 1, false);
-
-
---
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
 COPY job (jobid, country, description, fieldsrelated, company, picture, closedat, username, createdat, approvedat) FROM stdin;
-2	Philippines	\N	\N	Jireh Lim Company	\N	\N	admin	2015-10-29	2015-10-29
+2	Philippines	\N	\N	Jireh Lim Company	\N	\N	admin	2015-10-29	\N
+3	Philippines	\N	\N	Nestle Company	\N	\N	admin	2015-10-30	\N
+4	Philippines	\N	\N	PNG Company	\N	\N	admin	2015-10-30	\N
+5	Philippines	\N	\N	Jollibee Company	\N	\N	admin	2015-10-30	\N
 \.
 
 
@@ -138,24 +116,16 @@ COPY job (jobid, country, description, fieldsrelated, company, picture, closedat
 -- Name: job_jobid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
 --
 
-SELECT pg_catalog.setval('job_jobid_seq', 2, true);
+SELECT pg_catalog.setval('job_jobid_seq', 37, true);
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, approvedat, country) FROM stdin;
-admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	2015-10-29	Philippines
+COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, country, approvedat) FROM stdin;
+admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N
 \.
-
-
---
--- Name: civillian_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
---
-
-ALTER TABLE ONLY civillian
-    ADD CONSTRAINT civillian_pkey PRIMARY KEY (id);
 
 
 --

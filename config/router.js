@@ -11,7 +11,11 @@ module.exports = function (router) {
 		.get(PageController.getUsers);
 
 	router.route('/job')
-		.get(PageController.getJob);
+		.get(PageController.getJob)
+		.post(PageController.createJob);
+
+	router.route('/job/:id')
+		.get(PageController.searchJob);
 
 	return router;
 };
