@@ -10,14 +10,16 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
 --
+
+use cmsc127;
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +32,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: job; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+-- Name: job; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
 --
 
 CREATE TABLE job (
@@ -71,7 +73,7 @@ ALTER SEQUENCE job_jobid_seq OWNED BY job.jobid;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
 --
 
 CREATE TABLE users (
@@ -129,8 +131,8 @@ SELECT pg_catalog.setval('civillian_id_seq', 1, false);
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY job (jobid, country, description, fieldsrelated, company, picture, closedat, username, createdat, approvedat) FROM stdin;
-2	Philippines	\N	\N	Jireh Lim Company	\N	\N	admin	2015-10-29	2015-10-29
+COPY job (jobid, country, description, fieldsrelated, company, picture, closedat, username, createdat, approvedat, name) FROM stdin;
+2	Philippines	\N	\N	Jireh Lim Company	\N	\N	admin	2015-10-29	2015-10-29 Professional Gamer
 \.
 
 
@@ -151,7 +153,7 @@ admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	2015-10-29	Philippin
 
 
 --
--- Name: civillian_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
+-- Name: civillian_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
 --
 
 ALTER TABLE ONLY civillian
@@ -159,7 +161,7 @@ ALTER TABLE ONLY civillian
 
 
 --
--- Name: job_jobid_pk; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
+-- Name: job_jobid_pk; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
 --
 
 ALTER TABLE ONLY job
@@ -167,7 +169,7 @@ ALTER TABLE ONLY job
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
 --
 
 ALTER TABLE ONLY users
@@ -195,4 +197,3 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
-

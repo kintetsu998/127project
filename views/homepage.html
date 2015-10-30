@@ -21,15 +21,30 @@
       var Router = ReactRouter;
 
       var Layout = React.createClass({
+        search: function(e){
+          e.preventDefault();
+
+          window.location = "homepage#/job/"+$('#search').val();
+
+          return;
+        },
         render() {
           return (
             <div>
-              <nav>
-                <div className="blue nav-wrapper">
-                  <span className="brand-logo">LOGO HERE</span>
-                  <ul className="right tab-element hide-on-med-and-down">
-                    <a href="/" id="logout" className="btn btn-full waves-effect waves-light blue">Log Out</a>
+              <nav className="uppernav" className="navbar blue">
+                <div className="nav-wrapper">
+                  <a href="#"><img src="img/logo-full.png" className="navbar-logo"/></a>
+
+                  <ul className="right tab-element">
+                    <a href="/" className="btn waves-effect waves-light blue">Log out</a>
                   </ul>
+                  <div className="right tab-element tab-input hide-on-med-and-down">
+                    <form onSubmit={this.search}>
+                      <div className="">
+                        <input type="text" id="search" placeholder="Search"/>
+                      </div>
+                    </form>
+                  </div>
                 </div>
               </nav>
 
@@ -97,8 +112,6 @@
 
           list.reverse();
 
-          // console.table(list);
-
           var postNodes = list.map(function(post){
             return(
               <Post
@@ -155,6 +168,59 @@
         }
       });
 
+      var HotJobItem = React.createClass({
+        render() {
+          var job = this.props.job;
+          var url = "#/job/" + job.name;
+
+          return (
+            <li className="collection-item">
+              <a href={url}>{job.name}</a>
+            </li>
+          );
+        }
+      });
+
+      var HotJobs = React.createClass({
+        getInitialState: function(){
+          return {
+            hotJobs: []
+          };
+        },
+        componentWillMount: function(){
+          var self = this;
+
+          $.ajax({
+            url: '/api/job',
+            method: 'GET',
+            success: function(jobs){
+              self.setState({
+                'hotJobs': jobs
+              });
+            }
+          });
+        },
+        render() {
+          var hotJobNodes = this.state.hotJobs.map(function(job){
+            return(
+              <HotJobItem
+                job={job}
+              />
+            );
+          });
+
+          return (
+            <div className="card-panel">
+              <h5>Hot Jobs</h5>
+              <div className="divider"></div>
+              <ul className="collection">
+                {hotJobNodes}
+              </ul>
+            </div>
+          );
+        }
+      });
+
       var Homepage = React.createClass({
         render() {
           return (
@@ -172,7 +238,55 @@
                     </div>
                   </div>
                 </div>
+                <HotJobs/>
               </div>
+            </div>
+          );
+        }
+      });
+
+      var JobPage = React.createClass({
+        getInitialState: function(){
+          return {
+            job: null
+          };
+        },
+        componentWillMount: function(){
+          var self = this;
+
+          $.ajax({
+            url: "api/job/"+this.props.params.id,
+            method: "GET",
+            success: function(res){
+              self.setState({
+                job: res
+              });
+            }
+          });
+        },
+        render(){
+          var name = "";
+          var country = "";
+          var company = "";
+
+          if(this.state.job){
+            name = this.state.job.name;
+            country = this.state.job.country;
+            company = this.state.job.company;
+          }
+
+          return (
+            <div>
+              <h5>Job</h5>
+              <p>
+                {name}
+              </p>
+              <p>
+                {country}
+              </p>
+              <p>
+                {company}
+              </p>
             </div>
           );
         }
@@ -181,7 +295,8 @@
       var routes = (
         <Route>
           <Route path="/" handler={Layout}>
-            <Route path="home" handler={Homepage}/>
+            <Route path="" handler={Homepage}/>
+            <Route path="job/:id" handler={JobPage}/>
           </Route>
         </Route>
       );

@@ -1,0 +1,186 @@
+html,body {
+  margin: 0;
+  background-color: #F5F5F5;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6  {
+  margin: 0;
+}
+
+p {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+.row {
+  margin-bottom: 0;
+}
+
+.uppernav {
+  background-color: inherit;
+  box-shadow: none;
+  position: relative;
+}
+
+.section-1 {
+  color: white;
+  background-color: #1176a9;
+  background: url(../img/bg.png);
+  background-size: contain;
+}
+
+.section-1-content {
+  margin-top: 20px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+#tagline {
+  margin-bottom: 5px;
+}
+
+#tagline h1 {
+  font-size: 4em;
+  line-height: 4.62rem;
+  font-weight: 400;
+}
+
+#sub-tagline {
+  margin-bottom: 60px;
+}
+
+#sub-tagline h2 {
+  font-size: 1.5em;
+  line-height: 2.62rem;
+}
+
+.thin {
+  font-weight: 250;
+}
+
+.nav-wrapper {
+  padding: 0 5%;
+}
+
+.navbar-logo {
+  height: 60%;
+  margin-top: 1%;
+}
+
+.white-outline {
+  background-color: inherit;
+  border: 1px solid white;
+  box-shadow: inherit;
+  color: white;
+  border-radius: 5px;
+}
+
+.white-outline:hover {
+  background-color: inherit;
+  box-shadow: inherit;
+  background-color: white;
+  color: #2196F3;
+}
+
+#join-network {
+  margin-bottom: 60px;
+}
+
+#join-network a {
+  border-radius: 25px;
+  font-size: 1.25em;
+}
+
+#bs {
+  margin-bottom: 0;
+}
+
+#bs > div {
+  margin-bottom: 90px;
+}
+
+.bs-pic {
+  padding: 0 5rem !important;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.bs-name {
+  font-size: 2em;
+}
+
+.section-2 {
+  background-color: #232a32;
+  padding-top: 40px;
+  color: white;
+}
+
+#why-join {
+  margin-bottom: 40px;
+}
+
+#why-join h3 {
+  font-size: 2.5em;
+}
+
+#screenshot {
+  width: 100%;
+}
+
+.section-3 {
+  padding: 100px 0;
+}
+
+#counter-number {
+  font-size: 6em;
+  font-weight: bold;
+  line-height: 100px;
+}
+
+#counter-desc {
+  font-size: 2em;
+  font-weight: 300;
+}
+
+.center-img {
+  display: block;
+  margin: auto;
+}
+
+.section-4 {
+  background-color: #00acbd;
+  padding: 50px 0;
+}
+
+#awesome-people-label {
+  margin-bottom: 50px;
+  color: white;
+  font-size: 2.5em;
+}
+
+.footer {
+  background-color: #ff41a1;
+  padding: 20px 0;
+}
+
+.footer span {
+  font-size: 1.25em;
+  color: white;
+}
+
+.emphasize {
+  font-weight: 400;
+}
+
+#login {
+  min-height: 100vh;
+  color: black;
+  background-color: #739aff;
+}
+
+#login h4 {
+  color: black;
+}
