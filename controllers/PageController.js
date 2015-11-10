@@ -16,7 +16,7 @@ exports.homepage = function (req, res, next){
 	res.render('homepage.html');
 };
 
-/*code from http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#server-side-routes*/
+/*code from http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#server-side-routes */
 exports.getUsers = function(req, res) {
     var results = [];
     pg.connect(conString, function (err, client, done) {
