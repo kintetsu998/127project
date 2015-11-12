@@ -91,9 +91,6 @@ exports.createJob = function(req, res) {
 
     var results = [];
 
-    // Grab data from http request
-    var data = {text: req.body.text, complete: false};
-
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
         // Handle connection errors
@@ -109,6 +106,64 @@ exports.createJob = function(req, res) {
         // SQL Query > Select Data
         var query = client.query("SELECT * from job where jobid=currval('job_jobid_seq')");
 
+        // Stream results back one row at a time
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
+}
+
+exports.searchJob = function(req, res) {
+    var results = [];
+
+    // Get a Postgres client from the connection pool
+    pg.connect(conString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        // SQL Query > Select Data
+        var query = client.query("SELECT * from job where country=$1 OR description=$1 OR fieldsrelated=$1 OR company=$1", [req.params.query]);
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        // After all data is returned, close connection and return results
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+    });
+}
+
+exports.searchUsers = function(req, res) {
+    var results = [];
+
+    // Grab data from http request
+    var data = {text: req.body.text, complete: false};
+
+    // Get a Postgres client from the connection pool
+    pg.connect(conString, function(err, client, done) {
+        // Handle connection errors
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        // SQL Query > Select Data
+        var query = client.query("SELECT * from users where username=$1 OR fname=$1 OR mname=$1 OR lname=$1 OR fname::text||' '||lname::text=$1 OR fname::text||' '||mname::text||' '||lname::text=$1 OR occupation=$1 OR college=$1 OR country=$1", [req.params.query]);
+        
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);

@@ -17,5 +17,11 @@ module.exports = function (router) {
 	router.route('/job/:id')
 		.get(PageController.searchJob);
 
+	router.route('/searchUser/:query')
+		.get(PageController.searchUsers);
+
+	router.route('/searchJob/:query')
+		.get(PageController.searchJob);
+
 	return router;
 };
