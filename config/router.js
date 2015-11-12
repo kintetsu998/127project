@@ -17,11 +17,17 @@ module.exports = function (router) {
 	router.route('/job/:id')
 		.get(PageController.searchJob);
 
-	router.route('/searchUser/:query')
+	router.route('/searchUser')
 		.get(PageController.searchUsers);
 
-	router.route('/searchJob/:query')
+	router.route('/searchJob')
 		.get(PageController.searchJob);
+
+	router.route('/login')
+		.post(PageController.login);
+
+	router.route('/logout')
+		.post(PageController.logout);
 
 	return router;
 };
