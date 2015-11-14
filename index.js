@@ -6,7 +6,12 @@ var path = require('path');
 app.use(require('body-parser')());
 app.use(require('method-override')());
 app.use(require('cookie-parser')());
-app.use(require('express-session')({secret: 'jireh lim'}));
+app.use(require('express-session')({
+	secret: 'jireh lim',
+	resave: false,
+	saveUninitialized: true,
+	cookie: {secure: true}
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

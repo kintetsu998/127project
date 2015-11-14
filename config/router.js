@@ -20,6 +20,9 @@ module.exports = function (router) {
 	router.route('/searchUser')
 		.get(PageController.searchUsers);
 
+	router.route('/search')
+		.get(PageController.search);
+
 	router.route('/searchJob')
 		.get(PageController.searchJob);
 
