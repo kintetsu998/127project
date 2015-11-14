@@ -26,7 +26,7 @@ exports.getUsers = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT * FROM USERS;");
+        var query = client.query("SELECT username, fname, mname, lname, occupation, college, degree, picture, isadmin, country, createdat, approvedat FROM USERS;");
         query.on('row', function(row) {
             results.push(row);
         });
@@ -133,7 +133,7 @@ exports.search = function(req, res) {
 
         // SQL Query > Select Data
         var query = client.query("SELECT * from job where LOWER(country)=LOWER($1) OR LOWER(description)=LOWER($1) OR LOWER(fieldsrelated)=LOWER($1) OR LOWER(company)=LOWER($1) OR LOWER(username)=LOWER($1)", [req.query.keyword], function (err, qry){
-            var query1 = client.query("SELECT * from users where LOWER(username)=LOWER($1) OR LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(college)=LOWER($1) OR LOWER(country)=LOWER($1)", [req.query.keyword]);
+            var query1 = client.query("SELECT username, fname, mname, lname, occupation, college, degree, picture, isadmin, country, createdat, approvedat from users where LOWER(username)=LOWER($1) OR LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(college)=LOWER($1) OR LOWER(country)=LOWER($1)", [req.query.keyword]);
 
             query1.on('row', function(row) {
                 console.log("1");
@@ -205,7 +205,7 @@ exports.searchUsers = function(req, res) {
         }
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * from users where LOWER(username)=LOWER($1) OR LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(college)=LOWER($1) OR LOWER(country)=LOWER($1)", [req.query.keyword]);
+        var query = client.query("SELECT username, fname, mname, lname, occupation, college, degree, picture, isadmin, country, createdat, approvedat from users where LOWER(username)=LOWER($1) OR LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(college)=LOWER($1) OR LOWER(country)=LOWER($1)", [req.query.keyword]);
         
         // Stream results back one row at a time
         query.on('row', function(row) {
