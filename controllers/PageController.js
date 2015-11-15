@@ -51,11 +51,23 @@ exports.getUsers = function(req, res) {
     });
 };
 
-<<<<<<< HEAD
 exports.whoami = function(req, res) {
-    var results = [];
     pg.connect(conString, function (err, client, done) {
-=======
+      // Handle connection errors
+      if(err) {
+        done();
+        console.log(err);
+        return res.status(500).json({ success: false, data: err});
+      }
+
+      var query = client.query("SELECT users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, user_experience.title, user_experience.company, user_fieldofinterest.field from users left join user_experience on user_experience.username = users.username left join user_fieldofinterest on user_experience.username = user_fieldofinterest.username where users.username=$1;", [req.session.username]);
+      query.on('row', function(row) {
+        done();
+        return res.json(row);
+      });
+    });
+}
+
 exports.createUser = function(req, res) {
 
     var results = [];
@@ -109,22 +121,12 @@ exports.updateUser = function(req, res) {
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
         // Handle connection errors
->>>>>>> dc121cf5171c62ddb17b6a0ad28a22103c404da1
         if(err) {
           done();
           console.log(err);
           return res.status(500).json({ success: false, data: err});
         }
 
-<<<<<<< HEAD
-        var query = client.query("SELECT username, fname, mname, lname, occupation, college, degree, picture, isadmin, country, createdat, approvedat FROM USERS WHERE username=$1;", [req.session.username]);
-        query.on('row', function(row) {
-            done();
-            return res.json(row);
-        });
-    });
-};
-=======
         // SQL Query > Update Data
         var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8) WHERE username=($1)",
             [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.body.picture]);
@@ -242,7 +244,6 @@ exports.deleteUser = function(req, res) {
         });
     });
 }
->>>>>>> dc121cf5171c62ddb17b6a0ad28a22103c404da1
 
 exports.getJob = function(req, res) {
     var results = [];

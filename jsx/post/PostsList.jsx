@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var Post = require('./Post.jsx');
 
@@ -11,6 +12,7 @@ module.exports = React.createClass({
     var postNodes = list.map(function(post){
       return(
         <Post
+          key={post.id}
           img={post.img}
           url={post.url}
           name={post.name}
@@ -24,7 +26,9 @@ module.exports = React.createClass({
 
     return (
       <div className="postList">
-        {postNodes}
+        <ReactCSSTransitionGroup transitionName="fade" transitionEnterTimeout={500} transitionLeaveTimeout={300}>
+          {postNodes}
+        </ReactCSSTransitionGroup>
       </div>
     );
   }

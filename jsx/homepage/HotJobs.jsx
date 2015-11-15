@@ -12,7 +12,7 @@ module.exports = React.createClass({
     var self = this;
 
     $.ajax({
-      url: '/job',
+      url: '/api/job',
       method: 'GET',
       success: function(jobs){
         self.setState({
@@ -25,6 +25,7 @@ module.exports = React.createClass({
     var hotJobNodes = this.state.hotJobs.map(function(job){
       return(
         <HotJobItem
+          key={job.jobid}
           job={job}
         />
       );

@@ -8,7 +8,7 @@ module.exports = React.createClass({
 
     return (
       <li className="collection-item">
-        <Link to={url}>Missing name{/*{job.name}*/}</Link>
+        <Link to={url}>{job.name}</Link>
       </li>
     );
   }
