@@ -216,6 +216,7 @@ ALTER TABLE ONLY notification ALTER COLUMN notification_id SET DEFAULT nextval('
 --
 
 COPY job (jobid, country, description, fieldsrelated, company, picture, closedat, username, createdat, approvedat, name) FROM stdin;
+38	Philippines	\N	janitor	Proctor With Gamble	\N	\N	procopio	2015-11-15	\N	Janitor
 \.
 
 
@@ -223,7 +224,7 @@ COPY job (jobid, country, description, fieldsrelated, company, picture, closedat
 -- Name: job_jobid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
 --
 
-SELECT pg_catalog.setval('job_jobid_seq', 37, true);
+SELECT pg_catalog.setval('job_jobid_seq', 38, true);
 
 
 --
