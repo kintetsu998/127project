@@ -5,23 +5,39 @@ module.exports = function (router) {
 		.get(PageController.index);
 
 	router.route('/api/users')
-		.get(PageController.getUsers);
+		.get(PageController.getUsers)
+		.post(PageController.createUser)
+		.put(PageController.updateUser)
+		.delete(PageController.deleteUser);
 
-	router.route('/job')
+	router.route('/api/users/experience')
+		.post(PageController.createUserExperience)
+		.put(PageController.updateUserExperience);
+
+	router.route('/api/users/interest')
+		.post(PageController.createFieldOfInterest)
+		.put(PageController.updateFieldOfInterest);
+
+	router.route('/api/users/notif')
+		.post(PageController.createNotifFromUser);
+
+	router.route('/api/users/count')
+		.get(PageController.userCount);
+
+	router.route('/api/job')
 		.get(PageController.getJob)
-		.post(PageController.createJob);
+		.post(PageController.createJob)
+		.put(PageController.updateJob)
+		.delete(PageController.deleteJob);
 
-	router.route('/job/:id')
-		.get(PageController.searchJob);
+	router.route('/api/job/notif')
+		.post(PageController.createNotifFromJob);
 
-	router.route('/searchUser')
-		.get(PageController.searchUsers);
+	router.route('/api/notif')
+		.get(PageController.getNotifs)
 
 	router.route('/search')
 		.get(PageController.search);
-
-	router.route('/searchJob')
-		.get(PageController.searchJob);
 
 	router.route('/login')
 		.get(PageController.loginPage)
