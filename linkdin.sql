@@ -10,14 +10,14 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner:
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner:
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -30,7 +30,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: job; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
+-- Name: job; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
 --
 
 CREATE TABLE job (
@@ -43,7 +43,8 @@ CREATE TABLE job (
     closedat date,
     username character varying(20) NOT NULL,
     createdat date NOT NULL,
-    approvedat date
+    approvedat date,
+    name character varying(30) NOT NULL
 );
 
 
@@ -71,7 +72,7 @@ ALTER SEQUENCE job_jobid_seq OWNED BY job.jobid;
 
 
 --
--- Name: log; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
+-- Name: log; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
 --
 
 CREATE TABLE log (
@@ -105,7 +106,7 @@ ALTER SEQUENCE log_log_id_seq OWNED BY log.log_id;
 
 
 --
--- Name: notification; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
+-- Name: notification; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
 --
 
 CREATE TABLE notification (
@@ -142,7 +143,7 @@ ALTER SEQUENCE notification_notification_id_seq OWNED BY notification.notificati
 
 
 --
--- Name: user_experience; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
+-- Name: user_experience; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
 --
 
 CREATE TABLE user_experience (
@@ -155,7 +156,7 @@ CREATE TABLE user_experience (
 ALTER TABLE public.user_experience OWNER TO proj127;
 
 --
--- Name: user_fieldofinterest; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
+-- Name: user_fieldofinterest; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
 --
 
 CREATE TABLE user_fieldofinterest (
@@ -167,7 +168,7 @@ CREATE TABLE user_fieldofinterest (
 ALTER TABLE public.user_fieldofinterest OWNER TO proj127;
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: proj127; Tablespace:
+-- Name: users; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -214,11 +215,8 @@ ALTER TABLE ONLY notification ALTER COLUMN notification_id SET DEFAULT nextval('
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY job (jobid, country, description, fieldsrelated, company, picture, closedat, username, createdat, approvedat) FROM stdin;
-2	Philippines	\N	\N	Jireh Lim Company	\N	\N	admin	2015-10-29	\N
-3	Philippines	\N	\N	Nestle Company	\N	\N	admin	2015-10-30	\N
-4	Philippines	\N	\N	PNG Company	\N	\N	admin	2015-10-30	\N
-5	Philippines	\N	\N	Jollibee Company	\N	\N	admin	2015-10-30	\N
+COPY job (jobid, country, description, fieldsrelated, company, picture, closedat, username, createdat, approvedat, name) FROM stdin;
+38	Philippines	\N	janitor	Proctor With Gamble	\N	\N	procopio	2015-11-15	\N	Janitor
 \.
 
 
@@ -226,7 +224,7 @@ COPY job (jobid, country, description, fieldsrelated, company, picture, closedat
 -- Name: job_jobid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
 --
 
-SELECT pg_catalog.setval('job_jobid_seq', 37, true);
+SELECT pg_catalog.setval('job_jobid_seq', 38, true);
 
 
 --
@@ -264,6 +262,7 @@ SELECT pg_catalog.setval('notification_notification_id_seq', 1, false);
 --
 
 COPY user_experience (title, company, username) FROM stdin;
+janitor	procter & gamble	procopio
 \.
 
 
@@ -272,6 +271,7 @@ COPY user_experience (title, company, username) FROM stdin;
 --
 
 COPY user_fieldofinterest (field, username) FROM stdin;
+janitor	procopio
 \.
 
 
@@ -281,11 +281,12 @@ COPY user_fieldofinterest (field, username) FROM stdin;
 
 COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, country, approvedat) FROM stdin;
 admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N
+procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL		0	2015-11-15	Philippines	\N
 \.
 
 
 --
--- Name: job_jobid_pk; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
+-- Name: job_jobid_pk; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
 --
 
 ALTER TABLE ONLY job
@@ -293,7 +294,7 @@ ALTER TABLE ONLY job
 
 
 --
--- Name: log_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
+-- Name: log_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
 --
 
 ALTER TABLE ONLY log
@@ -301,7 +302,7 @@ ALTER TABLE ONLY log
 
 
 --
--- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
+-- Name: notification_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
 --
 
 ALTER TABLE ONLY notification
@@ -309,7 +310,7 @@ ALTER TABLE ONLY notification
 
 
 --
--- Name: user_experience_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
+-- Name: user_experience_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
 --
 
 ALTER TABLE ONLY user_experience
@@ -317,7 +318,7 @@ ALTER TABLE ONLY user_experience
 
 
 --
--- Name: user_experience_title_key; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
+-- Name: user_experience_title_key; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
 --
 
 ALTER TABLE ONLY user_experience
@@ -325,7 +326,7 @@ ALTER TABLE ONLY user_experience
 
 
 --
--- Name: user_fieldofinterest_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
+-- Name: user_fieldofinterest_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
 --
 
 ALTER TABLE ONLY user_fieldofinterest
@@ -333,7 +334,7 @@ ALTER TABLE ONLY user_fieldofinterest
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace:
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -369,15 +370,15 @@ ALTER TABLE ONLY notification
 --
 
 ALTER TABLE ONLY user_experience
-    ADD CONSTRAINT user_experience_username_fk FOREIGN KEY (username) REFERENCES users(username);
+    ADD CONSTRAINT user_experience_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
 
 
 --
--- Name: user_fieldofexperience_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+-- Name: user_fieldofinterest_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
 --
 
 ALTER TABLE ONLY user_fieldofinterest
-    ADD CONSTRAINT user_fieldofexperience_username_fk FOREIGN KEY (username) REFERENCES users(username);
+    ADD CONSTRAINT user_fieldofinterest_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
 
 
 --
@@ -393,3 +394,4 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 --
 -- PostgreSQL database dump complete
 --
+
