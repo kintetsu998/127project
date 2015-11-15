@@ -1,4 +1,5 @@
 var React = require('react');
+var Link = require('react-router').Link;
 
 module.exports = React.createClass({
   search: function(e){
@@ -25,7 +26,7 @@ module.exports = React.createClass({
       <div>
         <nav className="uppernav" className="navbar blue">
           <div className="nav-wrapper">
-            <a href="#"><img src="img/logo-full.png" className="navbar-logo"/></a>
+            <Link to="/"><img src="/img/logo-full.png" className="navbar-logo"/></Link>
 
             <ul className="right tab-element">
               <a href="#" className="btn waves-effect waves-light blue" onClick={this.logout}>Log out</a>

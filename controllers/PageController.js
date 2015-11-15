@@ -1,6 +1,7 @@
 //connecting to postgre
 var pg = require('pg');
-var conString = "postgres://postgres:12345678@localhost/postgres";
+var c = require('../config/config.js');
+var conString = "postgres://" + c.username +":" + c.password + "@localhost/" + c.database + "";
 var db = require('./../lib/postgresql');
 
 console.log(db);
@@ -43,6 +44,23 @@ exports.getUsers = function(req, res) {
         query.on('end', function() {
             done();
             return res.json(results);
+        });
+    });
+};
+
+exports.whoami = function(req, res) {
+    var results = [];
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT username, fname, mname, lname, occupation, college, degree, picture, isadmin, country, createdat, approvedat FROM USERS WHERE username=$1;", [req.session.username]);
+        query.on('row', function(row) {
+            done();
+            return res.json(row);
         });
     });
 };

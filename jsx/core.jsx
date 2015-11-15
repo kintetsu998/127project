@@ -13,6 +13,7 @@ var history = createBrowserHistory({
 // import classes
 var Layout = require('./layout/Layout.jsx');
 var Homepage = require('./homepage/HomePage.jsx');
+var ProfilePage = require('./profilepage/ProfilePage.jsx');
 
 var JobPage = React.createClass({
   getInitialState: function(){
@@ -65,6 +66,7 @@ ReactDOM.render((
     <Router history={history}>
       <Route path="/" component={Layout}>
         <IndexRoute component={Homepage}/>
+        <Route path="profile/:username" component={ProfilePage}/>
         <Route path="job/:id" component={JobPage}/>
       </Route>
     </Router>

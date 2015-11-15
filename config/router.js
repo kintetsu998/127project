@@ -23,6 +23,9 @@ module.exports = function (router) {
 	router.route('/searchJob')
 		.get(PageController.searchJob);
 
+	router.route('/whoami')
+		.get(PageController.whoami);
+
 	router.route('/login')
 		.get(PageController.loginPage)
 		.post(PageController.login);

@@ -4,7 +4,27 @@ var NewsFeed = require('./NewsFeed.jsx');
 var HotJobs = require('./HotJobs.jsx');
 
 module.exports = React.createClass({
+  getInitialState(){
+    return {};
+  },
+  componentWillMount(){
+    var self = this;
+
+    $.ajax({
+      url: '/whoami',
+      method: 'GET',
+      success: function(user){
+        self.setState(user);
+      }
+    });
+  },
   render() {
+    // get user occupation
+    var info;
+    if(this.state.occupation){
+      info = (<span className="grey-text info-title">{this.state.occupation} at the {this.state.college}</span>);
+    }
+
     return (
       <div className="row">
         <NewsFeed/>
@@ -12,11 +32,11 @@ module.exports = React.createClass({
           <div className="card-panel">
             <div className="row valign-wrapper no-margin">
               <div className="col l3">
-                <img src="img/003.jpg" className="circle info-picture" alt="Picture of Peter"/>
+                <img src={this.state.picture} className="circle info-picture"/>
               </div>
               <div className="col l9">
-                <span className="valign info-name">Peter Bernard M. Rupa</span>
-                <span className="grey-text info-title">Student at the University of the Philippines</span>
+                <span className="valign info-name">{this.state.fname} {this.state.mname} {this.state.lname}</span>
+                {info}
               </div>
             </div>
           </div>
