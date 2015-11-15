@@ -267,7 +267,7 @@ module.exports = React.createClass({
     var self = this;
 
     $.ajax({
-      url: '/api/job',
+      url: '/job',
       method: 'GET',
       success: function (jobs) {
         self.setState({
@@ -328,7 +328,6 @@ module.exports = React.createClass({
     };
   },
   addPost(post) {
-    console.table(this.state.posts.concat(post));
     this.setState({
       posts: this.state.posts.concat(post)
     });
@@ -478,6 +477,18 @@ module.exports = React.createClass({
 
     return;
   },
+  logout() {
+    $.ajax({
+      'url': '/logout',
+      'method': 'POST',
+      'success'() {
+        window.location.href = '/';
+      },
+      'error'(err) {
+        console.error(err);
+      }
+    });
+  },
   render() {
     return React.createElement(
       'div',
@@ -498,7 +509,7 @@ module.exports = React.createClass({
             { className: 'right tab-element' },
             React.createElement(
               'a',
-              { href: '/', className: 'btn waves-effect waves-light blue' },
+              { href: '#', className: 'btn waves-effect waves-light blue', onClick: this.logout },
               'Log out'
             )
           ),

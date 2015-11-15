@@ -2,9 +2,16 @@
 var express = require('express');
 var app = express();
 var path = require('path');
+var session = require('express-session');
 
 app.use(require('body-parser')());
 app.use(require('method-override')());
+app.use(require('cookie-parser')());
+app.use(session({
+	secret: 'jireh lim',
+	resave: false,
+	saveUninitialized: true
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

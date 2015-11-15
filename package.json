@@ -17,6 +17,7 @@
     "babelify": "^7.2.0",
     "body-parser": "~1.13.3",
     "express": "~4.13.3",
+    "express-session": "^1.12.1",
     "git": "~0.1.5",
     "history": "^1.13.0",
     "method-override": "~2.3.5",

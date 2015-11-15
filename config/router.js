@@ -4,17 +4,31 @@ module.exports = function (router) {
 	router.route('/')
 		.get(PageController.index);
 
-	router.route('/login')
-		.get(PageController.login);
-
 	router.route('/api/users')
 		.get(PageController.getUsers);
 
-	router.route('/api/job')
-		.get(PageController.getJobs);
+	router.route('/job')
+		.get(PageController.getJob)
+		.post(PageController.createJob);
 
-	router.route('/api/job/:id')
-		.get(PageController.getJob);
+	router.route('/job/:id')
+		.get(PageController.searchJob);
+
+	router.route('/searchUser')
+		.get(PageController.searchUsers);
+
+	router.route('/search')
+		.get(PageController.search);
+
+	router.route('/searchJob')
+		.get(PageController.searchJob);
+
+	router.route('/login')
+		.get(PageController.loginPage)
+		.post(PageController.login);
+
+	router.route('/logout')
+		.post(PageController.logout);
 
 	router.route('/*')
 		.get(PageController.homepage);

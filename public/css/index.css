@@ -5,7 +5,7 @@ html,body {
 }
 
 h1, h2, h3, h4, h5, h6  {
-  margin: 0;
+  margin: 5px 0;
 }
 
 p {
@@ -89,7 +89,7 @@ p {
   margin-bottom: 60px;
 }
 
-#join-network a {
+.btn-curve {
   border-radius: 25px;
   font-size: 1.25em;
 }
@@ -145,7 +145,7 @@ p {
   font-weight: 300;
 }
 
-.center-img {
+.center {
   display: block;
   margin: auto;
 }
@@ -161,14 +161,8 @@ p {
   font-size: 2.5em;
 }
 
-.footer {
-  background-color: #ff41a1;
-  padding: 20px 0;
-}
-
-.footer span {
-  font-size: 1.25em;
-  color: white;
+footer.page-footer {
+  margin-top: 0;
 }
 
 .emphasize {
@@ -183,4 +177,9 @@ p {
 
 #login h4 {
   color: black;
+}
+
+#login-panel {
+  max-width: 500px;
+  margin: auto;
 }

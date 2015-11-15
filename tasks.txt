@@ -1,0 +1,39 @@
+API Request:
+
+/login
+Method: POST
+Body: username, password
+Description: Login functionality. Sets a user session with their username.
+Responses:
+	Success: 2xx status code
+	Failed: 4xx status code
+
+/logout
+Method: POST
+Description: Logout functionality. Destroys a user session.
+Responses:
+	Success: 2xx status code
+	Failed: 4xx status code
+
+/search
+Method: GET
+Query: keyword
+Description: Searches for a keyword (user, job vacancy, etc). For search bar functionality.
+Responses:
+	An array of objects that would satisfy the search query.
+
+/users
+/jobs
+/posts
+/whatever-entity-we-have-in-ERD
+CRUD
+Description: Typical CRUD of these models. Only logged in users have access to these resources.
+Responses:
+	Success: the JSON itself
+	Unauthorized: 403
+
+/users-count (or whatever better URL)
+GET
+Description: Returns the number of users registered. This is for the index page.
+Responses:
+	An integer.

@@ -8,6 +8,18 @@ module.exports = React.createClass({
 
     return;
   },
+  logout(){
+    $.ajax({
+      'url': '/logout',
+      'method': 'POST',
+      'success'(){
+        window.location.href = '/';
+      },
+      'error'(err){
+        console.error(err);
+      }
+    });
+  },
   render() {
     return (
       <div>
@@ -16,7 +28,7 @@ module.exports = React.createClass({
             <a href="#"><img src="img/logo-full.png" className="navbar-logo"/></a>
 
             <ul className="right tab-element">
-              <a href="/" className="btn waves-effect waves-light blue">Log out</a>
+              <a href="#" className="btn waves-effect waves-light blue" onClick={this.logout}>Log out</a>
             </ul>
             <div className="right tab-element tab-input hide-on-med-and-down">
               <form onSubmit={this.search}>
