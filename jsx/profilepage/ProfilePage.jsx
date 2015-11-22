@@ -1,63 +1,66 @@
 var React = require('react');
 
 var Post = require('../post/Post.jsx');
+var ProfileTop = require('./ProfileTop.jsx');
+var ProfileMiddle = require('./ProfileMiddle.jsx');
 
 module.exports = React.createClass({
+  getInitialState: function(){
+    return {};
+  },
+  componentDidMount(){
+    var self = this;
+
+    $.ajax({
+      'url': '/api/users/' + this.props.params.username,
+      'method': 'GET',
+      'success'(data){
+        self.setState(data);
+      },
+      'error'(err){
+        console.error(err);
+      }
+    });
+  },
   render() {
+    var name = [this.state.fname, this.state.mname, this.state.lname].join(' ');
+
     return (
       <div>
         <div className="row small-margin">
           <div className="col s12 card-panel profile-top">
-            <div className="col s3">
-              <img src="/img/003.jpg" className="img-full circle"/>
-            </div>
-            <div className="col s9 profile-info">
-              <h4>Peter Bernard M. Rupa, Student at University of the Philippines</h4>
-              <div className="col s6">
-                <p>Lives in Philippines</p>
-              </div>
-              <div className="col s6">
-                {/*graduated at here*/}
-              </div>
-              <div style={{clear:'both'}}></div>
-              <span className="experiences">Experiences:</span>
-              <ul>
-                <li>Cashier at McDonalds</li>
-              </ul>
-            </div>
+            <ProfileTop
+              name={name}
+              occupation={this.state.occupation}
+              college={this.state.college}
+              country={this.state.country}
+              img={this.state.picture}
+            />
           </div>
         </div>
         <div className="row small-margin">
           <div className="col s12 card-panel profile-middle">
-            <div className="col s6">
-              <span className="bold">Interested in:</span>
-            </div>
-            <div className="col s6">
-              <span className="bold">Connections (62):</span>
-            </div>
+            <ProfileMiddle/>
           </div>
         </div>
         <div className="row small-margin">
           <div className="profile-post">
-            <Post img="/img/003.jpg" url="/" name="Peter Bernard M. Rupa" action="says: " body="Yehey!!"/>
+            <Post img="/img/003.jpg" url="/" name="Jireh Lim F. Club" action="is looking for a job."/>
           </div>
           <div className="profile-post">
-            <Post img="/img/003.jpg" url="/" name="Peter Bernard M. Rupa" action="says: " body="Yehey!!"/>
+            <Post img="/img/003.jpg" url="/" name="Jireh Lim F. Club" action="says: " body="This is a post."/>
           </div>
           <div className="profile-post">
-            <Post img="/img/003.jpg" url="/" name="Peter Bernard M. Rupa" action="says: " body="Yehey!!"/>
+            <Post img="/img/003.jpg" url="/" name="Jireh Lim F. Club" action="says: " body="Yehey!!"/>
           </div>
           <div className="profile-post">
-            <Post img="/img/003.jpg" url="/" name="Peter Bernard M. Rupa" action="says: " body="Yehey!!"/>
+            <Post img="/img/003.jpg" url="/" name="Jireh Lim F. Club" action="says: " body=":)"/>
           </div>
           <div className="profile-post">
-            <Post img="/img/003.jpg" url="/" name="Peter Bernard M. Rupa" action="says: " body="Yehey!!"/>
+            <Post img="/img/003.jpg" url="/" name="Jireh Lim F. Club" action="is now connected with Procopio. "/>
           </div>
           <div className="profile-post">
-            <Post img="/img/003.jpg" url="/" name="Peter Bernard M. Rupa" action="says: " body="Yehey!!"/>
-          </div>
-          <div className="profile-post">
-            <Post img="/img/003.jpg" url="/" name="Peter Bernard M. Rupa" action="says: " body="Yehey!!"/>
+            <Post img="/img/003.jpg" url="/" name="Jireh Lim F. Club" action="says: " body="Hello World!"/>
           </div>
         </div>
       </div>

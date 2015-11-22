@@ -18,8 +18,7 @@ module.exports = React.createClass({
         img: "img/002.jpg",
         url: "/profile/WareAnj",
         name: "Angelica P. Ware",
-        action: "is looking for a job.",
-        body: "Willing to take a job in the I.T. field. Message me."
+        action: "is looking for a job."
       }]
     };
   },
@@ -30,7 +29,7 @@ module.exports = React.createClass({
   },
   render() {
     return (
-      <div className="col l8">
+      <div>
         <StatusBox addPost={this.addPost}/>
         <PostsList posts={this.state.posts}/>
       </div>

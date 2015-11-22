@@ -25,7 +25,7 @@ $(document).ready(function(){
           $('#login-button').text('Log in');
 
           // set error message
-          $('#error').text('Your credentials do not match our records.');
+          $('.error').text('Your credentials do not match our records.');
         }
       }
     });

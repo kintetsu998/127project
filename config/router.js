@@ -10,6 +10,12 @@ module.exports = function (router) {
 		.put(PageController.updateUser)
 		.delete(PageController.deleteUser);
 
+	router.route('/api/users/count')
+		.get(PageController.userCount);
+
+	router.route('/api/users/:username')
+		.get(PageController.getUser);
+
 	router.route('/api/users/experience')
 		.post(PageController.createUserExperience)
 		.put(PageController.updateUserExperience);
@@ -20,9 +26,6 @@ module.exports = function (router) {
 
 	router.route('/api/users/notif')
 		.post(PageController.createNotifFromUser);
-
-	router.route('/api/users/count')
-		.get(PageController.userCount);
 
 	router.route('/api/job')
 		.get(PageController.getJob)
@@ -41,6 +44,9 @@ module.exports = function (router) {
 
 	router.route('/search')
 		.get(PageController.search);
+
+	router.route('/create')
+		.get(PageController.createPage);
 
 	router.route('/login')
 		.get(PageController.loginPage)

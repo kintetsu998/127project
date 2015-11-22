@@ -20,6 +20,10 @@ exports.loginPage = function(req, res, next){
 	res.render("login.html");
 };
 
+exports.createPage = function(req, res, next){
+	res.render("create.html");
+};
+
 exports.homepage = function (req, res, next){
 	res.render('homepage.html');
 };
@@ -51,6 +55,27 @@ exports.getUsers = function(req, res) {
     });
 };
 
+exports.getUser = function(req, res) {
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, user_experience.title, user_experience.company, user_fieldofinterest.field from users left join user_experience on user_experience.username = users.username left join user_fieldofinterest on user_experience.username = user_fieldofinterest.username where users.username=$1;", [req.params.username]);
+        query.on('row', function(row) {
+          done();
+          return res.json(row);
+        });
+
+        query.on('error', function() {
+            done();
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+};
+
 exports.whoami = function(req, res) {
     pg.connect(conString, function (err, client, done) {
       // Handle connection errors
@@ -66,7 +91,7 @@ exports.whoami = function(req, res) {
         return res.json(row);
       });
     });
-}
+};
 
 exports.createUser = function(req, res) {
 
@@ -105,7 +130,7 @@ exports.createUser = function(req, res) {
             });
         });
     });
-}
+};
 
 exports.updateUser = function(req, res) {
 
@@ -115,7 +140,7 @@ exports.updateUser = function(req, res) {
     var id = req.params.todo_id;
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -150,7 +175,7 @@ exports.updateUser = function(req, res) {
             return res.json(results);
         });
     });
-}
+};
 
 exports.approveUser = function(req, res) {
 
@@ -160,7 +185,7 @@ exports.approveUser = function(req, res) {
     var id = req.params.todo_id;
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -195,7 +220,7 @@ exports.approveUser = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.deleteUser = function(req, res) {
 
@@ -205,7 +230,7 @@ exports.deleteUser = function(req, res) {
     var id = req.params.todo_id;
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -231,7 +256,7 @@ exports.deleteUser = function(req, res) {
         // After all data is returned, close connection and return results
         query.on('end', function() {
             done();
-            if(results.length == 0){
+            if(results.length === 0){
                 return res.status(200).json({success: true});
             }else{
                 return res.status(404).json({success: false, msg: "User not found."});
@@ -243,7 +268,7 @@ exports.deleteUser = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.getJob = function(req, res) {
     var results = [];
@@ -302,14 +327,14 @@ exports.createJob = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.updateJob = function(req, res) {
 
     var results = [];
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -344,14 +369,14 @@ exports.updateJob = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.deleteJob = function(req, res) {
 
     var results = [];
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -385,7 +410,7 @@ exports.deleteJob = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.approveJob = function(req, res) {
 
@@ -395,7 +420,7 @@ exports.approveJob = function(req, res) {
     var id = req.params.todo_id;
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -430,7 +455,7 @@ exports.approveJob = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.closeJob = function(req, res) {
 
@@ -440,7 +465,7 @@ exports.closeJob = function(req, res) {
     var id = req.params.todo_id;
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -475,7 +500,7 @@ exports.closeJob = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.getNotifs = function(req, res) {
     var results = [];
@@ -539,7 +564,7 @@ exports.createNotifFromUser = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.createNotifFromJob = function(req, res) {
 
@@ -576,7 +601,7 @@ exports.createNotifFromJob = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.getLogs = function(req, res) {
     var results = [];
@@ -603,7 +628,7 @@ exports.getLogs = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.createLog = function(req, res) {
 
@@ -640,7 +665,7 @@ exports.createLog = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.search = function(req, res) {
     var results = [];
@@ -693,13 +718,13 @@ exports.search = function(req, res) {
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.createUserExperience = function(req, res){
     var results = [];
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -733,13 +758,13 @@ exports.createUserExperience = function(req, res){
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.updateUserExperience = function(req, res){
     var results = [];
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -773,13 +798,13 @@ exports.updateUserExperience = function(req, res){
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.createFieldOfInterest = function(req, res){
     var results = [];
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -798,7 +823,7 @@ exports.createFieldOfInterest = function(req, res){
         var query = client.query("SELECT * from user_fieldofinterest where field=$1", [req.body.field]);
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * FROM users where username=$1 and password=$2", [req.body.username, req.body.password]);
+        query = client.query("SELECT * FROM users where username=$1 and password=$2", [req.body.username, req.body.password]);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
@@ -816,13 +841,13 @@ exports.createFieldOfInterest = function(req, res){
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.updateFieldOfInterest = function(req, res){
     var results = [];
 
     if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
+        return res.status(403).json({success: false});
     }
 
     // Get a Postgres client from the connection pool
@@ -856,7 +881,7 @@ exports.updateFieldOfInterest = function(req, res){
             return res.status(500).json({ success: false, data: err});
         });
     });
-}
+};
 
 exports.userCount = function(req, res){
     var results = [];
@@ -878,7 +903,7 @@ exports.userCount = function(req, res){
             return res.json(results.length);
         });
     });
-}
+};
 
 exports.login = function(req, res) {
     var results = [];
@@ -913,9 +938,9 @@ exports.login = function(req, res) {
             }
         });
     });
-}
+};
 
 exports.logout = function(req, res) {
     req.session.destroy();
     res.sendStatus(200);
-}
+};

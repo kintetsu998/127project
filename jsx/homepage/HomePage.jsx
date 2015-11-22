@@ -29,7 +29,9 @@ module.exports = React.createClass({
 
     return (
       <div className="row">
-        <NewsFeed/>
+        <div className="col l8">
+          <NewsFeed/>
+        </div>
         <div className="col l4 hide-on-med-and-down">
           <Link to={url}>
             <div className="card-panel">
