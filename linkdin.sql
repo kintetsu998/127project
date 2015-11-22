@@ -456,6 +456,8 @@ SELECT pg_catalog.setval('project_projectid_seq', 1, true);
 COPY user_connection (username1, username2, approvedat) FROM stdin;
 procopio	xXxBaDbOyZzZ	\N
 xXxBaDbOyZzZ	procopio	\N
+procopio	admin	\N
+admin	procopio	\N
 \.
 
 
@@ -476,6 +478,7 @@ COPY users (username, password, fname, mname, lname, occupation, college, degree
 admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N	\N	\N
 procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL		0	2015-11-15	Philippines	\N	\N	\N
 xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	\N	0	2015-11-22	Philippines	2015-11-22	\N	\N
+anon12345	nooneknows	Hidden	Anon	Anonymous	administrator	UP-ish	BS Vulcanizing	\N	1	2015-11-22	Philippines	\N	Gambling	Anonymity Merchandise
 \.
 
 

@@ -74,15 +74,16 @@ exports.createUser = function(req, res) {
         }
 
         // SQL Query > Insert Data
-        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country) values($1, $2, $3, $4, $5, $6, now(), $7)",
-            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country]);
+        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12)", 
+            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest]);
 
-        create.on('error', function() {
+        create.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
 
-        create.on('row', function(row){
+        create.on('end', function(){
             var query = client.query("SELECT * from users where username=$1", [req.body.username]);
 
             // Stream results back one row at a time
@@ -329,7 +330,7 @@ exports.updateUserExperience = function(req, res){
         client.query("UPDATE user_experience SET title=($1) company=($2) where company=($3) and title=($4)", [req.body.title, req.body.company, req.body.oldCompany, req.body.oldTitle]);
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * from user_experience where company=$1", [req.body.company]);
+        var query = client.query("SELECT * from user_experience where company=$1 and title = $2", [req.body.company, req.body.title]);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
@@ -368,11 +369,6 @@ exports.deleteUserExperience = function(req, res) {
 
         // SQL Query > Delete Data
         var query = client.query("DELETE FROM user_experience WHERE company=($1) and title = ($2)", [req.body.company, req.body.title]);
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
 
         // After all data is returned, close connection and return results
         query.on('end', function() {
@@ -431,10 +427,6 @@ exports.connectUser = function(req, res){
         var query = client.query("INSERT INTO user_connection(username1, username2) values($1, $2)", [req.body.username1, req.body.username2]);
 
         client.query("INSERT INTO user_connection(username1, username2) values($1, $2)", [req.body.username2, req.body.username1]);
-
-        query.on('row', function(row) {
-            results.push(row);
-        });
 
         query.on('end', function() {
             done();
@@ -530,10 +522,6 @@ exports.unconnect = function(req, res){
 
 exports.showConnections = function(req, res){
 	var results = [];
-
-	if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
 
     pg.connect(conString, function (err, client, done) {
         if(err) {
