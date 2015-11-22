@@ -19,31 +19,28 @@ module.exports = function (router) {
 	router.route('/api/users/:username')
 		.get(user.getOneUser); //params: username
 
-	router.route('/api/users/approve/')
+	router.route('/api/user-approve/')
 		.post(user.approveUser); //body: username
 
-	router.route('/api/users/count')
-		.get(user.userCount);
-
-	// router.route('/api/users/:username')
-	// 	.get(user.getUser);
-
-	router.route('/api/users/experience')
+	router.route('/api/user-experience')
 		.get(user.getUserExperience) //query: username
 		.post(user.createUserExperience) //body: title, company, username
 		.put(user.updateUserExperience) //body: username, title, company, oldCompany, oldTitle
 		.delete(user.deleteUserExperience); //body: username, company, title
 
-	router.route('/api/users/connection')
+	router.route('/api/user-experience/all')
+		.get(user.getAllUserExperience);
+
+	router.route('/api/user-connection')
 		.get(user.showConnections) //query: username
 		.post(user.connectUser) //body: username1, username2
 		.delete(user.unconnect); //body: username1, username2
 
-	router.route('/api/users/notif')
+	router.route('/api/user-notif')
 		.get(notif.getNotifFromUser) //query: username
 		.post(notif.createNotifFromUser); //body: text, url, username
 
-	router.route('/api/users/count')
+	router.route('/api/user-count')
 		.get(user.userCount);
 
 	router.route('/api/joball')
@@ -55,19 +52,19 @@ module.exports = function (router) {
 		.put(job.updateJob) //body: jobid, description, fieldofinterestid, company, picture, name
 		.delete(job.deleteJob); //body: jobid
 
-	router.route('/api/job/notif')
+	router.route('/api/job-notif')
 		.get(notif.getNotifFromJob) //query: jobid
 		.post(notif.createNotifFromJob); //body: text, url, jobid
 
-	router.route('/api/job/applicant')
+	router.route('/api/job-applicant')
 		.get(job.getApplicants) //query: jobid
 		.post(job.addApplicant) //body: jobid, username
 		.delete(job.removeApplicant); //body: jobid, username
 
-	router.route('/api/job/approve/')
+	router.route('/api/job-approve/')
 		.post(job.approveJob); //body: jobid
 
-	router.route('/api/job/close/')
+	router.route('/api/job-close/')
 		.post(job.closeJob); //body: jobid
 
 	router.route('/api/notif')
@@ -79,7 +76,7 @@ module.exports = function (router) {
 		.put(post.updatePost) //body: content, postid
 		.delete(post.deletePost); //body: postid
 
-	router.route('/api/post/like')
+	router.route('/api/post-like')
 		.get(post.getLikes) //query: postid
 		.post(post.likePost) //body: postid
 		.delete(post.unlike); //body: postid

@@ -3,6 +3,8 @@ var pg = require('pg');
 var c = require('../config/config.js');
 var conString = "postgres://" + c.username +":" + c.password + "@localhost/" + c.database + "";
 
+var userColumns = "users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, users.fieldofinterest, users.company";
+
 pg.connect(conString, function(err, client, done) {
 
   if (err) {
@@ -20,9 +22,7 @@ exports.getUsers = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var columns = "users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, users.fieldofinterest";
-
-        var query = client.query("SELECT " + columns + " from users");
+        var query = client.query("SELECT " + userColumns + " from users");
         query.on('row', function(row) {
             results.push(row);
         });
@@ -47,9 +47,7 @@ exports.getOneUser = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var columns = "users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, users.fieldofinterest";
-
-        var query = client.query("SELECT " + columns + " from users where username=$1", [req.params.username]);
+        var query = client.query("SELECT " + userColumns + " from users where username=$1", [req.params.username]);
         query.on('row', function(row) {
             done();
             return res.json(row);
@@ -119,8 +117,8 @@ exports.updateUser = function(req, res) {
         }
 
         // SQL Query > Update Data
-        var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9) WHERE username=($1)",
-            [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.body.picture, req.body.country]);
+        var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9), company=($10) WHERE username=($1)", 
+            [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.body.picture, req.body.country, req.body.company]);
 
         update.on('error', function() {
             done();
@@ -199,21 +197,13 @@ exports.approveUser = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE users SET approvedat=now() WHERE username=($1)",
+        var query = client.query("UPDATE users SET approvedat=now() WHERE username=($1)",
             [req.body.username]);
-
-        // SQL Query > Select Data
-        var query = client.query("SELECT * FROM users where username=$1", [req.body.username]);
-
-        // Stream results back one row at a time
-        query.on('row', function(row) {
-            results.push(row);
-        });
 
         // After all data is returned, close connection and return results
         query.on('end', function() {
             done();
-            return res.json(results);
+            return res.status(200).json({success: true});
         });
 
         query.on('error', function() {
@@ -263,8 +253,9 @@ exports.createUserExperience = function(req, res){
     });
 }
 
-exports.getUserExperience = function(req, res) {
+exports.getAllUserExperience = function(req, res) {
     var results = [];
+
     pg.connect(conString, function (err, client, done) {
         if(err) {
           done();
@@ -272,7 +263,35 @@ exports.getUserExperience = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT * from user_experience where username = $1", [req.query.username]);
+        var query = client.query("SELECT * from user_experience");
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function() {
+            done();
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+};
+
+exports.getUserExperience = function(req, res) {
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT * from user_experience where username=$1", [req.query.username]);
 
         query.on('row', function(row) {
             results.push(row);
