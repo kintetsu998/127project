@@ -37,18 +37,30 @@ CREATE TABLE job (
     jobid integer NOT NULL,
     country character varying(15) NOT NULL,
     description text,
-    fieldsrelated character varying(30),
     company character varying(30) NOT NULL,
     picture character varying(40),
     closedat date,
     username character varying(20) NOT NULL,
     createdat date NOT NULL,
     approvedat date,
-    name character varying(30) NOT NULL
+    name character varying(30) NOT NULL,
+    fieldofinterestid integer NOT NULL
 );
 
 
 ALTER TABLE public.job OWNER TO proj127;
+
+--
+-- Name: job_applicant; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+--
+
+CREATE TABLE job_applicant (
+    jobid integer NOT NULL,
+    username character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.job_applicant OWNER TO proj127;
 
 --
 -- Name: job_jobid_seq; Type: SEQUENCE; Schema: public; Owner: proj127
@@ -110,22 +122,23 @@ ALTER SEQUENCE log_log_id_seq OWNED BY log.log_id;
 --
 
 CREATE TABLE notification (
-    notification_id integer NOT NULL,
+    notificationid integer NOT NULL,
     text text NOT NULL,
     url text NOT NULL,
-    created_at date NOT NULL,
-    job_id integer,
-    username character varying(20)
+    createdat date NOT NULL,
+    jobid integer,
+    username character varying(20),
+    CONSTRAINT notification_check_jobid_username CHECK (((jobid IS NULL) <> (username IS NULL)))
 );
 
 
 ALTER TABLE public.notification OWNER TO proj127;
 
 --
--- Name: notification_notification_id_seq; Type: SEQUENCE; Schema: public; Owner: proj127
+-- Name: notification_notificationid_seq; Type: SEQUENCE; Schema: public; Owner: proj127
 --
 
-CREATE SEQUENCE notification_notification_id_seq
+CREATE SEQUENCE notification_notificationid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -133,39 +146,140 @@ CREATE SEQUENCE notification_notification_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.notification_notification_id_seq OWNER TO proj127;
+ALTER TABLE public.notification_notificationid_seq OWNER TO proj127;
 
 --
--- Name: notification_notification_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: proj127
+-- Name: notification_notificationid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: proj127
 --
 
-ALTER SEQUENCE notification_notification_id_seq OWNED BY notification.notification_id;
+ALTER SEQUENCE notification_notificationid_seq OWNED BY notification.notificationid;
 
+
+--
+-- Name: post; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+--
+
+CREATE TABLE post (
+    postid integer NOT NULL,
+    content text NOT NULL,
+    createdat date NOT NULL,
+    username character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.post OWNER TO proj127;
+
+--
+-- Name: post_comment; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+--
+
+CREATE TABLE post_comment (
+    postid integer NOT NULL,
+    username character varying(20) NOT NULL,
+    comment text NOT NULL,
+    createdat date NOT NULL
+);
+
+
+ALTER TABLE public.post_comment OWNER TO proj127;
+
+--
+-- Name: post_like; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+--
+
+CREATE TABLE post_like (
+    postid integer NOT NULL,
+    username character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.post_like OWNER TO proj127;
+
+--
+-- Name: post_postid_seq; Type: SEQUENCE; Schema: public; Owner: proj127
+--
+
+CREATE SEQUENCE post_postid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.post_postid_seq OWNER TO proj127;
+
+--
+-- Name: post_postid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: proj127
+--
+
+ALTER SEQUENCE post_postid_seq OWNED BY post.postid;
+
+
+--
+-- Name: project; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+--
+
+CREATE TABLE project (
+    projectid integer NOT NULL,
+    projectname character varying(30) NOT NULL,
+    description text,
+    picture character varying(40),
+    createdat date NOT NULL,
+    username character varying(20) NOT NULL,
+    fieldrelated character varying(20)
+);
+
+
+ALTER TABLE public.project OWNER TO proj127;
+
+--
+-- Name: project_projectid_seq; Type: SEQUENCE; Schema: public; Owner: proj127
+--
+
+CREATE SEQUENCE project_projectid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.project_projectid_seq OWNER TO proj127;
+
+--
+-- Name: project_projectid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: proj127
+--
+
+ALTER SEQUENCE project_projectid_seq OWNED BY project.projectid;
+
+
+--
+-- Name: user_connection; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
+--
+
+CREATE TABLE user_connection (
+    username1 character varying(20) NOT NULL,
+    username2 character varying(20) NOT NULL,
+    approvedat date,
+    CONSTRAINT user_connection_not_same_users CHECK (((username1)::text <> (username2)::text))
+);
+
+
+ALTER TABLE public.user_connection OWNER TO proj127;
 
 --
 -- Name: user_experience; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
 --
 
 CREATE TABLE user_experience (
-    title character varying(20),
+    title character varying(20) NOT NULL,
     company character varying(30) NOT NULL,
     username character varying(20) NOT NULL
 );
 
 
 ALTER TABLE public.user_experience OWNER TO proj127;
-
---
--- Name: user_fieldofinterest; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
---
-
-CREATE TABLE user_fieldofinterest (
-    field character varying(20) NOT NULL,
-    username character varying(20) NOT NULL
-);
-
-
-ALTER TABLE public.user_fieldofinterest OWNER TO proj127;
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: proj127; Tablespace: 
@@ -184,7 +298,8 @@ CREATE TABLE users (
     isadmin bit(1) NOT NULL,
     createdat date NOT NULL,
     country character varying(15) NOT NULL,
-    approvedat date
+    approvedat date,
+    fieldofinterest character varying(20)
 );
 
 
@@ -205,18 +320,41 @@ ALTER TABLE ONLY log ALTER COLUMN log_id SET DEFAULT nextval('log_log_id_seq'::r
 
 
 --
--- Name: notification_id; Type: DEFAULT; Schema: public; Owner: proj127
+-- Name: notificationid; Type: DEFAULT; Schema: public; Owner: proj127
 --
 
-ALTER TABLE ONLY notification ALTER COLUMN notification_id SET DEFAULT nextval('notification_notification_id_seq'::regclass);
+ALTER TABLE ONLY notification ALTER COLUMN notificationid SET DEFAULT nextval('notification_notificationid_seq'::regclass);
+
+
+--
+-- Name: postid; Type: DEFAULT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY post ALTER COLUMN postid SET DEFAULT nextval('post_postid_seq'::regclass);
+
+
+--
+-- Name: projectid; Type: DEFAULT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY project ALTER COLUMN projectid SET DEFAULT nextval('project_projectid_seq'::regclass);
 
 
 --
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY job (jobid, country, description, fieldsrelated, company, picture, closedat, username, createdat, approvedat, name) FROM stdin;
-38	Philippines	\N	janitor	Proctor With Gamble	\N	\N	procopio	2015-11-15	\N	Janitor
+COPY job (jobid, country, description, company, picture, closedat, username, createdat, approvedat, name, fieldofinterestid) FROM stdin;
+39	Philippines	dummy description	ANY TV	\N	2015-11-22	admin	2015-11-22	2015-11-22	PROGAMER!!!!	1
+\.
+
+
+--
+-- Data for Name: job_applicant; Type: TABLE DATA; Schema: public; Owner: proj127
+--
+
+COPY job_applicant (jobid, username) FROM stdin;
+39	xXxBaDbOyZzZ
 \.
 
 
@@ -224,7 +362,7 @@ COPY job (jobid, country, description, fieldsrelated, company, picture, closedat
 -- Name: job_jobid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
 --
 
-SELECT pg_catalog.setval('job_jobid_seq', 38, true);
+SELECT pg_catalog.setval('job_jobid_seq', 39, true);
 
 
 --
@@ -232,6 +370,7 @@ SELECT pg_catalog.setval('job_jobid_seq', 38, true);
 --
 
 COPY log (log_id, text, created_at) FROM stdin;
+1	test text	2015-11-22
 \.
 
 
@@ -239,22 +378,84 @@ COPY log (log_id, text, created_at) FROM stdin;
 -- Name: log_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
 --
 
-SELECT pg_catalog.setval('log_log_id_seq', 1, false);
+SELECT pg_catalog.setval('log_log_id_seq', 1, true);
 
 
 --
 -- Data for Name: notification; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY notification (notification_id, text, url, created_at, job_id, username) FROM stdin;
+COPY notification (notificationid, text, url, createdat, jobid, username) FROM stdin;
+1	google!	www.google.com	2015-11-22	\N	admin
+2	example!	www.example.com	2015-11-22	39	\N
 \.
 
 
 --
--- Name: notification_notification_id_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
+-- Name: notification_notificationid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
 --
 
-SELECT pg_catalog.setval('notification_notification_id_seq', 1, false);
+SELECT pg_catalog.setval('notification_notificationid_seq', 2, true);
+
+
+--
+-- Data for Name: post; Type: TABLE DATA; Schema: public; Owner: proj127
+--
+
+COPY post (postid, content, createdat, username) FROM stdin;
+1	Hi po!	2015-11-22	xXxBaDbOyZzZ
+\.
+
+
+--
+-- Data for Name: post_comment; Type: TABLE DATA; Schema: public; Owner: proj127
+--
+
+COPY post_comment (postid, username, comment, createdat) FROM stdin;
+1	admin	hi rin! :3	2015-11-22
+\.
+
+
+--
+-- Data for Name: post_like; Type: TABLE DATA; Schema: public; Owner: proj127
+--
+
+COPY post_like (postid, username) FROM stdin;
+1	procopio
+\.
+
+
+--
+-- Name: post_postid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
+--
+
+SELECT pg_catalog.setval('post_postid_seq', 1, true);
+
+
+--
+-- Data for Name: project; Type: TABLE DATA; Schema: public; Owner: proj127
+--
+
+COPY project (projectid, projectname, description, picture, createdat, username, fieldrelated) FROM stdin;
+1	OPLAN127	sample description should be here	\N	2015-11-22	procopio	\N
+\.
+
+
+--
+-- Name: project_projectid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
+--
+
+SELECT pg_catalog.setval('project_projectid_seq', 1, true);
+
+
+--
+-- Data for Name: user_connection; Type: TABLE DATA; Schema: public; Owner: proj127
+--
+
+COPY user_connection (username1, username2, approvedat) FROM stdin;
+procopio	xXxBaDbOyZzZ	\N
+xXxBaDbOyZzZ	procopio	\N
+\.
 
 
 --
@@ -262,16 +463,7 @@ SELECT pg_catalog.setval('notification_notification_id_seq', 1, false);
 --
 
 COPY user_experience (title, company, username) FROM stdin;
-janitor	procter & gamble	procopio
-\.
-
-
---
--- Data for Name: user_fieldofinterest; Type: TABLE DATA; Schema: public; Owner: proj127
---
-
-COPY user_fieldofinterest (field, username) FROM stdin;
-janitor	procopio
+Badboy	BadBoy&Co.	xXxBaDbOyZzZ
 \.
 
 
@@ -279,9 +471,10 @@ janitor	procopio
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, country, approvedat) FROM stdin;
-admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N
-procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL		0	2015-11-15	Philippines	\N
+COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, country, approvedat, fieldofinterest) FROM stdin;
+admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N	\N
+procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL		0	2015-11-15	Philippines	\N	\N
+xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	\N	0	2015-11-22	Philippines	2015-11-22	\N
 \.
 
 
@@ -306,7 +499,23 @@ ALTER TABLE ONLY log
 --
 
 ALTER TABLE ONLY notification
-    ADD CONSTRAINT notification_pkey PRIMARY KEY (notification_id);
+    ADD CONSTRAINT notification_pkey PRIMARY KEY (notificationid);
+
+
+--
+-- Name: post_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
+--
+
+ALTER TABLE ONLY post
+    ADD CONSTRAINT post_pkey PRIMARY KEY (postid);
+
+
+--
+-- Name: project_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT project_pkey PRIMARY KEY (projectid);
 
 
 --
@@ -314,23 +523,7 @@ ALTER TABLE ONLY notification
 --
 
 ALTER TABLE ONLY user_experience
-    ADD CONSTRAINT user_experience_pkey PRIMARY KEY (company);
-
-
---
--- Name: user_experience_title_key; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
---
-
-ALTER TABLE ONLY user_experience
-    ADD CONSTRAINT user_experience_title_key UNIQUE (title);
-
-
---
--- Name: user_fieldofinterest_pkey; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
---
-
-ALTER TABLE ONLY user_fieldofinterest
-    ADD CONSTRAINT user_fieldofinterest_pkey PRIMARY KEY (field);
+    ADD CONSTRAINT user_experience_pkey PRIMARY KEY (title, company);
 
 
 --
@@ -342,27 +535,107 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: job_applicant_jobid_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY job_applicant
+    ADD CONSTRAINT job_applicant_jobid_fk FOREIGN KEY (jobid) REFERENCES job(jobid) ON DELETE CASCADE;
+
+
+--
+-- Name: job_applicant_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY job_applicant
+    ADD CONSTRAINT job_applicant_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
+
+
+--
 -- Name: job_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
 --
 
 ALTER TABLE ONLY job
-    ADD CONSTRAINT job_username_fk FOREIGN KEY (username) REFERENCES users(username);
+    ADD CONSTRAINT job_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
 
 
 --
--- Name: notification_job_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
---
-
-ALTER TABLE ONLY notification
-    ADD CONSTRAINT notification_job_id_fk FOREIGN KEY (job_id) REFERENCES job(jobid);
-
-
---
--- Name: notification_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+-- Name: noficication_jobid_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
 --
 
 ALTER TABLE ONLY notification
-    ADD CONSTRAINT notification_username_fk FOREIGN KEY (username) REFERENCES users(username);
+    ADD CONSTRAINT noficication_jobid_fk FOREIGN KEY (jobid) REFERENCES job(jobid) ON DELETE CASCADE;
+
+
+--
+-- Name: noficication_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY notification
+    ADD CONSTRAINT noficication_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
+
+
+--
+-- Name: post_comment_postid_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY post_comment
+    ADD CONSTRAINT post_comment_postid_fk FOREIGN KEY (postid) REFERENCES post(postid) ON DELETE CASCADE;
+
+
+--
+-- Name: post_comment_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY post_comment
+    ADD CONSTRAINT post_comment_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
+
+
+--
+-- Name: post_like_postid_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY post_like
+    ADD CONSTRAINT post_like_postid_fk FOREIGN KEY (postid) REFERENCES post(postid) ON DELETE CASCADE;
+
+
+--
+-- Name: post_like_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY post_like
+    ADD CONSTRAINT post_like_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
+
+
+--
+-- Name: post_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY post
+    ADD CONSTRAINT post_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
+
+
+--
+-- Name: project_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT project_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
+
+
+--
+-- Name: user_connection_username1_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY user_connection
+    ADD CONSTRAINT user_connection_username1_fk FOREIGN KEY (username1) REFERENCES users(username) ON DELETE CASCADE;
+
+
+--
+-- Name: user_connection_username2_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
+--
+
+ALTER TABLE ONLY user_connection
+    ADD CONSTRAINT user_connection_username2_fk FOREIGN KEY (username2) REFERENCES users(username) ON DELETE CASCADE;
 
 
 --
@@ -371,14 +644,6 @@ ALTER TABLE ONLY notification
 
 ALTER TABLE ONLY user_experience
     ADD CONSTRAINT user_experience_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
-
-
---
--- Name: user_fieldofinterest_username_fk; Type: FK CONSTRAINT; Schema: public; Owner: proj127
---
-
-ALTER TABLE ONLY user_fieldofinterest
-    ADD CONSTRAINT user_fieldofinterest_username_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE;
 
 
 --

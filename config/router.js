@@ -1,49 +1,108 @@
 // config/router.js
 var PageController = require('./../controllers/PageController');
+var user = require('./../controllers/user');
+var job = require('./../controllers/job');
+var notif = require('./../controllers/notification');
+var post = require('./../controllers/post');
+var project = require('./../controllers/project');
+var foi = require('./../controllers/fieldofinterest');
+
 module.exports = function (router) {
 	router.route('/')
 		.get(PageController.index);
 
 	router.route('/api/users')
-		.get(PageController.getUsers)
-		.post(PageController.createUser)
-		.put(PageController.updateUser)
-		.delete(PageController.deleteUser);
+		.get(user.getUsers)
+		.post(user.createUser) //body: username, password, fname, mname, lname, isadmin, country
+		.put(user.updateUser) //body: username, password, fname, mname, lname, occupation, college, degree, picture country
+		.delete(user.deleteUser); //body: username
+
+	router.route('/api/users/approve/')
+		.post(user.approveUser); //body: username
 
 	router.route('/api/users/count')
-		.get(PageController.userCount);
+		.get(user.userCount);
 
-	router.route('/api/users/:username')
-		.get(PageController.getUser);
+	// router.route('/api/users/:username')
+	// 	.get(user.getUser);
 
 	router.route('/api/users/experience')
-		.post(PageController.createUserExperience)
-		.put(PageController.updateUserExperience);
+		.get(user.getUserExperience) //query: username
+		.post(user.createUserExperience) //body: title, company, username
+		.put(user.updateUserExperience) //body: username, title, company, oldCompany, oldTitle
+		.delete(user.deleteUserExperience); //body: username, company, title
 
-	router.route('/api/users/interest')
-		.post(PageController.createFieldOfInterest)
-		.put(PageController.updateFieldOfInterest);
+	router.route('/api/users/connection')
+		.get(user.showConnections) //query: username
+		.post(user.connectUser) //body: username1, username2
+		.delete(user.unconnect); //body: username1, username2
 
 	router.route('/api/users/notif')
-		.post(PageController.createNotifFromUser);
+		.get(notif.getNotifFromUser) //query: username
+		.post(notif.createNotifFromUser); //body: text, url, username
+
+	router.route('/api/users/count')
+		.get(user.userCount);
+
+	router.route('/api/joball')
+		.get(job.getJob);
 
 	router.route('/api/job')
-		.get(PageController.getJob)
-		.post(PageController.createJob)
-		.put(PageController.updateJob)
-		.delete(PageController.deleteJob);
+		.get(job.getJobOne) //query: username
+		.post(job.createJob) //body: name, country, company, username
+		.put(job.updateJob) //body: jobid, description, fieldofinterestid, company, picture, name
+		.delete(job.deleteJob); //body: jobid
 
 	router.route('/api/job/notif')
-		.post(PageController.createNotifFromJob);
+		.get(notif.getNotifFromJob) //query: jobid
+		.post(notif.createNotifFromJob); //body: text, url, jobid
+
+	router.route('/api/job/applicant')
+		.get(job.getApplicants) //query: jobid
+		.post(job.addApplicant) //body: jobid, username
+		.delete(job.removeApplicant); //body: jobid, username
+
+	router.route('/api/job/approve/')
+		.post(job.approveJob); //body: jobid
+
+	router.route('/api/job/close/')
+		.post(job.closeJob); //body: jobid
 
 	router.route('/api/notif')
-		.get(PageController.getNotifs);
+		.get(notif.getNotifs);
+
+	router.route('/api/post')
+		.get(post.getPosts) //query: username
+		.post(post.createPost) //body: content, username
+		.put(post.updatePost) //body: content, postid
+		.delete(post.deletePost); //body: postid
+
+	router.route('/api/post/like')
+		.get(post.getLikes) //query: postid
+		.post(post.likePost) //body: postid
+		.delete(post.unlike); //body: postid
+
+	router.route('/api/project')
+		.get(project.getProjects) //body: username
+		.post(project.createProject) //body: name, username
+		.put(project.updateProject) //body: projectid, projectname, description, picture
+		.delete(project.deleteProject); //body: projectid
+
+	router.route('/api/foi')
+		.get(foi.getFOI)
+		.post(foi.createFOI) //body: name, picture
+		.put(foi.updateFOI) //body: name, picture, fieldofinterestid
+		.delete(foi.deleteFOI); //body: fieldofinterestid
 
 	router.route('/api/whoami')
 		.get(PageController.whoami);
 
 	router.route('/search')
 		.get(PageController.search);
+
+	router.route('/log')
+		.get(PageController.getLogs)
+		.post(PageController.createLog);
 
 	router.route('/create')
 		.get(PageController.createPage);
