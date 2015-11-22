@@ -81,6 +81,11 @@ module.exports = function (router) {
 		.post(post.likePost) //body: postid
 		.delete(post.unlike); //body: postid
 
+	router.route('/api/post-comment')
+		.get(post.showComment) //query: postid
+		.post(post.comment) //body: postid, username, comment
+		.delete(post.removeComment); //body: postid, username, comment, createdat
+
 	router.route('/api/project')
 		.get(project.getProjects) //body: username
 		.post(project.createProject) //body: name, username

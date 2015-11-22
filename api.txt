@@ -165,3 +165,80 @@
 		request body: username, content
 		reponse:
 			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			the new post created if successful in creating a post
+	PUT: updatePost
+		request body: username, content, postid
+		response:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			the updated post if successful
+	DELETE: deletePost
+		request body: username, postid
+		response:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			code 200 if successful in deleting
+
+/api/post-like
+	GET: getLikes
+		request query: postid
+		response:
+			a list of likes in a post
+			code 500 if the error is found in the database
+	POST: likePost
+		request body: username, postid
+		reponse:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			code 200 if the like is successful
+	DELETE: unlike
+		request body: username, postid
+		response:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			code 200 if successful in deleting
+
+/api/post-comment
+	GET: showComment
+		request query: postid
+		response:
+			a list of comments in a post
+			code 500 if the error is found in the database
+	POST: comment
+		request body: username, postid, comment
+		reponse:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			code 200 if the like is successful
+	DELETE: removeComment
+		request body: username, postid, comment, createdat
+		response:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			code 200 if successful in deleting
+
+/api/project
+	GET: getProject
+		request query: username
+		response:
+			a list of posts from the username in request query
+			code 500 if the error is found in the database
+	POST: createProject
+		request body: username, projectname
+		reponse:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			the new project created if successful in creating a post
+	PUT: updateProject
+		request body: username, projectid, projectname, description, picture, fieldrelated
+		response:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			the updated project if successful
+	DELETE: deleteProject
+		request body: username, projectid
+		response:
+			code 403 if the username in request body username is not equal to the session username
+			code 500 if the database encountered an error
+			code 200 if successful in deleting

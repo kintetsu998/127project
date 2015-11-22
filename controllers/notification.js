@@ -29,8 +29,9 @@ exports.getNotifs = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -56,8 +57,9 @@ exports.getNotifFromUser = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -83,8 +85,9 @@ exports.getNotifFromJob = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -121,8 +124,9 @@ exports.createNotifFromUser = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -158,8 +162,9 @@ exports.createNotifFromJob = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });

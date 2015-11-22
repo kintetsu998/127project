@@ -34,6 +34,7 @@ exports.getUsers = function(req, res) {
 
         query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -55,6 +56,7 @@ exports.getOneUser = function(req, res) {
 
         query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -95,6 +97,12 @@ exports.createUser = function(req, res) {
             query.on('end', function() {
                 done();
                 return res.json(results);
+            });
+
+            query.on('error', function(err) {
+                done();
+                console.log(err);
+                return res.status(500).json({ success: false, data: err});
             });
         });
     });
@@ -139,6 +147,12 @@ exports.updateUser = function(req, res) {
             done();
             return res.json(results);
         });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
     });
 }
 
@@ -173,8 +187,9 @@ exports.deleteUser = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -207,8 +222,9 @@ exports.approveUser = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -247,8 +263,9 @@ exports.createUserExperience = function(req, res){
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -275,8 +292,9 @@ exports.getAllUserExperience = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -303,8 +321,9 @@ exports.getUserExperience = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -343,8 +362,9 @@ exports.updateUserExperience = function(req, res){
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -376,8 +396,9 @@ exports.deleteUserExperience = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -403,8 +424,9 @@ exports.userCount = function(req, res){
             return res.json(results.length);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -433,8 +455,9 @@ exports.connectUser = function(req, res){
             return res.status(200).json({ success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -463,8 +486,9 @@ exports.approveConnectUser = function(req, res){
                     return res.status(200).json({ success: true});
                 });
 
-                query2.on('error', function() {
+               query2.on('error', function(err) {
                     done();
+                    console.log(err);
                     return res.status(500).json({ success: false, data: err});
                 });
             });
@@ -473,8 +497,9 @@ exports.approveConnectUser = function(req, res){
             done();
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -503,8 +528,9 @@ exports.unconnect = function(req, res){
                     return res.status(200).json({ success: true});
                 });
 
-                query2.on('error', function() {
+                query2.on('error', function(err) {
                     done();
+                    console.log(err);
                     return res.status(500).json({ success: false, data: err});
                 });
             });
@@ -513,8 +539,9 @@ exports.unconnect = function(req, res){
             done();
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -541,8 +568,9 @@ exports.showConnections = function(req, res){
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });

@@ -30,18 +30,24 @@ exports.homepage = function (req, res, next){
 
 exports.whoami = function(req, res) {
     pg.connect(conString, function (err, client, done) {
-      // Handle connection errors
-      if(err) {
-        done();
-        console.log(err);
-        return res.status(500).json({ success: false, data: err});
-      }
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
 
-      var query = client.query("SELECT users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, users.fieldofinterest from users where users.username=$1", [req.session.username]);
-      query.on('row', function(row) {
-        done();
-        return res.json(row);
-      });
+        var query = client.query("SELECT users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, users.fieldofinterest from users where users.username=$1", [req.session.username]);
+        query.on('row', function(row) {
+            done();
+            return res.json(row);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
     });
 };
 
@@ -65,8 +71,9 @@ exports.getLogs = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -102,8 +109,9 @@ exports.createLog = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -138,8 +146,9 @@ exports.search = function(req, res) {
                 return res.json(results);
             });
 
-            query1.on('error', function() {
+            query1.on('error', function(err) {
                 done();
+                console.log(err);
                 return res.status(500).json({ success: false, data: err});
             });
         });
@@ -156,8 +165,9 @@ exports.search = function(req, res) {
             done();
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -198,8 +208,9 @@ exports.login = function(req, res) {
             }
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });

@@ -30,8 +30,9 @@ exports.getPosts = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -57,11 +58,6 @@ exports.createPost = function(req, res) {
         var create = client.query("INSERT INTO post(content, createdat, username) values ($1, now(), $2)", 
         	[req.body.content, req.body.username]);
 
-        create.on('error', function() {
-            done();
-            return res.status(500).json({ success: false, data: err});
-        });
-
         create.on('row', function(row){
             var query = client.query("SELECT * from post where postid=currval('post_postid_seq')");
 
@@ -75,6 +71,18 @@ exports.createPost = function(req, res) {
                 done();
                 return res.json(results);
             });
+
+            query.on('error', function(err) {
+                done();
+                console.log(err);
+                return res.status(500).json({ success: false, data: err});
+            });
+        });
+
+        create.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
         });
     });
 }
@@ -114,8 +122,9 @@ exports.updatePost = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -147,8 +156,9 @@ exports.deletePost = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -157,7 +167,7 @@ exports.deletePost = function(req, res) {
 exports.likePost = function(req, res) {
 	 var results = [];
 
-    if(username in req.session){
+    if(req.body.username != req.session.username){
         return res.status(403).json({success: false})
     }
 
@@ -171,7 +181,7 @@ exports.likePost = function(req, res) {
         }
 
         // SQL Query > Delete Data
-        var query = client.query("INSERT INTO post_like(postid, username) values ($1, $2)", [req.body.postid]);
+        var query = client.query("INSERT INTO post_like(postid, username) values ($1, $2)", [req.body.postid, req.body.username]);
 
         // After all data is returned, close connection and return results
         query.on('end', function() {
@@ -179,8 +189,9 @@ exports.likePost = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -211,8 +222,9 @@ exports.unlike = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -243,8 +255,9 @@ exports.getLikes = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -252,10 +265,6 @@ exports.getLikes = function(req, res) {
 
 exports.showComment = function(req, res) {
 	 var results = [];
-
-    if(username in req.session){
-        return res.status(403).json({success: false})
-    }
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
@@ -267,7 +276,7 @@ exports.showComment = function(req, res) {
         }
 
         // SQL Query > Delete Data
-        var query = client.query("SELECT * FROM post_comment where postid=$1", [req.body.postid]);
+        var query = client.query("SELECT * FROM post_comment where postid=$1", [req.query.postid]);
 
         // After all data is returned, close connection and return results
         query.on('row', function(row) {
@@ -279,8 +288,9 @@ exports.showComment = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -289,7 +299,7 @@ exports.showComment = function(req, res) {
 exports.comment = function(req, res) {
 	 var results = [];
 
-    if(username in req.session){
+    if(req.session.username != req.body.username){
         return res.status(403).json({success: false})
     }
 
@@ -312,8 +322,9 @@ exports.comment = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -345,8 +356,9 @@ exports.removeComment = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });

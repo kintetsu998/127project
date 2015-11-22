@@ -30,8 +30,9 @@ exports.getProjects = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -58,12 +59,13 @@ exports.createProject = function(req, res) {
         var create = client.query("INSERT INTO project(projectname, createdat, username) VALUES ($1, now(), $2)", 
         	[req.body.projectname, req.body.username]);
 
-        create.on('error', function() {
+        create.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
 
-        create.on('row', function(row){
+        create.on('end', function(){
             var query = client.query("SELECT * from post where projectid=currval('project_projectid_seq')");
 
             // Stream results back one row at a time
@@ -75,6 +77,12 @@ exports.createProject = function(req, res) {
             query.on('end', function() {
                 done();
                 return res.json(results);
+            });
+
+            query.on('error', function(err) {
+                done();
+                console.log(err);
+                return res.status(500).json({ success: false, data: err});
             });
         });
     });
@@ -115,8 +123,9 @@ exports.updateProject = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -148,8 +157,9 @@ exports.deleteProject = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });

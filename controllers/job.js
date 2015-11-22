@@ -27,6 +27,12 @@ exports.getJob = function(req, res) {
             done();
             return res.json(results);
         });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
     });
 };
 
@@ -47,6 +53,12 @@ exports.getJobOne = function(req, res) {
         query.on('end', function() {
             done();
             return res.json(results);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
         });
     });
 };
@@ -82,8 +94,9 @@ exports.createJob = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -124,8 +137,9 @@ exports.updateJob = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -157,8 +171,9 @@ exports.deleteJob = function(req, res) {
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -199,8 +214,9 @@ exports.approveJob = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -241,8 +257,9 @@ exports.closeJob = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -273,8 +290,9 @@ exports.addApplicant = function(req, res){
             return res.status(200).json({success: true, username: req.body.username});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -310,8 +328,9 @@ exports.getApplicants = function(req, res){
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
@@ -341,8 +360,9 @@ exports.removeApplicant = function(req, res){
             return res.status(200).json({success: true});
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
     });
