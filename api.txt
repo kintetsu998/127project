@@ -33,7 +33,7 @@
 			code 200 if the username is successfully approved
 			code 500 if there is an error occured in the database
 
-/api/users/experience
+/api/user-experience
 	GET: getUserExperience
 		request query: username
 		response:
@@ -44,4 +44,124 @@
 		response:
 			creates a new user experience
 			code 500 if there is an error in the database
-			code 403 
+			code 403 if the username in session does not match the username in request body
+	PUT: updateUserExperience
+		request body: title, company, oldCompany (company before changing the company), oldTitle (title before changing the title)
+		response:
+			a json file of the user experience updated
+			code 403 when the username in session does not match the username in request body
+			code 500 when there is an error in the database
+	DELETE: deleteUserExperience
+		request body: username, company, title
+		response:
+			code 200 when the deletion is successful
+			code 403 when the username in session does not match the username in request body
+			code 500 when there is an error in the database
+
+/api/user-experience/all
+	GET: getAllUserExperience
+		request: none
+		response: 
+			all of the user experiences available in the database
+
+/api/user-connection
+	GET: showConnections
+		request query: username
+		response:
+			all of the connections in the database whose username1 matches the username in the request query
+			code 500 when there is an error in the database
+	POST: connectUser
+		request body: username1, username2 (order does not matter)
+		response:
+			code 200 if connecting two users is successful
+			code 403 if the username1 in the request body does not match the username in the request session
+			code 500 if the database encountered an error
+	DELETE: unconnect
+		request body: username1, username2 (order does not matter)
+		response:
+			code 200 if deletion is successful
+			code 403 if the request body in username1 does not match the request session username
+			code 500 if the database encountered an error
+
+/api/user-notif
+	GET: getNotifFromUser
+		request query: username
+		response:
+			the all of the notification from the user
+			code 500 if there is an error in the database
+	POST: createNotifFromUser
+		request body: text, url, username
+		response:
+			a newly created notif from user
+			code 500 if an error is encountered from the database
+
+/api/user-count
+	GET: userCount
+		request: none
+		response:
+			the number of users in the database
+			code 500 if there is an error in the database
+
+/api/joball
+	GET: getJob
+		request: none
+		reponse:
+			all of the jobs in the database
+
+/api/job
+	GET: getJobOne
+		request query: username
+		response:
+			all of the jobs whose username matches username in request query 
+			code 500 if error is encountered in the database
+	POST: createJob
+		request body: name, country, company, username
+		response:
+			the newly created job from the database
+			code 500 if an error is encountered from the database
+	PUT: updateJob
+		request body: username, jobid, description, company, picture, name
+		response:
+			code 403 if the username in request body does not match the username in request session
+			updated job if update is successful
+			code 500 if an error is encountered in the database
+	DELETE: deleteJob
+		request body: jobid, username
+		response:
+			code 200 if the deletion is successful
+			code 403 if the username in request body does not match the username in request session
+			code 500 if an error is found in the database
+
+/api/job-approve
+	POST: approveJob
+		request body: jobid
+		response:
+			code 403 if the request.session.isAdmin is not '1'
+			code 500 if an error is found in the database
+			updated job if successful
+
+/api/job-close
+	POST: closeJob
+		request body: jobid, username
+		response:
+			code 403 if the request body username does not match the session username
+			code 500 if the database returned an error
+			the updated job if successful
+
+/api/notif
+	GET: getNotifs
+		request: none
+		response:
+			a list of notification in json format
+			code 500 if the database returned an error
+
+/api/post
+	GET: getPosts
+		request query: username
+		response:
+			a list of posts from the username in request query
+			code 500 if the error is found in the database
+	POST: createPost
+		request body: username, content
+		reponse:
+			code 403 if the username in request body username is not equal to the session username
