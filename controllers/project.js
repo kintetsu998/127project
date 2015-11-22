@@ -98,8 +98,8 @@ exports.updateProject = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE project SET projectname = ($2), description = ($3), picture = ($4) WHERE projectid=($1)", 
-            [req.body.projectid, req.body.projectname, req.body.description, req.body.picture]);
+        client.query("UPDATE project SET projectname = ($2), description = ($3), picture = ($4), fieldrelated=($5) WHERE projectid=($1)", 
+            [req.body.projectid, req.body.projectname, req.body.description, req.body.picture, req.body.fieldrelated]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * project post where projectid=$1", [req.body.projectid]);

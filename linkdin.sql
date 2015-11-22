@@ -44,7 +44,7 @@ CREATE TABLE job (
     createdat date NOT NULL,
     approvedat date,
     name character varying(30) NOT NULL,
-    fieldofinterestid integer NOT NULL
+    fieldofinterest character varying(20)
 );
 
 
@@ -344,8 +344,8 @@ ALTER TABLE ONLY project ALTER COLUMN projectid SET DEFAULT nextval('project_pro
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY job (jobid, country, description, company, picture, closedat, username, createdat, approvedat, name, fieldofinterestid) FROM stdin;
-39	Philippines	dummy description	ANY TV	\N	2015-11-22	admin	2015-11-22	2015-11-22	PROGAMER!!!!	1
+COPY job (jobid, country, description, company, picture, closedat, username, createdat, approvedat, name, fieldofinterest) FROM stdin;
+39	Philippines	dummy description	ANY TV	\N	2015-11-22	admin	2015-11-22	2015-11-22	PROGAMER!!!!	\N
 \.
 
 
