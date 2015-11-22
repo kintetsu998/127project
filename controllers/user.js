@@ -258,8 +258,9 @@ exports.createUserExperience = function(req, res){
     });
 }
 
-exports.getUserExperience = function(req, res) {
+exports.getAllUserExperience = function(req, res) {
     var results = [];
+
     pg.connect(conString, function (err, client, done) {
         if(err) {
           done();
@@ -267,7 +268,35 @@ exports.getUserExperience = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT * from user_experience where username = $1", [req.query.username]);
+        var query = client.query("SELECT * from user_experience");
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function() {
+            done();
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+};
+
+exports.getUserExperience = function(req, res) {
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT * from user_experience where username=$1", [req.query.username]);
 
         query.on('row', function(row) {
             results.push(row);
