@@ -299,7 +299,8 @@ CREATE TABLE users (
     createdat date NOT NULL,
     country character varying(15) NOT NULL,
     approvedat date,
-    fieldofinterest character varying(20)
+    fieldofinterest character varying(20),
+    company character varying(40)
 );
 
 
@@ -471,10 +472,10 @@ Badboy	BadBoy&Co.	xXxBaDbOyZzZ
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, country, approvedat, fieldofinterest) FROM stdin;
-admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N	\N
-procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL		0	2015-11-15	Philippines	\N	\N
-xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	\N	0	2015-11-22	Philippines	2015-11-22	\N
+COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, country, approvedat, fieldofinterest, company) FROM stdin;
+admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N	\N	\N
+procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL		0	2015-11-15	Philippines	\N	\N	\N
+xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	\N	0	2015-11-22	Philippines	2015-11-22	\N	\N
 \.
 
 
