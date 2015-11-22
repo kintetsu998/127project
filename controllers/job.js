@@ -18,7 +18,7 @@ exports.getJob = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT * FROM JOB join fieldofinterest on job.fieldofinterestid = fieldofinterest.fieldofinterestid;");
+        var query = client.query("SELECT * FROM JOB");
         query.on('row', function(row) {
             results.push(row);
         });
@@ -39,7 +39,7 @@ exports.getJobOne = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT * FROM JOB join fieldofinterest on job.fieldofinterestid = fieldofinterest.fieldofinterestid where username = $1", [req.query.username]);
+        var query = client.query("SELECT * FROM JOB where username = $1", [req.query.username]);
         query.on('row', function(row) {
             results.push(row);
         });
@@ -107,8 +107,8 @@ exports.updateJob = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE job SET name = ($6), description=($2), fieldofinterestid=($3) company=($4), picture=($5) WHERE jobid=($1)", 
-            [req.body.jobid, req.body.description, req.body.fieldofinterestid, req.body.company, req.body.picture, req.body.name]);
+        client.query("UPDATE job SET name = ($6), description=($2), company=($3), picture=($4) WHERE jobid=($1)", 
+            [req.body.jobid, req.body.description, req.body.company, req.body.picture, req.body.name]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * FROM job where jobid=$1", [req.body.jobid]);

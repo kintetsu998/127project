@@ -5,7 +5,6 @@ var job = require('./../controllers/job');
 var notif = require('./../controllers/notification');
 var post = require('./../controllers/post');
 var project = require('./../controllers/project');
-var foi = require('./../controllers/fieldofinterest');
 
 module.exports = function (router) {
 	router.route('/')
@@ -81,12 +80,6 @@ module.exports = function (router) {
 		.post(project.createProject) //body: name, username
 		.put(project.updateProject) //body: projectid, projectname, description, picture
 		.delete(project.deleteProject); //body: projectid
-
-	router.route('/api/foi')
-		.get(foi.getFOI)
-		.post(foi.createFOI) //body: name, picture
-		.put(foi.updateFOI) //body: name, picture, fieldofinterestid
-		.delete(foi.deleteFOI); //body: fieldofinterestid
 
 	router.route('/api/whoami')
 		.get(PageController.whoami);
