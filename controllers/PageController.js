@@ -33,7 +33,7 @@ exports.whoami = function(req, res) {
         return res.status(500).json({ success: false, data: err});
       }
 
-      var query = client.query("SELECT users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, user_experience.title, user_experience.company, user_fieldofinterest.field from users left join user_experience on user_experience.username = users.username left join user_fieldofinterest on user_experience.username = user_fieldofinterest.username where users.username=$1;", [req.session.username]);
+      var query = client.query("SELECT users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, user_experience.title, user_experience.company, users.fieldofinterest from users left join user_experience on user_experience.username = users.username where users.username=$1", [req.session.username]);
       query.on('row', function(row) {
         done();
         return res.json(row);
