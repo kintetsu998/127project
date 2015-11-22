@@ -13,10 +13,6 @@ pg.connect(conString, function(err, client, done) {
 exports.getPosts = function(req, res) {
     var results = [];
 
-    if(!username in req.session){
-        return res.status(403).json({success: false})
-    }
-
     pg.connect(conString, function (err, client, done) {
         if(err) {
           done();
@@ -224,10 +220,6 @@ exports.unlike = function(req, res) {
 
 exports.getLikes = function(req, res) {
 	 var results = [];
-
-    if(username in req.session){
-        return res.status(403).json({success: false})
-    }
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {

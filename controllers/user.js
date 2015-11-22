@@ -20,7 +20,7 @@ exports.getUsers = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var columns = "users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country";
+        var columns = "users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, users.fieldofinterest";
 
         var query = client.query("SELECT " + columns + " from users");
         query.on('row', function(row) {
@@ -325,137 +325,12 @@ exports.deleteUserExperience = function(req, res) {
         }
 
         // SQL Query > Delete Data
-        var query = client.query("DELETE FROM user_fieldofinterest WHERE company=($1) and title = ($2)", [req.body.company, req.body.title]);
+        var query = client.query("DELETE FROM user_experience WHERE company=($1) and title = ($2)", [req.body.company, req.body.title]);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
             results.push(row);
         });
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return res.status(200).json({success: true});
-        });
-
-        query.on('error', function() {
-            done();
-            return res.status(500).json({ success: false, data: err});
-        });
-    });
-}
-
-exports.getUserFieldOfInterest = function(req, res) {
-    var results = [];
-    pg.connect(conString, function (err, client, done) {
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        var query = client.query("SELECT * from user_fieldofinterest join fieldofinterest on user_fieldofinterest.fieldofinterestid = fieldofinterest.fieldofinterestid where username = $1", [req.query.username]);
-        
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-        query.on('end', function() {
-            done();
-            return res.json(results);
-        });
-
-        query.on('error', function() {
-            done();
-            return res.status(500).json({ success: false, data: err});
-        });
-    });
-};
-
-exports.createUserFieldOfInterest = function(req, res){
-    var results = [];
-
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
-
-    // Get a Postgres client from the connection pool
-    pg.connect(conString, function(err, client, done) {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        // SQL Query > Insert Data
-        var query = client.query("INSERT INTO user_fieldofinterest(fieldofinterestid, username) values($1, $2)", [req.body.fieldofinterestid, req.body.username]);
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return res.status(200).json({success: true});
-        });
-
-        query.on('error', function() {
-            done();
-            return res.status(500).json({ success: false, data: err});
-        });
-    });
-}
-
-exports.deleteUserFieldOfInterest = function(req, res) {
-
-    var results = [];
-
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
-
-    // Get a Postgres client from the connection pool
-    pg.connect(conString, function(err, client, done) {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        // SQL Query > Delete Data
-        var query = client.query("DELETE FROM user_fieldofinterest WHERE username=($1) and fieldofinterestid = ($2)", [req.body.username, req.body.fieldofinterestid]);
-
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-            return res.status(200).json({success: true});
-        });
-
-        query.on('error', function() {
-            done();
-            return res.status(500).json({ success: false, data: err});
-        });
-    });
-}
-
-exports.updateUserFieldOfInterest = function(req, res){
-    var results = [];
-
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
-
-    // Get a Postgres client from the connection pool
-    pg.connect(conString, function(err, client, done) {
-        // Handle connection errors
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        // SQL Query > Insert Data
-        var query = client.query("UPDATE user_fieldofinterest SET fieldofinterestid=($1) WHERE fieldofinterestid=($2)", 
-            [req.body.fieldofinterestid, req.body.oldfieldofinterestid]);
 
         // After all data is returned, close connection and return results
         query.on('end', function() {
@@ -633,7 +508,7 @@ exports.showConnections = function(req, res){
 
         query.on('end', function() {
             done();
-            return res.status(200).json({ success: true});
+            return res.json(results);
         });
 
         query.on('error', function() {

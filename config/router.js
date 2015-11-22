@@ -26,14 +26,8 @@ module.exports = function (router) {
 		.put(user.updateUserExperience) //body: username, title, company, oldCompany, oldTitle
 		.delete(user.deleteUserExperience); //body: username, company, title
 
-	router.route('/api/users/interest')
-		.get(user.getUserFieldOfInterest) //query: username
-		.post(user.createUserFieldOfInterest) //body: fieldofinterestid, username
-		.put(user.updateUserFieldOfInterest) //body: fieldofinterestid, oldfieldofinterestid
-		.delete(user.deleteUserFieldOfInterest); //body: username, fieldofinterestid
-
 	router.route('/api/users/connection')
-		.get(user.showConnections) //body: username
+		.get(user.showConnections) //query: username
 		.post(user.connectUser) //body: username1, username2
 		.delete(user.unconnect); //body: username1, username2
 
@@ -87,12 +81,6 @@ module.exports = function (router) {
 		.post(project.createProject) //body: name, username
 		.put(project.updateProject) //body: projectid, projectname, description, picture
 		.delete(project.deleteProject); //body: projectid
-
-	router.route('/api/project/fieldrelated')
-		.get(project.getProjectFieldRelated) //query: projectid
-		.post(project.createProjectFieldRelated) //body: fieldofinterestid, projectid
-		.put(project.updateProjectFieldRelated) //body: projectid, fieldofinterestid, oldfieldofinterestid
-		.delete(project.deleteProjectFieldRelated); //body: fieldofinterestid, projectid
 
 	router.route('/api/foi')
 		.get(foi.getFOI)
