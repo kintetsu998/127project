@@ -1,0 +1,17 @@
+/api/users
+    GET: getUsers
+        request: none
+        response: returns all data of the users in the database without the password
+    POST: createUser
+        request body: username, password, fname, mname, lname, isadmin, country
+        response: returns a new instance of user that is already saved in the database
+    PUT: updateUser
+        request body: username, fname, mname, lname, occupation, college, degree, picture, country
+        reponse: updated user data whose username is equal to the request body's username
+    DELETE: deleteUser
+        request body: username
+        response: 
+            returns code 403 if the username in session does not match the username in request body
+            returns code 200 if the deletion is success, else returns a code 500
+
+/api/users/:username

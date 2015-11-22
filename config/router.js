@@ -16,6 +16,9 @@ module.exports = function (router) {
 		.put(user.updateUser) //body: username, password, fname, mname, lname, occupation, college, degree, picture country
 		.delete(user.deleteUser); //body: username
 
+	router.route('/api/users/:username')
+		.get(user.getOneUser); //params: username
+
 	router.route('/api/users/approve/')
 		.post(user.approveUser); //body: username
 

@@ -39,6 +39,34 @@ exports.getUsers = function(req, res) {
     });
 };
 
+exports.getOneUser = function(req, res) {
+    var results = [];
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var columns = "users.username, users.fname, users.mname, users.lname, users.occupation, users.college, users.degree, users.picture, users.isadmin, users.country, users.fieldofinterest";
+
+        var query = client.query("SELECT " + columns + " from users where username=$1", [req.params.username]);
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function() {
+            done();
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+};
+
 exports.createUser = function(req, res) {
 
     var results = [];
