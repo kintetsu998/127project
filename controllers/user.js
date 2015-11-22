@@ -32,7 +32,7 @@ exports.getUsers = function(req, res) {
             return res.json(results);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
             return res.status(500).json({ success: false, data: err});
         });
@@ -53,7 +53,7 @@ exports.getOneUser = function(req, res) {
             return res.json(row);
         });
 
-        query.on('error', function() {
+        query.on('error', function(err) {
             done();
             return res.status(500).json({ success: false, data: err});
         });
@@ -117,7 +117,7 @@ exports.updateUser = function(req, res) {
         }
 
         // SQL Query > Update Data
-        var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9), company=($10) WHERE username=($1)", 
+        var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9), company=($10) WHERE username=($1)",
             [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.body.picture, req.body.country, req.body.company]);
 
         update.on('error', function() {

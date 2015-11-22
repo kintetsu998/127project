@@ -18,7 +18,11 @@ module.exports = React.createClass({
           <div style={{clear:'both'}}></div>
           <span className="experiences">Experiences:</span>
           <ul>
-            <li>Cashier at McDonalds</li>
+            {this.props.experiences.map((experience)=>{
+              return (
+                <li>{experience.title} at {experience.company}</li>
+              );
+            })}
           </ul>
         </div>
       </div>

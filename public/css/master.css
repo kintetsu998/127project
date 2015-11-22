@@ -142,6 +142,8 @@ html,body {
   position: absolute;
   color: gray;
   left: -400%;
+  z-index: 9999;
+  display: none;
 }
 
 #notifications-pane .collection .collection-item.avatar {

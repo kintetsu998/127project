@@ -6,7 +6,9 @@ var ProfileMiddle = require('./ProfileMiddle.jsx');
 
 module.exports = React.createClass({
   getInitialState: function(){
-    return {};
+    return {
+      experiences: []
+    };
   },
   componentDidMount(){
     var self = this;
@@ -15,8 +17,23 @@ module.exports = React.createClass({
       'url': '/api/users/' + this.props.params.username,
       'method': 'GET',
       'success'(data){
-        console.log(data);
         self.setState(data);
+      },
+      'error'(err){
+        console.error(err);
+      }
+    });
+
+    // experiences
+    $.ajax({
+      'url': '/api/user-experience?username=' + this.props.params.username,
+      'method': 'GET',
+      'success'(data){
+        self.setState({
+          experiences: data
+        });
+
+        console.log(self.state);
       },
       'error'(err){
         console.error(err);
@@ -36,6 +53,7 @@ module.exports = React.createClass({
               college={this.state.college}
               country={this.state.country}
               img={this.state.picture}
+              experiences={this.state.experiences}
             />
           </div>
         </div>

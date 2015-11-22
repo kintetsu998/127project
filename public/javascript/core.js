@@ -520,7 +520,7 @@ module.exports = React.createClass({
                 { id: 'notifications-pane' },
                 React.createElement(
                   'ul',
-                  { className: 'collection' },
+                  { className: 'collection z-depth-3' },
                   React.createElement(
                     'li',
                     { className: 'collection-item avatar valign-wrapper ' },
@@ -730,7 +730,9 @@ module.exports = React.createClass({
   displayName: 'exports',
 
   getInitialState: function () {
-    return {};
+    return {
+      experiences: []
+    };
   },
   componentDidMount() {
     var self = this;
@@ -739,8 +741,23 @@ module.exports = React.createClass({
       'url': '/api/users/' + this.props.params.username,
       'method': 'GET',
       'success'(data) {
-        console.log(data);
         self.setState(data);
+      },
+      'error'(err) {
+        console.error(err);
+      }
+    });
+
+    // experiences
+    $.ajax({
+      'url': '/api/user-experience?username=' + this.props.params.username,
+      'method': 'GET',
+      'success'(data) {
+        self.setState({
+          experiences: data
+        });
+
+        console.log(self.state);
       },
       'error'(err) {
         console.error(err);
@@ -764,7 +781,8 @@ module.exports = React.createClass({
             occupation: this.state.occupation,
             college: this.state.college,
             country: this.state.country,
-            img: this.state.picture
+            img: this.state.picture,
+            experiences: this.state.experiences
           })
         )
       ),
@@ -864,11 +882,15 @@ module.exports = React.createClass({
         React.createElement(
           "ul",
           null,
-          React.createElement(
-            "li",
-            null,
-            "Cashier at McDonalds"
-          )
+          this.props.experiences.map(experience => {
+            return React.createElement(
+              "li",
+              null,
+              experience.title,
+              " at ",
+              experience.company
+            );
+          })
         )
       )
     );

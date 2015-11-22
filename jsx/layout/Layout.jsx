@@ -34,8 +34,8 @@ module.exports = React.createClass({
                 <div id="notification">
                   <a href="#"><i className="material-icons">notifications</i></a>
                 </div>
-                <div id="notifications-pane">
-                   <ul className="collection">
+                <div id="notifications-pane" >
+                   <ul className="collection z-depth-3">
                      <li className="collection-item avatar valign-wrapper ">
                        <img src="/img/003.jpg" alt="" className="circle"/>
                        <p>First Line</p>
