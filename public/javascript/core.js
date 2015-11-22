@@ -248,7 +248,7 @@ module.exports = React.createClass({
     var self = this;
 
     $.ajax({
-      url: '/api/job',
+      url: '/api/joball',
       method: 'GET',
       success: function (jobs) {
         self.setState({
@@ -498,6 +498,83 @@ module.exports = React.createClass({
               'a',
               { href: '#', className: 'btn waves-effect waves-light blue', onClick: this.logout },
               'Log out'
+            ),
+            React.createElement(
+              'li',
+              { id: 'notification-area' },
+              React.createElement(
+                'div',
+                { id: 'notification' },
+                React.createElement(
+                  'a',
+                  { href: '#' },
+                  React.createElement(
+                    'i',
+                    { className: 'material-icons' },
+                    'notifications'
+                  )
+                )
+              ),
+              React.createElement(
+                'div',
+                { id: 'notifications-pane' },
+                React.createElement(
+                  'ul',
+                  { className: 'collection' },
+                  React.createElement(
+                    'li',
+                    { className: 'collection-item avatar valign-wrapper ' },
+                    React.createElement('img', { src: '/img/003.jpg', alt: '', className: 'circle' }),
+                    React.createElement(
+                      'p',
+                      null,
+                      'First Line'
+                    )
+                  ),
+                  React.createElement(
+                    'li',
+                    { className: 'collection-item avatar valign-wrapper ' },
+                    React.createElement(
+                      'i',
+                      { className: 'material-icons circle' },
+                      'folder'
+                    ),
+                    React.createElement(
+                      'p',
+                      null,
+                      'First Line'
+                    )
+                  ),
+                  React.createElement(
+                    'li',
+                    { className: 'collection-item avatar valign-wrapper ' },
+                    React.createElement(
+                      'i',
+                      { className: 'material-icons circle green' },
+                      'insert_chart'
+                    ),
+                    React.createElement(
+                      'p',
+                      null,
+                      'First Line'
+                    )
+                  ),
+                  React.createElement(
+                    'li',
+                    { className: 'collection-item avatar valign-wrapper ' },
+                    React.createElement(
+                      'i',
+                      { className: 'material-icons circle red' },
+                      'play_arrow'
+                    ),
+                    React.createElement(
+                      'p',
+                      null,
+                      'First Line'
+                    )
+                  )
+                )
+              )
             )
           ),
           React.createElement(
@@ -625,7 +702,8 @@ module.exports = React.createClass({
         React.createElement(
           "span",
           { className: "bold" },
-          "Interested in:"
+          "Interested in: ",
+          this.props.interest
         )
       ),
       React.createElement(
@@ -661,6 +739,7 @@ module.exports = React.createClass({
       'url': '/api/users/' + this.props.params.username,
       'method': 'GET',
       'success'(data) {
+        console.log(data);
         self.setState(data);
       },
       'error'(err) {
@@ -695,7 +774,9 @@ module.exports = React.createClass({
         React.createElement(
           'div',
           { className: 'col s12 card-panel profile-middle' },
-          React.createElement(ProfileMiddle, null)
+          React.createElement(ProfileMiddle, {
+            interest: this.state.fieldofinterest
+          })
         )
       ),
       React.createElement(

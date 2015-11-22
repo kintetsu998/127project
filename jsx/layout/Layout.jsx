@@ -30,6 +30,31 @@ module.exports = React.createClass({
 
             <ul className="right tab-element">
               <a href="#" className="btn waves-effect waves-light blue" onClick={this.logout}>Log out</a>
+              <li id="notification-area">
+                <div id="notification">
+                  <a href="#"><i className="material-icons">notifications</i></a>
+                </div>
+                <div id="notifications-pane">
+                   <ul className="collection">
+                     <li className="collection-item avatar valign-wrapper ">
+                       <img src="/img/003.jpg" alt="" className="circle"/>
+                       <p>First Line</p>
+                     </li>
+                     <li className="collection-item avatar valign-wrapper ">
+                       <i className="material-icons circle">folder</i>
+                       <p>First Line</p>
+                     </li>
+                     <li className="collection-item avatar valign-wrapper ">
+                       <i className="material-icons circle green">insert_chart</i>
+                       <p>First Line</p>
+                     </li>
+                     <li className="collection-item avatar valign-wrapper ">
+                       <i className="material-icons circle red">play_arrow</i>
+                       <p>First Line</p>
+                     </li>
+                   </ul>
+                </div>
+              </li>
             </ul>
             <div className="right tab-element tab-input hide-on-med-and-down">
               <form onSubmit={this.search}>

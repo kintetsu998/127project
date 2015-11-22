@@ -27,7 +27,6 @@ body {
 	font-size: 1em;
 	font-family: 'Roboto', Arial, sans-serif;
 	overflow: hidden;
-	overflow-y: scroll;
 	min-height: 590px;
 }
 

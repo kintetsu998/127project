@@ -12,7 +12,7 @@ module.exports = React.createClass({
     var self = this;
 
     $.ajax({
-      url: '/api/job',
+      url: '/api/joball',
       method: 'GET',
       success: function(jobs){
         self.setState({

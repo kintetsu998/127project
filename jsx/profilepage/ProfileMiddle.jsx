@@ -5,7 +5,7 @@ module.exports = React.createClass({
     return (
       <div className="">
         <div className="col s6">
-          <span className="bold">Interested in:</span>
+          <span className="bold">Interested in: {this.props.interest}</span>
         </div>
         <div className="col s6">
           <span className="bold">Connections (62):</span>

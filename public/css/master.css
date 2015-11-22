@@ -129,6 +129,26 @@ html,body {
   margin-bottom: 5px;
 }
 
+#notification-area {
+  margin: 0 15px;
+  position: relative;
+}
+
+#notification {
+  padding: 0 5px;
+}
+
+#notifications-pane {
+  position: absolute;
+  color: gray;
+  left: -400%;
+}
+
+#notifications-pane .collection .collection-item.avatar {
+  min-height: 62px;
+  min-width: 500px;
+}
+
 /* label underline focus color */
 .fade {
   border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;

@@ -40,7 +40,6 @@ exports.getUsers = function(req, res) {
 };
 
 exports.getOneUser = function(req, res) {
-    var results = [];
     pg.connect(conString, function (err, client, done) {
         if(err) {
           done();
@@ -52,12 +51,8 @@ exports.getOneUser = function(req, res) {
 
         var query = client.query("SELECT " + columns + " from users where username=$1", [req.params.username]);
         query.on('row', function(row) {
-            results.push(row);
-        });
-
-        query.on('end', function() {
             done();
-            return res.json(results);
+            return res.json(row);
         });
 
         query.on('error', function() {
@@ -81,7 +76,7 @@ exports.createUser = function(req, res) {
         }
 
         // SQL Query > Insert Data
-        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country) values($1, $2, $3, $4, $5, $6, now(), $7)", 
+        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country) values($1, $2, $3, $4, $5, $6, now(), $7)",
             [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country]);
 
         create.on('error', function() {
@@ -124,7 +119,7 @@ exports.updateUser = function(req, res) {
         }
 
         // SQL Query > Update Data
-        var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9) WHERE username=($1)", 
+        var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9) WHERE username=($1)",
             [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.body.picture, req.body.country]);
 
         update.on('error', function() {
@@ -204,7 +199,7 @@ exports.approveUser = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE users SET approvedat=now() WHERE username=($1)", 
+        client.query("UPDATE users SET approvedat=now() WHERE username=($1)",
             [req.body.username]);
 
         // SQL Query > Select Data
@@ -448,7 +443,7 @@ exports.approveConnectUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("UPDATE user_connection set approvedat = now() where username1=$1 username2=$2", 
+        var query = client.query("UPDATE user_connection set approvedat = now() where username1=$1 username2=$2",
             [req.body.username1, req.body.username2], function (err, qry){
                 var query2 = client.query("UPDATE user_connection set approvedat = now() where username1=$2 username2=$1", [req.body.username1, req.body.username2]);
 

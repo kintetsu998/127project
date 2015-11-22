@@ -15,6 +15,7 @@ module.exports = React.createClass({
       'url': '/api/users/' + this.props.params.username,
       'method': 'GET',
       'success'(data){
+        console.log(data);
         self.setState(data);
       },
       'error'(err){
@@ -40,7 +41,9 @@ module.exports = React.createClass({
         </div>
         <div className="row small-margin">
           <div className="col s12 card-panel profile-middle">
-            <ProfileMiddle/>
+            <ProfileMiddle
+              interest={this.state.fieldofinterest}
+            />
           </div>
         </div>
         <div className="row small-margin">
