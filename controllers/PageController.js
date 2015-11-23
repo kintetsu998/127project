@@ -20,6 +20,10 @@ exports.loginPage = function(req, res, next){
 	res.render("login.html");
 };
 
+exports.uploadPage = function(req, res, next){
+    res.render("test-upload.html");
+};
+
 exports.createPage = function(req, res, next){
 	res.render("create.html");
 };

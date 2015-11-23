@@ -77,8 +77,8 @@ exports.createJob = function(req, res) {
         }
 
         // SQL Query > Insert Data
-        client.query("INSERT INTO JOB(name, country, company, username, createdat) values($1, $2, $3, $4, now())", 
-            [req.body.name, req.body.country, req.body.company, req.body.username]);
+        client.query("INSERT INTO JOB(name, country, company, username, createdat, picture) values($1, $2, $3, $4, now(), $5)", 
+            [req.body.name, req.body.country, req.body.company, req.body.username, req.file.path]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * from job where jobid=currval('job_jobid_seq')");
@@ -120,8 +120,8 @@ exports.updateJob = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE job SET name = ($6), description=($2), company=($3), picture=($4) WHERE jobid=($1)", 
-            [req.body.jobid, req.body.description, req.body.company, req.body.picture, req.body.name]);
+        client.query("UPDATE job SET name = ($5), description=($2), company=($3), picture=($4) WHERE jobid=($1)", 
+            [req.body.jobid, req.body.description, req.body.company, req.file.path, req.body.name]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * FROM job where jobid=$1", [req.body.jobid]);

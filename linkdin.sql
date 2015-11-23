@@ -38,13 +38,13 @@ CREATE TABLE job (
     country character varying(15) NOT NULL,
     description text,
     company character varying(30) NOT NULL,
-    picture character varying(40),
     closedat date,
     username character varying(20) NOT NULL,
     createdat date NOT NULL,
     approvedat date,
     name character varying(30) NOT NULL,
-    fieldofinterest character varying(20)
+    fieldofinterest character varying(20),
+    picture text
 );
 
 
@@ -224,10 +224,10 @@ CREATE TABLE project (
     projectid integer NOT NULL,
     projectname character varying(30) NOT NULL,
     description text,
-    picture character varying(40),
     createdat date NOT NULL,
     username character varying(20) NOT NULL,
-    fieldrelated character varying(20)
+    fieldrelated character varying(20),
+    picture text
 );
 
 
@@ -294,13 +294,13 @@ CREATE TABLE users (
     occupation character varying(20),
     college character varying(40),
     degree character varying(40),
-    picture character varying(40),
     isadmin bit(1) NOT NULL,
     createdat date NOT NULL,
     country character varying(15) NOT NULL,
     approvedat date,
     fieldofinterest character varying(20),
-    company character varying(40)
+    company character varying(40),
+    picture text
 );
 
 
@@ -345,8 +345,8 @@ ALTER TABLE ONLY project ALTER COLUMN projectid SET DEFAULT nextval('project_pro
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY job (jobid, country, description, company, picture, closedat, username, createdat, approvedat, name, fieldofinterest) FROM stdin;
-39	Philippines	dummy description	ANY TV	\N	2015-11-22	admin	2015-11-22	2015-11-22	PROGAMER!!!!	\N
+COPY job (jobid, country, description, company, closedat, username, createdat, approvedat, name, fieldofinterest, picture) FROM stdin;
+39	Philippines	dummy description	ANY TV	2015-11-22	admin	2015-11-22	2015-11-22	PROGAMER!!!!	\N	\N
 \.
 
 
@@ -437,8 +437,8 @@ SELECT pg_catalog.setval('post_postid_seq', 1, true);
 -- Data for Name: project; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY project (projectid, projectname, description, picture, createdat, username, fieldrelated) FROM stdin;
-1	OPLAN127	sample description should be here	\N	2015-11-22	procopio	\N
+COPY project (projectid, projectname, description, createdat, username, fieldrelated, picture) FROM stdin;
+1	OPLAN127	sample description should be here	2015-11-22	procopio	\N	\N
 \.
 
 
@@ -474,11 +474,11 @@ Badboy	BadBoy&Co.	xXxBaDbOyZzZ
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY users (username, password, fname, mname, lname, occupation, college, degree, picture, isadmin, createdat, country, approvedat, fieldofinterest, company) FROM stdin;
-admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	\N	1	2015-10-29	Philippines	\N	\N	\N
-procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL		0	2015-11-15	Philippines	\N	\N	\N
-xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	\N	0	2015-11-22	Philippines	2015-11-22	\N	\N
-anon12345	nooneknows	Hidden	Anon	Anonymous	administrator	UP-ish	BS Vulcanizing	\N	1	2015-11-22	Philippines	\N	Gambling	Anonymity Merchandise
+COPY users (username, password, fname, mname, lname, occupation, college, degree, isadmin, createdat, country, approvedat, fieldofinterest, company, picture) FROM stdin;
+admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	1	2015-10-29	Philippines	\N	\N	\N	\N
+procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL	0	2015-11-15	Philippines	\N	\N	\N	\N
+xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	0	2015-11-22	Philippines	2015-11-22	\N	\N	\N
+anon12345	nooneknows	Hidden	Anon	Anonymous	administrator	UP-ish	BS Vulcanizing	1	2015-11-22	Philippines	\N	Gambling	Anonymity Merchandise	\N
 \.
 
 

@@ -76,8 +76,8 @@ exports.createUser = function(req, res) {
         }
 
         // SQL Query > Insert Data
-        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12)", 
-            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest]);
+        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest, picture) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12, $13)", 
+            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, req.file.path]);
 
         create.on('error', function(err) {
             done();
@@ -112,9 +112,7 @@ exports.updateUser = function(req, res) {
 
     var results = [];
 
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
+    Console.log("Update User: " + req.body.username);
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
@@ -127,10 +125,11 @@ exports.updateUser = function(req, res) {
 
         // SQL Query > Update Data
         var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9), company=($10) WHERE username=($1)",
-            [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.body.picture, req.body.country, req.body.company]);
+            [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.file.path, req.body.country, req.body.company]);
 
-        update.on('error', function() {
+        update.on('error', function(err) {
             done();
+            console.log(err);
             return res.status(500).json({ success: false, data: err});
         });
 
