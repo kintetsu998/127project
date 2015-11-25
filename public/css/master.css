@@ -129,13 +129,13 @@ html,body {
   margin-bottom: 5px;
 }
 
-#notification-area {
-  margin: 0 15px;
+.navbar-item-area {
+  margin-right: 5px;
   position: relative;
 }
 
-#notification {
-  padding: 0 5px;
+.navbar-item-area > .navbar-item {
+  padding: 0 2px;
 }
 
 #notifications-pane {
@@ -143,12 +143,26 @@ html,body {
   color: gray;
   left: -400%;
   z-index: 9999;
-  display: none;
 }
 
 #notifications-pane .collection .collection-item.avatar {
   min-height: 62px;
   min-width: 500px;
+}
+
+.collection.small .collection-item.avatar {
+  min-height: 62px;
+  min-width: 500px;
+}
+
+.subtitle {
+  font-size: 75%;
+  color: grey;
+}
+
+.statistic-text {
+  font-size: 250%;
+  font-weight: 600;
 }
 
 /* label underline focus color */

@@ -3,6 +3,7 @@ var Link = require('react-router').Link;
 
 var NewsFeed = require('./NewsFeed.jsx');
 var HotJobs = require('./HotJobs.jsx');
+var ControlPanel = require('./ControlPanel.jsx');
 
 module.exports = React.createClass({
   getInitialState(){
@@ -46,6 +47,7 @@ module.exports = React.createClass({
               </div>
             </div>
           </Link>
+          <ControlPanel/>
           <HotJobs/>
         </div>
       </div>

@@ -1,8 +1,9 @@
-var React = require('react');
+const React = require('react');
 
-var Post = require('../post/Post.jsx');
-var ProfileTop = require('./ProfileTop.jsx');
-var ProfileMiddle = require('./ProfileMiddle.jsx');
+const Post = require('../post/Post.jsx');
+const ProfileTop = require('./ProfileTop.jsx');
+const ProfileMiddle = require('./ProfileMiddle.jsx');
+const ControlPanel = require('./ControlPanel.jsx');
 
 module.exports = React.createClass({
   getInitialState: function(){
@@ -56,6 +57,9 @@ module.exports = React.createClass({
               experiences={this.state.experiences}
             />
           </div>
+        </div>
+        <div className="row small-margin">
+          <ControlPanel/>
         </div>
         <div className="row small-margin">
           <div className="col s12 card-panel profile-middle">

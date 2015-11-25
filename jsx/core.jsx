@@ -1,20 +1,21 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var ReactRouter = require('react-router');
-var Router = ReactRouter.Router;
-var Route = ReactRouter.Route;
-var RouteHandler = ReactRouter.RouteHandler;
-var IndexRoute = ReactRouter.IndexRoute;
-var createBrowserHistory = require('history/lib/createBrowserHistory');
-var history = createBrowserHistory({
+const React = require('react');
+const ReactDOM = require('react-dom');
+const ReactRouter = require('react-router');
+const Router = ReactRouter.Router;
+const Route = ReactRouter.Route;
+const RouteHandler = ReactRouter.RouteHandler;
+const IndexRoute = ReactRouter.IndexRoute;
+const createBrowserHistory = require('history/lib/createBrowserHistory');
+const history = createBrowserHistory({
   queryString: 'cats'
 });
 
 // import classes
-var Layout = require('./layout/Layout.jsx');
-var Homepage = require('./homepage/HomePage.jsx');
-var ProfilePage = require('./profilepage/ProfilePage.jsx');
-var JobPage = require('./jobpage/JobPage.jsx');
+const Layout = require('./layout/Layout.jsx');
+const Homepage = require('./homepage/HomePage.jsx');
+const ProfilePage = require('./profilepage/ProfilePage.jsx');
+const JobPage = require('./jobpage/JobPage.jsx');
+const AdminPage = require('./adminpage/AdminPage.jsx');
 
 ReactDOM.render((
     <Router history={history}>
@@ -22,6 +23,7 @@ ReactDOM.render((
         <IndexRoute component={Homepage}/>
         <Route path="profile/:username" component={ProfilePage}/>
         <Route path="job/:id" component={JobPage}/>
+        <Route path="admin" component={AdminPage}></Route>
       </Route>
     </Router>
 ), document.getElementById('app'));

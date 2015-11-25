@@ -1,8 +1,20 @@
 var React = require('react');
 var Link = require('react-router').Link;
 
+const Notifications = require('./Notifications.jsx');
+
 module.exports = React.createClass({
-  search: function(e){
+  getInitialState(){
+    return {
+      notifications: false
+    };
+  },
+  toggleNotifications(){
+    this.setState({
+      notifications: this.state.notifications? false: true
+    });
+  },
+  search(e){
     e.preventDefault();
 
     window.location = "homepage#/job/"+$('#search').val();
@@ -30,30 +42,16 @@ module.exports = React.createClass({
 
             <ul className="right tab-element">
               <a href="#" className="btn waves-effect waves-light blue" onClick={this.logout}>Log out</a>
-              <li id="notification-area">
-                <div id="notification">
-                  <a href="#"><i className="material-icons">notifications</i></a>
+              <li className="navbar-item-area">
+                <div className="navbar-item">
+                  <Link to="/admin"><i className="material-icons">assignment_ind</i></Link>
                 </div>
-                <div id="notifications-pane" >
-                   <ul className="collection z-depth-3">
-                     <li className="collection-item avatar valign-wrapper ">
-                       <img src="/img/003.jpg" alt="" className="circle"/>
-                       <p>First Line</p>
-                     </li>
-                     <li className="collection-item avatar valign-wrapper ">
-                       <i className="material-icons circle">folder</i>
-                       <p>First Line</p>
-                     </li>
-                     <li className="collection-item avatar valign-wrapper ">
-                       <i className="material-icons circle green">insert_chart</i>
-                       <p>First Line</p>
-                     </li>
-                     <li className="collection-item avatar valign-wrapper ">
-                       <i className="material-icons circle red">play_arrow</i>
-                       <p>First Line</p>
-                     </li>
-                   </ul>
+              </li>
+              <li className="navbar-item-area">
+                <div className="navbar-item">
+                  <a href="#" onClick={this.toggleNotifications}><i className="material-icons">notifications</i></a>
                 </div>
+                {this.state.notifications? <Notifications/>:''}
               </li>
             </ul>
             <div className="right tab-element tab-input hide-on-med-and-down">
