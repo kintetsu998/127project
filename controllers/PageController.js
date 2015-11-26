@@ -28,8 +28,17 @@ exports.createPage = function(req, res, next){
 	res.render("create.html");
 };
 
+exports.successPage = function(req, res, next){
+	res.render("success.html");
+};
+
 exports.homepage = function (req, res, next){
-	res.render('homepage.html');
+  if(req.session.username){
+    res.render('homepage.html');
+  }
+  else{
+    return next();
+  }
 };
 
 exports.whoami = function(req, res) {

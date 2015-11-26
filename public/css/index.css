@@ -1,6 +1,7 @@
 html,body {
   margin: 0;
   background-color: #5a83ff;
+  overflow: auto !important;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -201,4 +202,15 @@ footer.page-footer {
 .signup-field {
   color: white;
   font-size: 250%;
+}
+
+.exp-field {
+  width: 300px !important;
+  font-size: 90% !important;
+  display: inline !important;
+}
+
+#add-exp {
+  color: white !important;
+  margin-top: 40px;
 }

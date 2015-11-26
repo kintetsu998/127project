@@ -1,5 +1,6 @@
 //connecting to postgre
 var pg = require('pg');
+var async = require('async');
 var c = require('../config/config.js');
 var conString = "postgres://" + c.username +":" + c.password + "@localhost/" + c.database + "";
 
@@ -92,11 +93,14 @@ exports.getOneUser = function(req, res) {
 exports.createUser = function(req, res) {
 
     var results = [];
-    var path = (typeof req.file != "undefined")? req.file.path: null;
+    var path = (typeof req.file != "undefined")? '/' + req.file.path.substring(7): null;
 
     if(req.body.password == ""){
         return res.status(404).json({ succes: false, msg: "Password cannot be null!"});
     }
+
+    // serialize experience data
+    req.body.experiences = JSON.parse(req.body.experiences);
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
@@ -109,7 +113,7 @@ exports.createUser = function(req, res) {
 
         // SQL Query > Insert Data
         var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest, picture) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12, $13)",
-            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, path]);
+            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, 0, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, path]);
 
         create.on('error', function(err) {
             done();
@@ -118,24 +122,34 @@ exports.createUser = function(req, res) {
         });
 
         create.on('end', function(){
-            var query = client.query("SELECT * from users where username=$1", [req.body.username]);
+            // add experiences
+            async.each(req.body.experiences,
+              function(experience, callback){
+                // SQL Query > Insert Data
+                client.query("INSERT INTO user_experience(title, company, username) values($1, $2, $3)", [experience.occupation, experience.company, req.body.username]);
 
-            // Stream results back one row at a time
-            query.on('row', function(row) {
-                results.push(row);
-            });
+                callback(null);
+              },
+              function(err){
+                var query = client.query("SELECT * from users where username=$1", [req.body.username]);
 
-            // After all data is returned, close connection and return results
-            query.on('end', function() {
-                done();
-                return res.json(results);
-            });
+                // Stream results back one row at a time
+                query.on('row', function(row) {
+                    results.push(row);
+                });
 
-            query.on('error', function(err) {
-                done();
-                console.log(err);
-                return res.status(500).json({ success: false, data: err});
-            });
+                // After all data is returned, close connection and return results
+                query.on('end', function() {
+                    done();
+                    return res.json(results);
+                });
+
+                query.on('error', function(err) {
+                    done();
+                    console.log(err);
+                    return res.status(500).json({ success: false, data: err});
+                });
+              });
         });
     });
 }
@@ -145,7 +159,7 @@ exports.updateUser = function(req, res) {
     var results = [];
     var path = (typeof req.file != "undefined")? req.file.path: null;
 
-    Console.log("Update User: " + req.body.username);
+    console.log("Update User: " + req.body.username);
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {

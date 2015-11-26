@@ -17,9 +17,13 @@ module.exports = React.createClass({
           <div className="col s6">
             <p>Lives in {this.props.country}</p>
           </div>
-          <div className="col s6">
-            {/*graduated at here*/}
-          </div>
+          {this.props.college?
+            <div className="col s6">
+              <span>Graduated at {this.props.college}</span>
+            </div>
+            :''
+          }
+
           <div style={{clear:'both'}}></div>
           <span className="experiences">Experiences:</span>
           {this.props.experiences.length > 0?

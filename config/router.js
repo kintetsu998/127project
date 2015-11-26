@@ -12,7 +12,7 @@ var multer = require('multer');
 var path = require('path');
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) { //destination folder
-		cb(null, './uploads/')
+		cb(null, './public/uploads/')
 	},
 	filename: function (req, file, cb) {
 		crypto.pseudoRandomBytes(16, function (err, raw) {
@@ -154,6 +154,8 @@ module.exports = function (router) {
 	router.route('/upload/') //test upload for user
 		.get(PageController.uploadPage);
 
+	router.route('/success') //test upload for user
+		.get(PageController.successPage);
 
 	router.route('/*')
 		.get(PageController.homepage);

@@ -28,43 +28,43 @@
 					<ol class="fs-fields">
             <li>
 							<label class="fs-field-label fs-anim-upper" for="username">What's your username?</label>
-							<input class="fs-anim-lower" id="username" type="text" placeholder="Amazing username" required/>
+							<input class="fs-anim-lower" id="username" type="text" name="username" placeholder="Amazing username" required value="tricycle"/>
 						</li>
 						<li>
 							<label class="fs-field-label fs-anim-upper" for="password" data-info="Be sure to think of a strong password!">What's your password?</label>
-							<input class="fs-anim-lower" id="password" type="password" placeholder="Some super strong password" required/>
+							<input class="fs-anim-lower" id="password" type="password" name="password" placeholder="Some super strong password" required value="123123"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="fname">What's your first name?</label>
-							<input class="fs-anim-lower" id="fname" type="text" placeholder="First name" required/>
+							<input class="fs-anim-lower" id="fname" type="text" name="fname" placeholder="First name" required value="Peter Bernard"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="mname" data-info="Your full middle name, not your middle initial!">What's your middle name?</label>
-							<input class="fs-anim-lower" id="mname" type="text" placeholder="Middle name" required/>
+							<input class="fs-anim-lower" id="mname" type="text" name="mname" placeholder="Middle name" required value="Mariano"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="lname">What's your last name?</label>
-							<input class="fs-anim-lower" id="lname" type="text" placeholder="Last name" required/>
+							<input class="fs-anim-lower" id="lname" type="text" name="lname" placeholder="Last name" required value="Rupa"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="occupation" data-info="If you don't have any, leave it blank!">What's your current occupation?</label>
-							<input class="fs-anim-lower" id="occupation" type="text" placeholder="My work that I'm proud of"/>
+							<input class="fs-anim-lower" id="occupation" type="text" name="occupation" placeholder="My work that I'm proud of" value="Web Developer"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="company" data-info="If you don't have any, leave it blank!">What company do your work for?</label>
-							<input class="fs-anim-lower" id="company" type="text" placeholder="Awesome Inc."/>
+							<input class="fs-anim-lower" id="company" type="text" name="company" placeholder="Awesome Inc." value="any.tv"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="college" data-info="If you don't have any, leave it blank!">What university or college have you graduated on?</label>
-							<input class="fs-anim-lower" id="college" type="text" placeholder="My beloved Alma Mater"/>
+							<input class="fs-anim-lower" id="college" type="text" name="college" placeholder="My beloved Alma Mater" value="University of the Philippines"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="degree" data-info="If you don't have any, leave it blank!">What degree have you graduated with?</label>
-							<input class="fs-anim-lower" id="degree" type="text" placeholder="BS Computer Science"/>
+							<input class="fs-anim-lower" id="degree" type="text" name="degree" placeholder="BS Computer Science" value="BS Computer Science"/>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper">What country are you from?</label>
-							<select id="country" class="fs-anim-lower">
+							<select id="country" name="country" class="fs-anim-lower">
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Åland Islands">Åland Islands</option>
                 <option value="Albania">Albania</option>
@@ -275,11 +275,22 @@
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="interest" data-info="This will help us know what jobs are for you.">What field are you interested in?</label>
-							<input class="fs-anim-lower" id="interest" type="text" placeholder="Web Development is hart hart"/>
+							<input class="fs-anim-lower" id="interest" type="text" name="fieldofinterest" placeholder="Web Development is hart hart" value="Web Development"/>
+						</li>
+						<li>
+							<label class="fs-field-label fs-anim-upper" for="interest" data-info="This will help us know what jobs are for you." style="display:block;">What are your experiences?</label>
+							<ul id="exp-list">
+								<li class="fs-anim-lower">
+									<input class="fs-anim-lower exp-field exp-occupation" type="text" placeholder="Occupation"/>
+									 at
+									<input class="fs-anim-lower exp-field exp-company" type="text" placeholder="Company"/>
+								</li>
+							</ul>
+							<button type="button" class="fs-anim-lower" id="add-exp">+ Add</button>
 						</li>
             <li>
 							<label class="fs-field-label fs-anim-upper" for="picture" data-info="For best results, upload a 1:1 square picture!">Add a profile picture!</label>
-							<input class="fs-anim-lower" id="picture" type="file" accept="image/*" required/>
+							<input class="fs-anim-lower" id="picture" type="file" accept="image/*" name="image" required/>
 						</li>
 					</ol><!-- /fs-fields -->
 					<button class="fs-submit" type="submit">Sign up</button>
