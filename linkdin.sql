@@ -42,9 +42,10 @@ CREATE TABLE job (
     username character varying(20) NOT NULL,
     createdat date NOT NULL,
     approvedat date,
-    name character varying(30) NOT NULL,
+    jobname character varying(30) NOT NULL,
     fieldofinterest character varying(20),
-    picture text
+    picture text,
+    numberofviews integer DEFAULT 0
 );
 
 
@@ -345,8 +346,10 @@ ALTER TABLE ONLY project ALTER COLUMN projectid SET DEFAULT nextval('project_pro
 -- Data for Name: job; Type: TABLE DATA; Schema: public; Owner: proj127
 --
 
-COPY job (jobid, country, description, company, closedat, username, createdat, approvedat, name, fieldofinterest, picture) FROM stdin;
-39	Philippines	dummy description	ANY TV	2015-11-22	admin	2015-11-22	2015-11-22	PROGAMER!!!!	\N	\N
+COPY job (jobid, country, description, company, closedat, username, createdat, approvedat, jobname, fieldofinterest, picture, numberofviews) FROM stdin;
+39	Philippines	dummy description	ANY TV	2015-11-22	admin	2015-11-22	2015-11-22	PROGAMER!!!!	Gambling	\N	1
+40	Philippines	Buy 1 Take 1	C2	\N	procopio	2015-11-26	\N	Taste Tester	Drinking	\N	0
+41	Philippines	Database Thingies	ICS	\N	procopio	2015-11-26	\N	Database Admin	Computing	\N	0
 \.
 
 
@@ -363,7 +366,7 @@ COPY job_applicant (jobid, username) FROM stdin;
 -- Name: job_jobid_seq; Type: SEQUENCE SET; Schema: public; Owner: proj127
 --
 
-SELECT pg_catalog.setval('job_jobid_seq', 39, true);
+SELECT pg_catalog.setval('job_jobid_seq', 41, true);
 
 
 --
@@ -454,10 +457,10 @@ SELECT pg_catalog.setval('project_projectid_seq', 1, true);
 --
 
 COPY user_connection (username1, username2, approvedat) FROM stdin;
-procopio	xXxBaDbOyZzZ	\N
-xXxBaDbOyZzZ	procopio	\N
+procopio	anon12345	\N
+procopio	test	\N
 procopio	admin	\N
-admin	procopio	\N
+procopio	xXxBaDbOyZzZ	\N
 \.
 
 
@@ -475,10 +478,11 @@ Badboy	BadBoy&Co.	xXxBaDbOyZzZ
 --
 
 COPY users (username, password, fname, mname, lname, occupation, college, degree, isadmin, createdat, country, approvedat, fieldofinterest, company, picture) FROM stdin;
-admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	1	2015-10-29	Philippines	\N	\N	\N	\N
-procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL	0	2015-11-15	Philippines	\N	\N	\N	\N
-xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	0	2015-11-22	Philippines	2015-11-22	\N	\N	\N
 anon12345	nooneknows	Hidden	Anon	Anonymous	administrator	UP-ish	BS Vulcanizing	1	2015-11-22	Philippines	\N	Gambling	Anonymity Merchandise	\N
+test	test	test	test	test	test	test	test	0	2015-11-23	test	\N	test	test	uploads/c798a70b317c5ea5538e4d8fe31a33a0
+admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	1	2015-10-29	Philippines	\N	Computing	\N	\N
+procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL	0	2015-11-15	Philippines	\N	Computing	\N	\N
+xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	0	2015-11-22	Philippines	2015-11-22	Computing	\N	\N
 \.
 
 
@@ -520,6 +524,14 @@ ALTER TABLE ONLY post
 
 ALTER TABLE ONLY project
     ADD CONSTRAINT project_pkey PRIMARY KEY (projectid);
+
+
+--
+-- Name: user_connection_username1_pk; Type: CONSTRAINT; Schema: public; Owner: proj127; Tablespace: 
+--
+
+ALTER TABLE ONLY user_connection
+    ADD CONSTRAINT user_connection_username1_pk PRIMARY KEY (username1, username2);
 
 
 --
