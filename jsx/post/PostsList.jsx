@@ -1,7 +1,7 @@
-var React = require('react');
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+const React = require('react');
+const ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
-var Post = require('./Post.jsx');
+const Post = require('./Post.jsx');
 
 module.exports = React.createClass({
   render(){

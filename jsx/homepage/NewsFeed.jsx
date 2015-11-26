@@ -1,7 +1,7 @@
-var React = require('react');
+const React = require('react');
 
-var StatusBox = require('./StatusBox.jsx');
-var PostsList = require('../post/PostsList.jsx');
+const StatusBox = require('./StatusBox.jsx');
+const PostsList = require('../post/PostsList.jsx');
 
 module.exports = React.createClass({
   getInitialState(){

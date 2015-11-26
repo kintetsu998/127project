@@ -1,6 +1,6 @@
-var React = require('react');
+const React = require('react');
 
-var HotJobItem = require('./HotJobItem.jsx');
+const HotJobItem = require('./HotJobItem.jsx');
 
 module.exports = React.createClass({
   getInitialState: function(){

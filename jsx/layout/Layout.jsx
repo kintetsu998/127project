@@ -1,5 +1,7 @@
-var React = require('react');
-var Link = require('react-router').Link;
+'use strict';
+
+const React = require('react');
+const Link = require('react-router').Link;
 
 const Notifications = require('./Notifications.jsx');
 
@@ -17,9 +19,12 @@ module.exports = React.createClass({
   search(e){
     e.preventDefault();
 
-    window.location = "homepage#/job/"+$('#search').val();
+    let keyword = $('#search').val();
 
-    return;
+    this.props.history.pushState(null, '/s', {keyword});
+
+    // clear search bar
+    $('#search').val('');
   },
   logout(){
     $.ajax({
@@ -55,7 +60,7 @@ module.exports = React.createClass({
               </li>
             </ul>
             <div className="right tab-element tab-input hide-on-med-and-down">
-              <form onSubmit={this.search}>
+              <form action="/search" onSubmit={this.search}>
                 <div className="">
                   <input type="text" id="search" placeholder="Search"/>
                 </div>

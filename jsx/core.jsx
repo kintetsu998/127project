@@ -16,6 +16,7 @@ const Homepage = require('./homepage/HomePage.jsx');
 const ProfilePage = require('./profilepage/ProfilePage.jsx');
 const JobPage = require('./jobpage/JobPage.jsx');
 const AdminPage = require('./adminpage/AdminPage.jsx');
+const SearchPage = require('./searchpage/SearchPage.jsx');
 
 ReactDOM.render((
     <Router history={history}>
@@ -24,6 +25,7 @@ ReactDOM.render((
         <Route path="profile/:username" component={ProfilePage}/>
         <Route path="job/:id" component={JobPage}/>
         <Route path="admin" component={AdminPage}></Route>
+        <Route path="s" component={SearchPage}></Route>
       </Route>
     </Router>
 ), document.getElementById('app'));
