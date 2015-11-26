@@ -109,7 +109,7 @@ exports.createJob = function(req, res) {
         }
 
         // SQL Query > Insert Data
-        client.query("INSERT INTO JOB(jobname, country, company, username, createdat, picture) values($1, $2, $3, $4, now(), $5)", 
+        client.query("INSERT INTO JOB(jobname, country, company, username, createdat, picture) values($1, $2, $3, $4, now(), $5)",
             [req.body.jobname, req.body.country, req.body.company, req.body.username, path]);
 
         // SQL Query > Select Data
@@ -157,7 +157,7 @@ exports.updateJob = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE job SET jobname = ($5), description=($2), company=($3), picture=($4) WHERE jobid=($1)", 
+        client.query("UPDATE job SET jobname = ($5), description=($2), company=($3), picture=($4) WHERE jobid=($1)",
             [req.body.jobid, req.body.description, req.body.company, path, req.body.jobname]);
 
         // SQL Query > Select Data
@@ -234,7 +234,7 @@ exports.approveJob = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE job SET approvedat=now() WHERE jobid=($1)", 
+        client.query("UPDATE job SET approvedat=now() WHERE jobid=($1)",
             [req.body.jobid]);
 
         // SQL Query > Select Data
@@ -277,7 +277,7 @@ exports.closeJob = function(req, res) {
         }
 
         // SQL Query > Update Data
-        client.query("UPDATE job SET closedat=now() WHERE jobid=($1)", 
+        client.query("UPDATE job SET closedat=now() WHERE jobid=($1)",
             [req.body.jobid]);
 
         // SQL Query > Select Data
@@ -414,7 +414,7 @@ exports.getRecommendedJobs = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT jobid, jobname FROM JOB where approvedat is not null and job.fieldofinterest = (SELECT fieldofinterest from users where username = $1)", [req.session.username]);
+        var query = client.query("SELECT jobid, jobname FROM JOB where approvedat is not null and job.fieldofinterest = (SELECT fieldofinterest from users where username = $1) limit 6", [req.session.username]);
         query.on('row', function(row) {
             results.push(row);
         });
@@ -449,7 +449,7 @@ exports.updateJobView = function(req, res) {
         }
 
         // SQL Query > Update Data
-        var query = client.query("UPDATE job SET numberofviews = numberofviews+1 WHERE jobid=($1)", 
+        var query = client.query("UPDATE job SET numberofviews = numberofviews+1 WHERE jobid=($1)",
             [req.body.jobid]);
 
         // After all data is returned, close connection and return results
@@ -467,8 +467,6 @@ exports.updateJobView = function(req, res) {
 }
 
 exports.getHottestJobs = function(req, res) {
-    var results = [];
-
     if(req.session.isadmin != '1'){
         return res.status(403).json({success: false})
     }
@@ -480,14 +478,10 @@ exports.getHottestJobs = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT jobid, jobname, fieldofinterest FROM job where numberofviews = (select MAX(numberofviews) from job)");
+        var query = client.query("SELECT jobid, jobname, fieldofinterest, numberofviews as count FROM job where numberofviews = (select MAX(numberofviews) from job)");
         query.on('row', function(row) {
-            results.push(row);
-        });
-
-        query.on('end', function() {
-            done();
-            return res.json(results);
+          done();
+          return res.json(row);
         });
 
         query.on('error', function(err) {

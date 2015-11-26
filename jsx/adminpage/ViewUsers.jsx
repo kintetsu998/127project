@@ -2,14 +2,33 @@
 
 const React = require('react');
 const moment = require('moment');
+const Link = require('react-router').Link;
+
+const Help = require('../helpers.jsx');
 
 module.exports = React.createClass({
+  getInitialState(){
+    return {
+      users: []
+    };
+  },
   searchDate(e){
     e.preventDefault();
 
+    let self = this;
     let date = $('.datepicker').val();
 
-    console.log(moment($('.datepicker').val()));
+    date = moment(date, 'D MMMM, YYYY').format('YYYY-MM-DD');
+
+    $.ajax({
+      url: '/api/users-date?date=' + date,
+      method: 'GET',
+      success(users){
+        self.setState({users});
+
+        console.log(self.state.users);
+      }
+    });
   },
   render(){
     return (
@@ -24,20 +43,24 @@ module.exports = React.createClass({
           </div>
         </div>
 
-        <ul className="collection">
-         <li className="collection-item avatar valign-wrapper">
-           <img src="/img/003.jpg" alt="" className="circle"/>
-           <span className="title">Peter Bernard M. Rupa</span>
-         </li>
-         <li className="collection-item avatar valign-wrapper">
-           <img src="/img/003.jpg" alt="" className="circle"/>
-           <span className="title">Peter Bernard M. Rupa</span>
-         </li>
-         <li className="collection-item avatar valign-wrapper">
-           <img src="/img/003.jpg" alt="" className="circle"/>
-           <span className="title">Peter Bernard M. Rupa</span>
-         </li>
-        </ul>
+        {this.state.users.length > 0?
+          <ul className="collection">
+            {this.state.users.map(user => {
+                let fullName = user.fname + ' ' + Help.parseMiddleName(user.mname) + ' ' + user.lname;
+                let url = '/profile/' + user.username;
+
+                return (
+                  <Link to={url}>
+                    <li className="collection-item avatar valign-wrapper" key={user.username}>
+                      <img src={user.picture} alt="" className="circle"/>
+                      <span className="title">{fullName}</span>
+                    </li>
+                  </Link>
+                );
+            })}
+          </ul>
+          :''
+        }
       </div>
     );
   }

@@ -10,12 +10,14 @@ module.exports = React.createClass({
     var self = this;
 
     $.ajax({
-      url: "api/job/"+this.props.params.id,
+      url: "/api/job?jobid="+this.props.params.id,
       method: "GET",
       success: function(res){
         self.setState({
           job: res
         });
+
+        console.log(self.state.job);
       }
     });
   },
@@ -34,7 +36,7 @@ module.exports = React.createClass({
           <div className="center">
             <a className="waves-effect waves-light btn blue">Stuff</a>
           </div>
-          
+
           <br/>
           <strong className="red-text job-closed">This job offer is closed.</strong>
         </div>

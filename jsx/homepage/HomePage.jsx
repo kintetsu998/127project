@@ -1,5 +1,8 @@
+'use strict';
+
 const React = require('react');
 const Link = require('react-router').Link;
+const Help = require('../helpers.jsx');
 
 const NewsFeed = require('./NewsFeed.jsx');
 const HotJobs = require('./HotJobs.jsx');
@@ -23,11 +26,15 @@ module.exports = React.createClass({
   },
   render() {
     // get user occupation
-    var info;
-    if(this.state.occupation){
-      info = (<span className="grey-text info-title">{this.state.occupation} at the {this.state.college}</span>);
+    let info;
+    if(this.state.occupation && this.state.company){
+      info = (<span className="grey-text info-title">{this.state.occupation} at the {this.state.company}</span>);
     }
-    var url = '/profile/' + this.state.username;
+    let url = '/profile/' + this.state.username;
+
+    if(this.state.mname){
+      var fullName = this.state.fname + ' ' + Help.parseMiddleName(this.state.mname) + ' ' + this.state.lname;
+    }
 
     return (
       <div className="row">
@@ -42,7 +49,7 @@ module.exports = React.createClass({
                   <img src={this.state.picture} className="circle info-picture"/>
                 </div>
                 <div className="col l9">
-                  <span className="valign info-name">{this.state.fname} {this.state.mname} {this.state.lname}</span>
+                  <span className="valign info-name">{this.state.mname? fullName: ''}</span>
                   {info}
                 </div>
               </div>

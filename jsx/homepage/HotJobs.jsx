@@ -12,7 +12,7 @@ module.exports = React.createClass({
     var self = this;
 
     $.ajax({
-      url: '/api/joball',
+      url: '/api/job-recommended',
       method: 'GET',
       success: function(jobs){
         self.setState({
@@ -31,7 +31,7 @@ module.exports = React.createClass({
             let url = '/job/' + job.jobid;
 
             return(
-              <a href={url} className="collection-item" key={job.jobid}>{job.name}</a>
+              <a href={url} className="collection-item" key={job.jobid}>{job.jobname}</a>
             );
           })}
         </ul>

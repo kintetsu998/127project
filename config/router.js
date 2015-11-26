@@ -39,6 +39,9 @@ module.exports = function (router) {
 	router.route('/api/users/:username')
 		.get(user.getOneUser); //params: username
 
+		router.route('/api/users-date')
+			.get(user.getUsersByApprovedDate); //query = date ('YYYY-MM-DD')
+
 	//----------------------- USERS PENDING -----------------------
 	router.route('/api/user-pending/')
 		.get(user.getPendingUsers)
@@ -129,7 +132,7 @@ module.exports = function (router) {
 
 	//----------------------- FIELD OF INTEREST ----------------------
 	router.route('/api/field-of-interest')
-		.get(PageController.fieldOfInterest);
+		.get(PageController.fieldsOfInterest);
 
 	//----------------------- POST ----------------------
 	router.route('/api/post/')

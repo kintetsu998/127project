@@ -183,6 +183,30 @@ exports.search = function(req, res) {
     });
 };
 
+exports.fieldsOfInterest = function(req, res) {
+    pg.connect(conString, function (err, client, done) {
+        // Handle connection errors
+        if(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("select fieldofinterest from job union select fieldofinterest from users");
+
+        query.on('row', function(row) {
+            done();
+            return res.json(row);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+};
+
 exports.login = function(req, res) {
     var results = [];
 
