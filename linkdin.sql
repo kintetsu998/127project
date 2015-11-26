@@ -458,7 +458,6 @@ SELECT pg_catalog.setval('project_projectid_seq', 1, true);
 
 COPY user_connection (username1, username2, approvedat) FROM stdin;
 procopio	anon12345	\N
-procopio	test	\N
 procopio	admin	\N
 procopio	xXxBaDbOyZzZ	\N
 \.
@@ -478,13 +477,12 @@ Badboy	BadBoy&Co.	xXxBaDbOyZzZ
 --
 
 COPY users (username, password, fname, mname, lname, occupation, college, degree, isadmin, createdat, country, approvedat, fieldofinterest, company, picture) FROM stdin;
-anon12345	nooneknows	Hidden	Anon	Anonymous	administrator	UP-ish	BS Vulcanizing	1	2015-11-22	Philippines	\N	Gambling	Anonymity Merchandise	\N
-admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	1	2015-10-29	Philippines	\N	Computing	\N	\N
-procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL	0	2015-11-15	Philippines	\N	Computing	\N	\N
-xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	0	2015-11-22	Philippines	2015-11-22	Computing	\N	\N
-asfasf	asfasf	asasf	asfasf	asasf	asfasf	asfasf	asfasf	0	2015-11-26	asfasf	\N	asfasf	asfasf	\N
-anonimity	toosecret	Anon	Anon	Anonymous	Secret	UP	BSGaming	0	2015-11-26	Philippines	\N	Gaming	Secret	uploads/fff04eeb81284ce3330d4ad417d2058a.jpg
-test	test	test	test	test	test	test	test	0	2015-11-23	test	\N	test	test	
+998	998	998	998	998	998	998	998	0	2015-11-26	Philippines	\N	Music	998	/uploads/a018ba5b6fcde898299432d05b45dec1.jpg
+anon12345	nooneknows	Hidden	Anon	Anonymous	administrator	UP-ish	BS Vulcanizing	1	2015-11-22	Philippines	\N	Gambling	Anonymity Merchandise	/uploads/fff04eeb81284ce3330d4ad417d2058a.jpg
+admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	1	2015-10-29	Philippines	\N	Computing	\N	/uploads/fff04eeb81284ce3330d4ad417d2058a.jpg
+procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL	0	2015-11-15	Philippines	\N	Computing	\N	/uploads/fff04eeb81284ce3330d4ad417d2058a.jpg
+xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	0	2015-11-22	Philippines	2015-11-22	Computing	\N	/uploads/fff04eeb81284ce3330d4ad417d2058a.jpg
+asfasf	asfasf	asasf	asfasf	asasf	asfasf	asfasf	asfasf	0	2015-11-26	asfasf	\N	asfasf	asfasf	/uploads/fff04eeb81284ce3330d4ad417d2058a.jpg
 \.
 
 

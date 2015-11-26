@@ -12,13 +12,13 @@ var multer = require('multer');
 var path = require('path');
 var storage = multer.diskStorage({
 	destination: function (req, file, cb) { //destination folder
-		cb(null, './uploads/')
+		cb(null, './public/uploads/')
 	},
 	filename: function (req, file, cb) {
 		crypto.pseudoRandomBytes(16, function (err, raw) {
 			if (err) return cb(err);
-
-			cb(null, raw.toString('hex') + path.extname(file.originalname));
+			var name = raw.toString('hex') + path.extname(file.originalname);
+			cb(null, name);
 		});
 	}
 });

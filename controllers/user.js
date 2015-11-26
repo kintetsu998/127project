@@ -92,7 +92,11 @@ exports.getOneUser = function(req, res) {
 exports.createUser = function(req, res) {
 
     var results = [];
-    var path = (typeof req.file != "undefined")? req.file.path: null;
+    var path = null;
+    if(typeof req.file != "undefined"){
+        path = req.file.path;
+        path = path.replace("public", "");
+    }
 
     if(req.body.password == ""){
         return res.status(404).json({ succes: false, msg: "Password cannot be null!"});
@@ -143,9 +147,11 @@ exports.createUser = function(req, res) {
 exports.updateUser = function(req, res) {
 
     var results = [];
-    var path = (typeof req.file != "undefined")? req.file.path: null;
-
-    Console.log("Update User: " + req.body.username);
+    var path = null;
+    if(typeof req.file != "undefined"){
+        path = req.file.path;
+        path = path.replace("public", "");
+    }
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
