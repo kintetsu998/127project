@@ -29,20 +29,22 @@ module.exports = function (router) {
 	router.route('/')
 		.get(PageController.index);
 
+	//----------------------- USERS -----------------------
 	router.route('/api/users/')
 		.get(user.getApprovedUsers)
 		.post(type, user.createUser) //body: username, password, fname, mname, lname, isadmin, country
 		.put(type, user.updateUser) //body: username, password, fname, mname, lname, occupation, college, degree, picture country
 		.delete(user.deleteUser); //body: username
 
-
 	router.route('/api/users/:username')
 		.get(user.getOneUser); //params: username
 
+	//----------------------- USERS PENDING -----------------------
 	router.route('/api/user-pending/')
 		.get(user.getPendingUsers)
 		.post(user.approveUser); //body: username
 
+	//----------------------- USERS EXPERIENCE ----------------------
 	router.route('/api/user-experience/')
 		.get(user.getUserExperience) //query: username
 		.post(user.createUserExperience) //body: title, company, username
@@ -52,20 +54,23 @@ module.exports = function (router) {
 	router.route('/api/user-experience/all')
 		.get(user.getAllUserExperience);
 
+	//----------------------- USERS CONNECTION ----------------------
 	router.route('/api/user-connection/')
 		.get(user.showConnections) //query: username
 		.post(user.connectUser) //body: username1, username2
+		.put(user.approveConnectUser) //body: username1, username2
 		.delete(user.unconnect); //body: username1, username2
 
-	
-
+	//----------------------- USERS NOTIF ----------------------
 	router.route('/api/user-notif/')
 		.get(notif.getNotifFromUser) //query: username
 		.post(notif.createNotifFromUser); //body: text, url, username
 
+	//----------------------- USERS COUNT ----------------------
 	router.route('/api/user-count/')
 		.get(user.userCount);
 
+	//----------------------- JOB ----------------------
 	router.route('/api/job-approved/')
 		.get(job.getApprovedJobs);
 
@@ -75,24 +80,30 @@ module.exports = function (router) {
 		.put(type, job.updateJob) //body: jobid, description, fieldofinterestid, company, picture, name
 		.delete(job.deleteJob); //body: jobid
 
+	//----------------------- JOB VIEW INCREMENT ----------------------
 	router.route('/api/job-increment')
 		.put(job.updateJobView);
 
+	//----------------------- RECOMMENDED JOBS ----------------------
 	router.route('/api/job-recommended')
 		.get(job.getRecommendedJobs);
 
+	//----------------------- JOB NOTIFICATION ----------------------
 	router.route('/api/job-notif/')
 		.get(notif.getNotifFromJob) //query: jobid
 		.post(notif.createNotifFromJob); //body: text, url, jobid
 
+	//----------------------- JOB APPLICANT ----------------------
 	router.route('/api/job-applicant/')
 		.get(job.getApplicants) //query: jobid
 		.post(job.addApplicant) //body: jobid, username
 		.delete(job.removeApplicant); //body: jobid, username
 
+	//----------------------- APPROVE JOB ----------------------
 	router.route('/api/job-approve/')
 		.post(job.approveJob); //body: jobid
 
+	//----------------------- CLOSE JOB ----------------------
 	router.route('/api/job-close/')
 		.post(job.closeJob); //body: jobid
 
@@ -112,27 +123,34 @@ module.exports = function (router) {
 	router.route('/api/job-hottest/')
 		.get(job.getHottestJobs);
 
-	//-------------------------------------------
-
+	//----------------------- NOTIF ----------------------
 	router.route('/api/notif/')
 		.get(notif.getNotifs);
 
+	//----------------------- FIELD OF INTEREST ----------------------
+	router.route('/api/field-of-interest')
+		.get(PageController.fieldOfInterest);
+
+	//----------------------- POST ----------------------
 	router.route('/api/post/')
 		.get(post.getPosts) //query: username
 		.post(post.createPost) //body: content, username
 		.put(post.updatePost) //body: content, postid
 		.delete(post.deletePost); //body: postid
 
+	//----------------------- LIKE ----------------------
 	router.route('/api/post-like/')
 		.get(post.getLikes) //query: postid
 		.post(post.likePost) //body: postid
 		.delete(post.unlike); //body: postid
 
+	//----------------------- COMMENT ----------------------
 	router.route('/api/post-comment/')
 		.get(post.showComment) //query: postid
 		.post(post.comment) //body: postid, username, comment
 		.delete(post.removeComment); //body: postid, username, comment, createdat
 
+	//----------------------- PROJECT ----------------------
 	router.route('/api/project/')
 		.get(project.getProjects) //body: username
 		.post(type, project.createProject) //body: name, username

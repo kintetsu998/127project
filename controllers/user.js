@@ -113,7 +113,20 @@ exports.createUser = function(req, res) {
 
         // SQL Query > Insert Data
         var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest, picture) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12, $13)", 
-            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, path]);
+            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, path],
+            function (err, rows, res){
+                if(typeof req.body.experience != "undefined"){
+                    for(var i=0; i<req.body.experience.length; i++){
+                        var exp = client.query("INSERT INTO user_experience(title, company, username) values($1, $2, $3)", [req.body.experience[i].title, req.body.experience[i].company, req.body.username]);
+
+                        exp.on('error', function(err) {
+                            done();
+                            console.log(err);
+                            return res.status(500).json({ success: false, data: err});
+                        });
+                    }
+                }
+            });
 
         create.on('error', function(err) {
             done();
@@ -122,7 +135,7 @@ exports.createUser = function(req, res) {
         });
 
         create.on('end', function(){
-            var query = client.query("SELECT * from users where username=$1", [req.body.username]);
+            var query = client.query("SELECT "+ userColumns +" from users where username=$1", [req.body.username]);
 
             // Stream results back one row at a time
             query.on('row', function(row) {
@@ -285,7 +298,10 @@ exports.createUserExperience = function(req, res){
         }
 
         // SQL Query > Insert Data
-        client.query("INSERT INTO user_experience(title, company, username) values($1, $2, $3)", [req.body.title, req.body.company, req.body.username]);
+        client.query("INSERT INTO user_experience(title, company, username) values($1, $2, $3)", [req.body.title, req.body.company, req.body.username]
+            , function (err, rows, res){
+
+        });
 
         // SQL Query > Select Data
         var query = client.query("SELECT * from user_experience where company=$1", [req.body.company]);
@@ -513,11 +529,12 @@ exports.approveConnectUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("UPDATE user_connection set approvedat = now() where username1=$1 and username2=$2",
+        var query = client.query("UPDATE user_connection set approvedat = now() where (username1=$1 and username2=$2) or (username1=$2 and username2=$1)",
             [req.body.username1, req.body.username2]);
 
         query.on('end', function() {
             done();
+            return res.status(200).json({ success: true });
         });
 
         query.on('error', function(err) {
@@ -542,11 +559,40 @@ exports.unconnect = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("DELETE FROM user_connection WHERE username1=$1 and username2=$2",
+        var query = client.query("DELETE FROM user_connection where (username1=$1 and username2=$2) or (username1=$2 and username2=$1)",
             [req.body.username1, req.body.username2]);
 
         query.on('end', function() {
             done();
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+}
+
+exports.showConnections = function(req, res){
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT * from user_connection join users on user_connection.username = users.username where username1 = $1 or username2 = $1", [req.query.username]);
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
         });
 
         query.on('error', function(err) {
@@ -596,36 +642,7 @@ exports.showMostOccupationUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT occupation, count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation having count(occupation) >= ALL(SELECT count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation);");
-
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-        query.on('end', function() {
-            done();
-            return res.json(results);
-        });
-
-        query.on('error', function(err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err});
-        });
-    });
-}
-
-exports.showConnections = function(req, res){
-    var results = [];
-
-    pg.connect(conString, function (err, client, done) {
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        var query = client.query("SELECT * from user_connection join users", [req.query.username]);
+        var query = client.query("SELECT occupation, count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation having count(occupation) >= ALL(SELECT count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation)");
 
         query.on('row', function(row) {
             results.push(row);

@@ -71,13 +71,19 @@
 			all of the connections in the database whose username1 matches the username in the request query
 			code 500 when there is an error in the database
 	POST: connectUser
-		request body: username1, username2 (order does not matter)
+		request body: username1, username2 (order does matter)
+		response:
+			code 200 if connecting two users is successful
+			code 403 if the username1 in the request body does not match the username in the request session
+			code 500 if the database encountered an error
+	POST: approveConnectUser
+		request body: username1, username2 (order does matter)
 		response:
 			code 200 if connecting two users is successful
 			code 403 if the username1 in the request body does not match the username in the request session
 			code 500 if the database encountered an error
 	DELETE: unconnect
-		request body: username1, username2 (order does not matter)
+		request body: username1, username2 (order does matter)
 		response:
 			code 200 if deletion is successful
 			code 403 if the request body in username1 does not match the request session username
