@@ -134,18 +134,17 @@ exports.search = function(req, res) {
         }
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * from job where LOWER(country)=LOWER($1) OR LOWER(description)=LOWER($1) OR LOWER(fieldsrelated)=LOWER($1) OR LOWER(company)=LOWER($1) OR LOWER(username)=LOWER($1)",
+        var query = client.query("SELECT name, fieldofinterest from job where LOWER(name)=LOWER($1) OR LOWER(fieldofinterest)=LOWER($1)",
             [req.query.keyword], function (err, qry){
-            var query1 = client.query("SELECT username, fname, mname, lname, occupation, college, degree, picture, isadmin, country, createdat, approvedat from users where LOWER(username)=LOWER($1) OR LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(college)=LOWER($1) OR LOWER(country)=LOWER($1)", [req.query.keyword]);
+            var query1 = client.query("SELECT fname, mname, lname, occupation, fieldofinterest from users where LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(fieldofinterest)=LOWER($1)", 
+                [req.query.keyword]);
 
             query1.on('row', function(row) {
-                console.log("1");
                 console.log(row);
                 results.push(row);
             });
 
             query1.on('end', function() {
-                console.log("q1 is done.");
                 done();
                 return res.json(results);
             });
@@ -158,14 +157,12 @@ exports.search = function(req, res) {
         });
 
         query.on('row', function(row) {
-            console.log("2");
             console.log(row);
             results.push(row);
         });
 
         // After all data is returned, close connection and return results
         query.on('end', function() {
-            console.log("q is done.");
             done();
         });
 

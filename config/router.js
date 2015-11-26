@@ -14,15 +14,17 @@ module.exports = function (router) {
 		.get(PageController.index);
 
 	router.route('/api/users/')
-		.get(user.getUsers)
+		.get(user.getApprovedUsers)
 		.post(type, user.createUser) //body: username, password, fname, mname, lname, isadmin, country
 		.put(type, user.updateUser) //body: username, password, fname, mname, lname, occupation, college, degree, picture country
 		.delete(user.deleteUser); //body: username
 
+
 	router.route('/api/users/:username')
 		.get(user.getOneUser); //params: username
 
-	router.route('/api/user-approve/')
+	router.route('/api/user-pending/')
+		.get(user.getPendingUsers)
 		.post(user.approveUser); //body: username
 
 	router.route('/api/user-experience/')
@@ -39,6 +41,18 @@ module.exports = function (router) {
 		.post(user.connectUser) //body: username1, username2
 		.delete(user.unconnect); //body: username1, username2
 
+	router.route('/api/user-connection-interest')
+		.get(user.showMostInterestUser); //session: username
+
+	router.route('/api/user-connection-occupation')
+		.get(user.showMostOccupationUser); //session: username
+
+	router.route('/api/user-most-interest')
+		.get(user.showMostInterest);
+
+	router.route('/api/user-most-occupation')
+		.get(user.showMostOccupation);
+
 	router.route('/api/user-notif/')
 		.get(notif.getNotifFromUser) //query: username
 		.post(notif.createNotifFromUser); //body: text, url, username
@@ -46,18 +60,24 @@ module.exports = function (router) {
 	router.route('/api/user-count/')
 		.get(user.userCount);
 
-	router.route('/api/joball/')
-		.get(job.getJob);
+	router.route('/api/job-approved/')
+		.get(job.getApprovedJobs);
 
 	router.route('/api/job/')
-		.get(job.getJobOne) //query: username
+		.get(job.getJobOne) //query: jobid
 		.post(type, job.createJob) //body: name, country, company, username
 		.put(type, job.updateJob) //body: jobid, description, fieldofinterestid, company, picture, name
 		.delete(job.deleteJob); //body: jobid
 
+	router.route('/api/job-increment')
+		.put(job.updateJobView);
+
 	router.route('/api/job-notif/')
 		.get(notif.getNotifFromJob) //query: jobid
 		.post(notif.createNotifFromJob); //body: text, url, jobid
+
+	router.route('/api/job-hottest/')
+		.get(job.getHottestJobs);
 
 	router.route('/api/job-applicant/')
 		.get(job.getApplicants) //query: jobid
