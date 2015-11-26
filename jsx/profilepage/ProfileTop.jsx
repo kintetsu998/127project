@@ -8,7 +8,12 @@ module.exports = React.createClass({
           <img src={this.props.img} className="img-full circle"/>
         </div>
         <div className="col s9 profile-info">
-          <h4>{this.props.name}, {this.props.occupation} at {this.props.college}</h4>
+          <h4>{this.props.name}
+            {this.props.occupation && this.props.company?
+              <span>, {this.props.occupation} at {this.props.company}</span>
+              :''
+            }
+          </h4>
           <div className="col s6">
             <p>Lives in {this.props.country}</p>
           </div>
@@ -17,13 +22,17 @@ module.exports = React.createClass({
           </div>
           <div style={{clear:'both'}}></div>
           <span className="experiences">Experiences:</span>
-          <ul>
-            {this.props.experiences.map((experience)=>{
-              return (
-                <li>{experience.title} at {experience.company}</li>
-              );
-            })}
-          </ul>
+          {this.props.experiences.length > 0?
+            <ul>
+              {this.props.experiences.map((experience)=>{
+                return (
+                  <li>{experience.title} at {experience.company}</li>
+                );
+              })}
+            </ul>
+            :
+            <p>None</p>
+          }
         </div>
       </div>
     );

@@ -12,7 +12,10 @@ module.exports = React.createClass({
   render(){
     return(
       <div className="card-panel center">
-        <a className="waves-effect waves-light btn blue">Connect</a>
+        {this.props.username != this.props.profileName?
+          <a className="waves-effect waves-light btn blue">Connect</a>
+          :''
+        }
 
         {this.props.isAdmin || this.props.username == this.props.profileName?
           <a className="waves-effect waves-light btn green modal-trigger" href="#modal1">Edit</a>

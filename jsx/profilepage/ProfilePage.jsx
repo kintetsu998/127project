@@ -50,6 +50,7 @@ module.exports = React.createClass({
               name={name}
               occupation={this.state.occupation}
               college={this.state.college}
+              company={this.state.company}
               country={this.state.country}
               img={this.state.picture}
               experiences={this.state.experiences}

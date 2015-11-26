@@ -108,7 +108,7 @@ exports.createUser = function(req, res) {
         }
 
         // SQL Query > Insert Data
-        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest, picture) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12, $13)", 
+        var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest, picture) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12, $13)",
             [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, path]);
 
         create.on('error', function(err) {
@@ -189,10 +189,9 @@ exports.updateUser = function(req, res) {
 }
 
 exports.deleteUser = function(req, res) {
-
     var results = [];
 
-    if(req.session.username != req.body.username){
+    if(!req.session.isadmin){
         return res.status(403).json({success: false})
     }
 

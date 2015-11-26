@@ -136,7 +136,7 @@ exports.search = function(req, res) {
         // SQL Query > Select Data
         var query = client.query("SELECT name, fieldofinterest from job where LOWER(name)=LOWER($1) OR LOWER(fieldofinterest)=LOWER($1)",
             [req.query.keyword], function (err, qry){
-            var query1 = client.query("SELECT fname, mname, lname, occupation, fieldofinterest from users where LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(fieldofinterest)=LOWER($1)", 
+            var query1 = client.query("SELECT fname, mname, lname, occupation, fieldofinterest from users where LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(fieldofinterest)=LOWER($1)",
                 [req.query.keyword]);
 
             query1.on('row', function(row) {
@@ -189,7 +189,7 @@ exports.login = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
         // SQL Query > Select Data
-        var query = client.query("SELECT * FROM users where username=$1 and password=$2", [req.body.username, req.body.password]);
+        var query = client.query("SELECT * FROM users where username=$1 and password=$2 and approvedat is not null", [req.body.username, req.body.password]);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
