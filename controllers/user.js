@@ -13,7 +13,7 @@ pg.connect(conString, function(err, client, done) {
 });
 
 /*code from http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#server-side-routes */
-exports.getUsers = function(req, res) {
+exports.getApprovedUsers = function(req, res) {
     var results = [];
     pg.connect(conString, function (err, client, done) {
         if(err) {
@@ -22,7 +22,34 @@ exports.getUsers = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT " + userColumns + " from users");
+        var query = client.query("SELECT " + userColumns + " from users where approvedat is not null");
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+};
+
+exports.getPendingUsers = function(req, res) {
+    var results = [];
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT username, fname, mname, lname, picture from users where approvedat is null");
         query.on('row', function(row) {
             results.push(row);
         });
@@ -432,9 +459,9 @@ exports.userCount = function(req, res){
 }
 
 exports.connectUser = function(req, res){
-	var results = [];
+    var results = [];
 
-	if(req.session.username != req.body.username1){
+    if(req.session.username != req.body.username1){
         return res.status(403).json({success: false})
     }
 
@@ -446,8 +473,6 @@ exports.connectUser = function(req, res){
         }
 
         var query = client.query("INSERT INTO user_connection(username1, username2) values($1, $2)", [req.body.username1, req.body.username2]);
-
-        client.query("INSERT INTO user_connection(username1, username2) values($1, $2)", [req.body.username2, req.body.username1]);
 
         query.on('end', function() {
             done();
@@ -476,21 +501,8 @@ exports.approveConnectUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("UPDATE user_connection set approvedat = now() where username1=$1 username2=$2",
-            [req.body.username1, req.body.username2], function (err, qry){
-                var query2 = client.query("UPDATE user_connection set approvedat = now() where username1=$2 username2=$1", [req.body.username1, req.body.username2]);
-
-                query2.on('end', function() {
-                    done();
-                    return res.status(200).json({ success: true});
-                });
-
-               query2.on('error', function(err) {
-                    done();
-                    console.log(err);
-                    return res.status(500).json({ success: false, data: err});
-                });
-            });
+        var query = client.query("UPDATE user_connection set approvedat = now() where username1=$1 and username2=$2",
+            [req.body.username1, req.body.username2]);
 
         query.on('end', function() {
             done();
@@ -505,9 +517,9 @@ exports.approveConnectUser = function(req, res){
 }
 
 exports.unconnect = function(req, res){
-	var results = [];
+    var results = [];
 
-	if(req.session.username != req.body.username1){
+    if(req.session.username != req.body.username1){
         return res.status(403).json({success: false})
     }
 
@@ -519,20 +531,7 @@ exports.unconnect = function(req, res){
         }
 
         var query = client.query("DELETE FROM user_connection WHERE username1=$1 and username2=$2",
-            [req.body.username1, req.body.username2], function (err, qry){
-                var query2 = client.query("DELETE FROM user_connection WHERE username1=$1 and username2=$2", [req.body.username2, req.body.username1]);
-
-                query2.on('end', function() {
-                    done();
-                    return res.status(200).json({ success: true});
-                });
-
-                query2.on('error', function(err) {
-                    done();
-                    console.log(err);
-                    return res.status(500).json({ success: false, data: err});
-                });
-            });
+            [req.body.username1, req.body.username2]);
 
         query.on('end', function() {
             done();
@@ -546,8 +545,8 @@ exports.unconnect = function(req, res){
     });
 }
 
-exports.showConnections = function(req, res){
-	var results = [];
+exports.showMostInterestUser = function(req, res){
+    var results = [];
 
     pg.connect(conString, function (err, client, done) {
         if(err) {
@@ -556,7 +555,123 @@ exports.showConnections = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT * from user_connection where username1 = $1", [req.query.username]);
+        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by fieldofinterest order by count(fieldofinterest) desc");
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+}
+
+exports.showMostOccupationUser = function(req, res){
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT occupation, count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation order by count(occupation) desc");
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+}
+
+exports.showConnections = function(req, res){
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT * from user_connection join users", [req.query.username]);
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+}
+
+exports.showMostOccupation = function(req, res){
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT occupation, count(occupation) from users group by occupation order by count(occupation) desc");
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+}
+
+exports.showMostInterest = function(req, res){
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users group by fieldofinterest order by count(fieldofinterest) desc");
 
         query.on('row', function(row) {
             results.push(row);
