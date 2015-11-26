@@ -1,9 +1,9 @@
-var React = require('react');
-var Link = require('react-router').Link;
+const React = require('react');
+const Link = require('react-router').Link;
 
-var NewsFeed = require('./NewsFeed.jsx');
-var HotJobs = require('./HotJobs.jsx');
-var ControlPanel = require('./ControlPanel.jsx');
+const NewsFeed = require('./NewsFeed.jsx');
+const HotJobs = require('./HotJobs.jsx');
+const ControlPanel = require('./ControlPanel.jsx');
 
 module.exports = React.createClass({
   getInitialState(){
