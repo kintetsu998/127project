@@ -1,6 +1,6 @@
-const React = require('react');
+'use strict';
 
-const HotJobItem = require('./HotJobItem.jsx');
+const React = require('react');
 
 module.exports = React.createClass({
   getInitialState: function(){
@@ -22,21 +22,18 @@ module.exports = React.createClass({
     });
   },
   render() {
-    var hotJobNodes = this.state.hotJobs.map(function(job){
-      return(
-        <HotJobItem
-          key={job.jobid}
-          job={job}
-        />
-      );
-    });
-
     return (
       <div className="card-panel">
-        <h5>Hot Jobs</h5>
+        <h5>Recommended for you:</h5>
         <div className="divider"></div>
         <ul className="collection">
-          {hotJobNodes}
+          {this.state.hotJobs.map((job)=>{
+            let url = '/job/' + job.jobid;
+
+            return(
+              <a href={url} className="collection-item" key={job.jobid}>{job.name}</a>
+            );
+          })}
         </ul>
       </div>
     );

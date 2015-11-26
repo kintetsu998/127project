@@ -179,6 +179,20 @@ html,body {
   font-size: 150%;
 }
 
+.inline {
+  display: inline;
+}
+
+.connection-list {
+  margin: 0 15px;
+}
+
+.connection-pic {
+  height: 30px;
+  width: auto;
+  margin: 0 5px;
+}
+
 /* label underline focus color */
 .fade {
   border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;

@@ -4,12 +4,13 @@ const Link = require('react-router').Link;
 const NewsFeed = require('./NewsFeed.jsx');
 const HotJobs = require('./HotJobs.jsx');
 const ControlPanel = require('./ControlPanel.jsx');
+const DidYouKnow = require('./DidYouKnow.jsx');
 
 module.exports = React.createClass({
   getInitialState(){
     return {};
   },
-  componentWillMount(){
+  componentDidMount(){
     var self = this;
 
     $.ajax({
@@ -49,6 +50,7 @@ module.exports = React.createClass({
           </Link>
           <ControlPanel/>
           <HotJobs/>
+          <DidYouKnow/>
         </div>
       </div>
     );
