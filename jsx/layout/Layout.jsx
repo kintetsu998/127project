@@ -8,7 +8,9 @@ const Notifications = require('./Notifications.jsx');
 module.exports = React.createClass({
   getInitialState(){
     return {
-      notifications: false
+      notifications: false,
+      isAdmin: false,
+      username: '',
     };
   },
   toggleNotifications(){
@@ -38,6 +40,20 @@ module.exports = React.createClass({
       }
     });
   },
+  componentWillMount(){
+    var self = this;
+
+    $.ajax({
+      url: '/api/whoami',
+      method: 'GET',
+      success: function(user){
+        let isAdmin = user.isadmin == "1"? true: false;
+        let username = user.username;
+
+        self.setState({isAdmin, username});
+      }
+    });
+  },
   render() {
     return (
       <div>
@@ -47,11 +63,14 @@ module.exports = React.createClass({
 
             <ul className="right tab-element">
               <a href="#" className="btn waves-effect waves-light blue" onClick={this.logout}>Log out</a>
-              <li className="navbar-item-area">
-                <div className="navbar-item">
-                  <Link to="/admin"><i className="material-icons">assignment_ind</i></Link>
-                </div>
-              </li>
+              {this.state.isAdmin?
+                <li className="navbar-item-area">
+                  <div className="navbar-item">
+                    <Link to="/admin"><i className="material-icons">assignment_ind</i></Link>
+                  </div>
+                </li>
+                :''
+              }
               <li className="navbar-item-area">
                 <div className="navbar-item">
                   <a href="#" onClick={this.toggleNotifications}><i className="material-icons">notifications</i></a>
@@ -70,7 +89,10 @@ module.exports = React.createClass({
         </nav>
 
         <div className="container-content">
-          {this.props.children}
+          {this.props.children && React.cloneElement(this.props.children, {
+            isAdmin: this.state.isAdmin,
+            username: this.state.username
+          })}
         </div>
       </div>
     );

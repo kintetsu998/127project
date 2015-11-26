@@ -11,7 +11,7 @@ module.exports = React.createClass({
       experiences: []
     };
   },
-  componentDidMount(){
+  componentWillMount(){
     var self = this;
 
     $.ajax({
@@ -33,8 +33,6 @@ module.exports = React.createClass({
         self.setState({
           experiences: data
         });
-
-        console.log(self.state);
       },
       'error'(err){
         console.error(err);
@@ -59,7 +57,11 @@ module.exports = React.createClass({
           </div>
         </div>
         <div className="row small-margin">
-          <ControlPanel/>
+          <ControlPanel
+            username={this.props.username}
+            isAdmin={this.props.isAdmin}
+            profileName={this.state.username}
+          />
         </div>
         <div className="row small-margin">
           <div className="col s12 card-panel profile-middle">

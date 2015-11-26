@@ -464,7 +464,7 @@ ReactDOM.render(React.createElement(
   )
 ), document.getElementById('app'));
 
-},{"./adminpage/AdminPage.jsx":2,"./homepage/HomePage.jsx":9,"./jobpage/JobPage.jsx":14,"./layout/Layout.jsx":15,"./profilepage/ProfilePage.jsx":21,"./searchpage/SearchPage.jsx":23,"history/lib/createBrowserHistory":29,"react":238,"react-dom":50,"react-router":70}],8:[function(require,module,exports){
+},{"./adminpage/AdminPage.jsx":2,"./homepage/HomePage.jsx":10,"./jobpage/JobPage.jsx":14,"./layout/Layout.jsx":15,"./profilepage/ProfilePage.jsx":21,"./searchpage/SearchPage.jsx":23,"history/lib/createBrowserHistory":29,"react":238,"react-dom":50,"react-router":70}],8:[function(require,module,exports){
 const React = require('react');
 
 module.exports = React.createClass({
@@ -1567,11 +1567,68 @@ module.exports = React.createClass({
 
 },{"react":238}],9:[function(require,module,exports){
 const React = require('react');
+
+const Link = require('react-router').Link;
+
+module.exports = React.createClass({
+  displayName: 'exports',
+
+  render() {
+    return React.createElement(
+      'div',
+      { className: 'card-panel' },
+      React.createElement(
+        'h5',
+        null,
+        'Did you know?'
+      ),
+      React.createElement(
+        'p',
+        null,
+        'That...'
+      ),
+      React.createElement(
+        'p',
+        null,
+        '...most of your connections are ',
+        React.createElement(
+          Link,
+          { to: '/s?keyword=Janitor' },
+          React.createElement(
+            'strong',
+            null,
+            'Janitors'
+          )
+        ),
+        '? (3 connections) '
+      ),
+      React.createElement(
+        'p',
+        null,
+        '...most of your connections like ',
+        React.createElement(
+          Link,
+          { to: '/s?keyword=Web Development' },
+          React.createElement(
+            'strong',
+            null,
+            'Web Development'
+          )
+        ),
+        '? (7 connections) '
+      )
+    );
+  }
+});
+
+},{"react":238,"react-router":70}],10:[function(require,module,exports){
+const React = require('react');
 const Link = require('react-router').Link;
 
 const NewsFeed = require('./NewsFeed.jsx');
 const HotJobs = require('./HotJobs.jsx');
 const ControlPanel = require('./ControlPanel.jsx');
+const DidYouKnow = require('./DidYouKnow.jsx');
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -1579,7 +1636,7 @@ module.exports = React.createClass({
   getInitialState() {
     return {};
   },
-  componentWillMount() {
+  componentDidMount() {
     var self = this;
 
     $.ajax({
@@ -1647,39 +1704,17 @@ module.exports = React.createClass({
           )
         ),
         React.createElement(ControlPanel, null),
-        React.createElement(HotJobs, null)
+        React.createElement(HotJobs, null),
+        React.createElement(DidYouKnow, null)
       )
     );
   }
 });
 
-},{"./ControlPanel.jsx":8,"./HotJobs.jsx":11,"./NewsFeed.jsx":12,"react":238,"react-router":70}],10:[function(require,module,exports){
+},{"./ControlPanel.jsx":8,"./DidYouKnow.jsx":9,"./HotJobs.jsx":11,"./NewsFeed.jsx":12,"react":238,"react-router":70}],11:[function(require,module,exports){
+'use strict';
+
 const React = require('react');
-const Link = require('react-router').Link;
-
-module.exports = React.createClass({
-  displayName: 'exports',
-
-  render() {
-    var job = this.props.job;
-    var url = "/job/" + job.jobid;
-
-    return React.createElement(
-      'li',
-      { className: 'collection-item' },
-      React.createElement(
-        Link,
-        { to: url },
-        job.name
-      )
-    );
-  }
-});
-
-},{"react":238,"react-router":70}],11:[function(require,module,exports){
-const React = require('react');
-
-const HotJobItem = require('./HotJobItem.jsx');
 
 module.exports = React.createClass({
   displayName: 'exports',
@@ -1703,32 +1738,33 @@ module.exports = React.createClass({
     });
   },
   render() {
-    var hotJobNodes = this.state.hotJobs.map(function (job) {
-      return React.createElement(HotJobItem, {
-        key: job.jobid,
-        job: job
-      });
-    });
-
     return React.createElement(
       'div',
       { className: 'card-panel' },
       React.createElement(
         'h5',
         null,
-        'Hot Jobs'
+        'Recommended for you:'
       ),
       React.createElement('div', { className: 'divider' }),
       React.createElement(
         'ul',
         { className: 'collection' },
-        hotJobNodes
+        this.state.hotJobs.map(job => {
+          let url = '/job/' + job.jobid;
+
+          return React.createElement(
+            'a',
+            { href: url, className: 'collection-item', key: job.jobid },
+            job.name
+          );
+        })
       )
     );
   }
 });
 
-},{"./HotJobItem.jsx":10,"react":238}],12:[function(require,module,exports){
+},{"react":238}],12:[function(require,module,exports){
 const React = require('react');
 
 const StatusBox = require('./StatusBox.jsx');
@@ -1860,47 +1896,92 @@ module.exports = React.createClass({
   render() {
     return React.createElement(
       "div",
-      { className: "card-panel" },
+      { className: "row" },
       React.createElement(
-        "p",
-        { className: "center-text job-title" },
-        "Janitor at Nestle Foods"
+        "div",
+        { className: "card-panel" },
+        React.createElement(
+          "p",
+          { className: "center-text job-title" },
+          "Janitor at Nestle Foods"
+        ),
+        React.createElement(
+          "p",
+          { className: "center-text job-country" },
+          "Philippines"
+        ),
+        React.createElement(
+          "strong",
+          null,
+          "Field:"
+        ),
+        React.createElement(
+          "p",
+          null,
+          "Web Development"
+        ),
+        React.createElement(
+          "strong",
+          null,
+          "Description:"
+        ),
+        React.createElement(
+          "p",
+          null,
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        ),
+        React.createElement(
+          "div",
+          { className: "center" },
+          React.createElement(
+            "a",
+            { className: "waves-effect waves-light btn blue" },
+            "Stuff"
+          )
+        ),
+        React.createElement("br", null),
+        React.createElement(
+          "strong",
+          { className: "red-text job-closed" },
+          "This job offer is closed."
+        )
       ),
       React.createElement(
-        "p",
-        { className: "center-text job-country" },
-        "Philippines"
-      ),
-      React.createElement(
-        "strong",
-        null,
-        "Field:"
-      ),
-      React.createElement(
-        "p",
-        null,
-        "Web Development"
-      ),
-      React.createElement(
-        "strong",
-        null,
-        "Description:"
-      ),
-      React.createElement(
-        "p",
-        null,
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-      ),
-      React.createElement(
-        "a",
-        { className: "waves-effect waves-light btn blue" },
-        "Stuff"
-      ),
-      React.createElement("br", null),
-      React.createElement(
-        "strong",
-        { className: "red-text job-closed" },
-        "This job offer is closed."
+        "div",
+        { className: "col s12 l6 offset-l3" },
+        React.createElement(
+          "div",
+          { className: "card-panel" },
+          React.createElement(
+            "h5",
+            null,
+            "Applicants"
+          ),
+          React.createElement(
+            "div",
+            { className: "collection" },
+            React.createElement(
+              "a",
+              { href: "#!", className: "collection-item" },
+              "Alvin"
+            ),
+            React.createElement(
+              "a",
+              { href: "#!", className: "collection-item" },
+              "Alvin"
+            ),
+            React.createElement(
+              "a",
+              { href: "#!", className: "collection-item" },
+              "Alvin"
+            ),
+            React.createElement(
+              "a",
+              { href: "#!", className: "collection-item" },
+              "Alvin"
+            )
+          )
+        )
       )
     );
   }
@@ -1919,7 +2000,9 @@ module.exports = React.createClass({
 
   getInitialState() {
     return {
-      notifications: false
+      notifications: false,
+      isAdmin: false,
+      username: ''
     };
   },
   toggleNotifications() {
@@ -1949,6 +2032,20 @@ module.exports = React.createClass({
       }
     });
   },
+  componentWillMount() {
+    var self = this;
+
+    $.ajax({
+      url: '/api/whoami',
+      method: 'GET',
+      success: function (user) {
+        let isAdmin = user.isadmin == "1" ? true : false;
+        let username = user.username;
+
+        self.setState({ isAdmin, username });
+      }
+    });
+  },
   render() {
     return React.createElement(
       'div',
@@ -1972,7 +2069,7 @@ module.exports = React.createClass({
               { href: '#', className: 'btn waves-effect waves-light blue', onClick: this.logout },
               'Log out'
             ),
-            React.createElement(
+            this.state.isAdmin ? React.createElement(
               'li',
               { className: 'navbar-item-area' },
               React.createElement(
@@ -1988,7 +2085,7 @@ module.exports = React.createClass({
                   )
                 )
               )
-            ),
+            ) : '',
             React.createElement(
               'li',
               { className: 'navbar-item-area' },
@@ -2026,7 +2123,10 @@ module.exports = React.createClass({
       React.createElement(
         'div',
         { className: 'container-content' },
-        this.props.children
+        this.props.children && React.cloneElement(this.props.children, {
+          isAdmin: this.state.isAdmin,
+          username: this.state.username
+        })
       )
     );
   }
@@ -2210,17 +2310,12 @@ module.exports = React.createClass({
         { className: 'waves-effect waves-light btn blue' },
         'Connect'
       ),
-      React.createElement(
+      this.props.isAdmin || this.props.username == this.props.profileName ? React.createElement(
         'a',
         { className: 'waves-effect waves-light btn green modal-trigger', href: '#modal1' },
         'Edit'
-      ),
-      React.createElement(
-        'a',
-        { className: 'waves-effect waves-light btn red' },
-        'Delete'
-      ),
-      React.createElement(
+      ) : '',
+      this.props.isAdmin || this.props.username == this.props.profileName ? React.createElement(
         'div',
         { id: 'modal1', className: 'modal' },
         React.createElement(
@@ -3296,7 +3391,12 @@ module.exports = React.createClass({
             )
           )
         )
-      )
+      ) : '',
+      this.props.isAdmin ? React.createElement(
+        'a',
+        { className: 'waves-effect waves-light btn red' },
+        'Delete'
+      ) : ''
     );
   }
 });
@@ -3304,37 +3404,60 @@ module.exports = React.createClass({
 },{"react":238}],20:[function(require,module,exports){
 const React = require('react');
 
+const Link = require('react-router').Link;
+
 module.exports = React.createClass({
-  displayName: "exports",
+  displayName: 'exports',
 
   render() {
     return React.createElement(
-      "div",
-      { className: "" },
+      'div',
+      { className: '' },
       React.createElement(
-        "div",
-        { className: "col s6" },
+        'div',
+        { className: 'col s6' },
         React.createElement(
-          "span",
-          { className: "bold" },
-          "Interested in: ",
-          this.props.interest
+          'span',
+          { className: 'bold' },
+          'Interested in: ',
+          React.createElement(
+            Link,
+            { to: '/s?keyword=Arts' },
+            this.props.interest
+          )
         )
       ),
       React.createElement(
-        "div",
-        { className: "col s6" },
+        'div',
+        { className: 'col s6' },
         React.createElement(
-          "span",
-          { className: "bold" },
-          "Connections (62):"
+          'span',
+          { className: 'bold' },
+          'Connections (62):'
+        ),
+        React.createElement(
+          'ul',
+          { className: 'connection-list inline' },
+          React.createElement(
+            'li',
+            { className: 'inline' },
+            React.createElement(
+              Link,
+              { to: '/profile/admin' },
+              React.createElement('img', { src: '/img/003.jpg',
+                className: 'circle connection-pic tooltipped',
+                'data-position': 'bottom',
+                'data-delay': '10',
+                'data-tooltip': 'Peter Bernard M. Rupa' })
+            )
+          )
         )
       )
     );
   }
 });
 
-},{"react":238}],21:[function(require,module,exports){
+},{"react":238,"react-router":70}],21:[function(require,module,exports){
 const React = require('react');
 
 const Post = require('../post/Post.jsx');
@@ -3350,7 +3473,7 @@ module.exports = React.createClass({
       experiences: []
     };
   },
-  componentDidMount() {
+  componentWillMount() {
     var self = this;
 
     $.ajax({
@@ -3372,8 +3495,6 @@ module.exports = React.createClass({
         self.setState({
           experiences: data
         });
-
-        console.log(self.state);
       },
       'error'(err) {
         console.error(err);
@@ -3405,7 +3526,11 @@ module.exports = React.createClass({
       React.createElement(
         'div',
         { className: 'row small-margin' },
-        React.createElement(ControlPanel, null)
+        React.createElement(ControlPanel, {
+          username: this.props.username,
+          isAdmin: this.props.isAdmin,
+          profileName: this.state.username
+        })
       ),
       React.createElement(
         'div',
