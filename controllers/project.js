@@ -41,7 +41,11 @@ exports.getProjects = function(req, res) {
 exports.createProject = function(req, res) {
 
     var results = [];
-    var path = (typeof req.file != "undefined")? req.file.path: null;
+    var path = null;
+    if(typeof req.file != "undefined"){
+        path = req.file.path;
+        path = path.replace("public", "");
+    }
 
     if(req.session.username != req.body.username){
         return res.status(403).json({success: false})
@@ -92,7 +96,12 @@ exports.createProject = function(req, res) {
 exports.updateProject = function(req, res) {
 
     var results = [];
-    var path = (typeof req.file != "undefined")? req.file.path: null;
+    var path = null;
+    if(typeof req.file != "undefined"){
+        path = req.file.path;
+        path = path.replace("public", "");
+    }
+
     if(req.session.username != req.body.username){
         return res.status(403).json({success: false})
     }

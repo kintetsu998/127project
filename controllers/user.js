@@ -157,9 +157,11 @@ exports.createUser = function(req, res) {
 exports.updateUser = function(req, res) {
 
     var results = [];
-    var path = (typeof req.file != "undefined")? req.file.path: null;
-
-    console.log("Update User: " + req.body.username);
+    var path = null;
+    if(typeof req.file != "undefined"){
+        path = req.file.path;
+        path = path.replace("public", "");
+    }
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
@@ -292,7 +294,10 @@ exports.createUserExperience = function(req, res){
         }
 
         // SQL Query > Insert Data
-        client.query("INSERT INTO user_experience(title, company, username) values($1, $2, $3)", [req.body.title, req.body.company, req.body.username]);
+        client.query("INSERT INTO user_experience(title, company, username) values($1, $2, $3)", [req.body.title, req.body.company, req.body.username]
+            , function (err, rows, res){
+
+        });
 
         // SQL Query > Select Data
         var query = client.query("SELECT * from user_experience where company=$1", [req.body.company]);
@@ -520,11 +525,12 @@ exports.approveConnectUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("UPDATE user_connection set approvedat = now() where username1=$1 and username2=$2",
+        var query = client.query("UPDATE user_connection set approvedat = now() where (username1=$1 and username2=$2) or (username1=$2 and username2=$1)",
             [req.body.username1, req.body.username2]);
 
         query.on('end', function() {
             done();
+            return res.status(200).json({ success: true });
         });
 
         query.on('error', function(err) {
@@ -549,11 +555,40 @@ exports.unconnect = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("DELETE FROM user_connection WHERE username1=$1 and username2=$2",
+        var query = client.query("DELETE FROM user_connection where (username1=$1 and username2=$2) or (username1=$2 and username2=$1)",
             [req.body.username1, req.body.username2]);
 
         query.on('end', function() {
             done();
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+}
+
+exports.showConnections = function(req, res){
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT * from user_connection join users on user_connection.username = users.username where username1 = $1 or username2 = $1", [req.query.username]);
+
+        query.on('row', function(row) {
+            results.push(row);
+        });
+
+        query.on('end', function() {
+            done();
+            return res.json(results);
         });
 
         query.on('error', function(err) {
@@ -574,7 +609,7 @@ exports.showMostInterestUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by fieldofinterest order by count(fieldofinterest) desc");
+        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by fieldofinterest having count(fieldofinterest) >= ALL(SELECT count(fieldofinterest) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by fieldofinterest);");
 
         query.on('row', function(row) {
             results.push(row);
@@ -603,36 +638,7 @@ exports.showMostOccupationUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT occupation, count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation order by count(occupation) desc");
-
-        query.on('row', function(row) {
-            results.push(row);
-        });
-
-        query.on('end', function() {
-            done();
-            return res.json(results);
-        });
-
-        query.on('error', function(err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err});
-        });
-    });
-}
-
-exports.showConnections = function(req, res){
-    var results = [];
-
-    pg.connect(conString, function (err, client, done) {
-        if(err) {
-          done();
-          console.log(err);
-          return res.status(500).json({ success: false, data: err});
-        }
-
-        var query = client.query("SELECT * from user_connection join users", [req.query.username]);
+        var query = client.query("SELECT occupation, count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation having count(occupation) >= ALL(SELECT count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation)");
 
         query.on('row', function(row) {
             results.push(row);
@@ -661,7 +667,7 @@ exports.showMostOccupation = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT occupation, count(occupation) from users group by occupation order by count(occupation) desc");
+        var query = client.query("SELECT occupation, count(occupation) from users group by occupation having count(occupation) >= ALL(SELECT count(occupation) from users group by occupation);");
 
         query.on('row', function(row) {
             results.push(row);
@@ -690,7 +696,7 @@ exports.showMostInterest = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users group by fieldofinterest order by count(fieldofinterest) desc");
+        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users group by fieldofinterest having count(fieldofinterest) >= ALL(SELECT count(fieldofinterest) from users group by fieldofinterest);");
 
         query.on('row', function(row) {
             results.push(row);
