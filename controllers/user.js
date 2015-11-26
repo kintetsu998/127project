@@ -567,7 +567,7 @@ exports.showMostInterestUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by fieldofinterest order by count(fieldofinterest) desc");
+        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by fieldofinterest having count(fieldofinterest) >= ALL(SELECT count(fieldofinterest) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by fieldofinterest);");
 
         query.on('row', function(row) {
             results.push(row);
@@ -596,7 +596,7 @@ exports.showMostOccupationUser = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT occupation, count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation order by count(occupation) desc");
+        var query = client.query("SELECT occupation, count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation having count(occupation) >= ALL(SELECT count(occupation) from users join user_connection on users.username = user_connection.username2 where user_connection.username1 = $1 group by occupation);");
 
         query.on('row', function(row) {
             results.push(row);
@@ -654,7 +654,7 @@ exports.showMostOccupation = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT occupation, count(occupation) from users group by occupation order by count(occupation) desc");
+        var query = client.query("SELECT occupation, count(occupation) from users group by occupation having count(occupation) >= ALL(SELECT count(occupation) from users group by occupation);");
 
         query.on('row', function(row) {
             results.push(row);
@@ -683,7 +683,7 @@ exports.showMostInterest = function(req, res){
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users group by fieldofinterest order by count(fieldofinterest) desc");
+        var query = client.query("SELECT fieldofinterest, count(fieldofinterest) from users group by fieldofinterest having count(fieldofinterest) >= ALL(SELECT count(fieldofinterest) from users group by fieldofinterest);");
 
         query.on('row', function(row) {
             results.push(row);

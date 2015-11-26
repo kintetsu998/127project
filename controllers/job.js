@@ -142,7 +142,7 @@ exports.updateJob = function(req, res) {
         path = req.file.path;
         path = path.replace("public", "");
     }
-    
+
     if(req.session.username != req.body.username){
         return res.status(403).json({success: false})
     }
@@ -480,7 +480,7 @@ exports.getHottestJobs = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT jobid, jobname, fieldofinterest FROM job order by numberofviews desc");
+        var query = client.query("SELECT jobid, jobname, fieldofinterest FROM job where numberofviews = (select MAX(numberofviews) from job)");
         query.on('row', function(row) {
             results.push(row);
         });

@@ -57,17 +57,7 @@ module.exports = function (router) {
 		.post(user.connectUser) //body: username1, username2
 		.delete(user.unconnect); //body: username1, username2
 
-	router.route('/api/user-connection-interest')
-		.get(user.showMostInterestUser); //session: username
-
-	router.route('/api/user-connection-occupation')
-		.get(user.showMostOccupationUser); //session: username
-
-	router.route('/api/user-most-interest')
-		.get(user.showMostInterest);
-
-	router.route('/api/user-most-occupation')
-		.get(user.showMostOccupation);
+	
 
 	router.route('/api/user-notif/')
 		.get(notif.getNotifFromUser) //query: username
@@ -88,12 +78,12 @@ module.exports = function (router) {
 	router.route('/api/job-increment')
 		.put(job.updateJobView);
 
+	router.route('/api/job-recommended')
+		.get(job.getRecommendedJobs);
+
 	router.route('/api/job-notif/')
 		.get(notif.getNotifFromJob) //query: jobid
 		.post(notif.createNotifFromJob); //body: text, url, jobid
-
-	router.route('/api/job-hottest/')
-		.get(job.getHottestJobs);
 
 	router.route('/api/job-applicant/')
 		.get(job.getApplicants) //query: jobid
@@ -105,6 +95,24 @@ module.exports = function (router) {
 
 	router.route('/api/job-close/')
 		.post(job.closeJob); //body: jobid
+
+	//-------------------STATS-------------------
+	router.route('/api/user-connection-interest')
+		.get(user.showMostInterestUser); //session: username
+
+	router.route('/api/user-connection-occupation')
+		.get(user.showMostOccupationUser); //session: username
+
+	router.route('/api/user-most-interest')
+		.get(user.showMostInterest);
+
+	router.route('/api/user-most-occupation')
+		.get(user.showMostOccupation);
+
+	router.route('/api/job-hottest/')
+		.get(job.getHottestJobs);
+
+	//-------------------------------------------
 
 	router.route('/api/notif/')
 		.get(notif.getNotifs);
