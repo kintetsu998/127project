@@ -479,10 +479,12 @@ Badboy	BadBoy&Co.	xXxBaDbOyZzZ
 
 COPY users (username, password, fname, mname, lname, occupation, college, degree, isadmin, createdat, country, approvedat, fieldofinterest, company, picture) FROM stdin;
 anon12345	nooneknows	Hidden	Anon	Anonymous	administrator	UP-ish	BS Vulcanizing	1	2015-11-22	Philippines	\N	Gambling	Anonymity Merchandise	\N
-test	test	test	test	test	test	test	test	0	2015-11-23	test	\N	test	test	uploads/c798a70b317c5ea5538e4d8fe31a33a0
 admin	useruser	Jireh Lim	Fans	Club	\N	\N	\N	1	2015-10-29	Philippines	\N	Computing	\N	\N
 procopio	secret	NAGG	SI	BATUS	housewife	CDLB	BS LoL	0	2015-11-15	Philippines	\N	Computing	\N	\N
 xXxBaDbOyZzZ	iamsopogi	Juan	Gregoriyo	dela Cruz	Janitor	UP with reservations	BS Rubix Cube	0	2015-11-22	Philippines	2015-11-22	Computing	\N	\N
+asfasf	asfasf	asasf	asfasf	asasf	asfasf	asfasf	asfasf	0	2015-11-26	asfasf	\N	asfasf	asfasf	\N
+anonimity	toosecret	Anon	Anon	Anonymous	Secret	UP	BSGaming	0	2015-11-26	Philippines	\N	Gaming	Secret	uploads/fff04eeb81284ce3330d4ad417d2058a.jpg
+test	test	test	test	test	test	test	test	0	2015-11-23	test	\N	test	test	
 \.
 
 

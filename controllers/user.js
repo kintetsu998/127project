@@ -92,6 +92,11 @@ exports.getOneUser = function(req, res) {
 exports.createUser = function(req, res) {
 
     var results = [];
+    var path = (typeof req.file != "undefined")? req.file.path: null;
+
+    if(req.body.password == ""){
+        return res.status(404).json({ succes: false, msg: "Password cannot be null!"});
+    }
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
@@ -104,7 +109,7 @@ exports.createUser = function(req, res) {
 
         // SQL Query > Insert Data
         var create = client.query("INSERT INTO USERS(username, password, fname, mname, lname, isadmin, createdat, country, occupation, company, college, degree, fieldofinterest, picture) values($1, $2, $3, $4, $5, $6, now(), $7, $8, $9, $10, $11, $12, $13)", 
-            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, req.file.path]);
+            [req.body.username, req.body.password, req.body.fname, req.body.mname, req.body.lname, req.body.isadmin, req.body.country, req.body.occupation, req.body.company, req.body.college, req.body.degree, req.body.fieldofinterest, path]);
 
         create.on('error', function(err) {
             done();
@@ -138,6 +143,7 @@ exports.createUser = function(req, res) {
 exports.updateUser = function(req, res) {
 
     var results = [];
+    var path = (typeof req.file != "undefined")? req.file.path: null;
 
     Console.log("Update User: " + req.body.username);
 
@@ -152,7 +158,7 @@ exports.updateUser = function(req, res) {
 
         // SQL Query > Update Data
         var update = client.query("UPDATE users SET fname=($2), mname=($3), lname=($4), occupation=($5), college=($6), degree=($7), picture=($8), country=($9), company=($10) WHERE username=($1)",
-            [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, req.file.path, req.body.country, req.body.company]);
+            [req.body.username, req.body.fname, req.body.mname, req.body.lname, req.body.occupation, req.body.college, req.body.degree, path, req.body.country, req.body.company]);
 
         update.on('error', function(err) {
             done();

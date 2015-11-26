@@ -6,8 +6,24 @@ var notif = require('./../controllers/notification');
 var post = require('./../controllers/post');
 var project = require('./../controllers/project');
 
-var multer = require('multer')({ dest: './uploads/'}); //destination folder
-var type = multer.single('image'); //name of the input file: <input type="file" name="image" />
+/*code from: https://github.com/expressjs/multer/issues/170*/
+var crypto = require('crypto');
+var multer = require('multer');
+var path = require('path');
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) { //destination folder
+		cb(null, './uploads/')
+	},
+	filename: function (req, file, cb) {
+		crypto.pseudoRandomBytes(16, function (err, raw) {
+			if (err) return cb(err);
+
+			cb(null, raw.toString('hex') + path.extname(file.originalname));
+		});
+	}
+});
+var upload = multer({ storage: storage });
+var type = upload.single('image'); //name of the input file: <input type="file" name="image" />
 
 module.exports = function (router) {
 	router.route('/')

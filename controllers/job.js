@@ -93,6 +93,7 @@ exports.getJobOne = function(req, res) {
 exports.createJob = function(req, res) {
 
     var results = [];
+    var path = (typeof req.file != "undefined")? req.file.path: null;
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
@@ -105,7 +106,7 @@ exports.createJob = function(req, res) {
 
         // SQL Query > Insert Data
         client.query("INSERT INTO JOB(jobname, country, company, username, createdat, picture) values($1, $2, $3, $4, now(), $5)", 
-            [req.body.jobname, req.body.country, req.body.company, req.body.username, req.file.path]);
+            [req.body.jobname, req.body.country, req.body.company, req.body.username, path]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * from job where jobid=currval('job_jobid_seq')");
@@ -132,7 +133,9 @@ exports.createJob = function(req, res) {
 exports.updateJob = function(req, res) {
 
     var results = [];
-
+    var path = null;
+    if(req.file.hasOwnProperty(path)) path = req.file.path;
+    
     if(req.session.username != req.body.username){
         return res.status(403).json({success: false})
     }
@@ -148,7 +151,7 @@ exports.updateJob = function(req, res) {
 
         // SQL Query > Update Data
         client.query("UPDATE job SET jobname = ($5), description=($2), company=($3), picture=($4) WHERE jobid=($1)", 
-            [req.body.jobid, req.body.description, req.body.company, req.file.path, req.body.jobname]);
+            [req.body.jobid, req.body.description, req.body.company, path, req.body.jobname]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * FROM job where jobid=$1", [req.body.jobid]);

@@ -41,6 +41,7 @@ exports.getProjects = function(req, res) {
 exports.createProject = function(req, res) {
 
     var results = [];
+    var path = (typeof req.file != "undefined")? req.file.path: null;
 
     if(req.session.username != req.body.username){
         return res.status(403).json({success: false})
@@ -57,7 +58,7 @@ exports.createProject = function(req, res) {
 
         // SQL Query > Insert Data
         var create = client.query("INSERT INTO project(projectname, createdat, username, picture) VALUES ($1, now(), $2, $3)", 
-        	[req.body.projectname, req.body.username], req.file.path);
+        	[req.body.projectname, req.body.username], path);
 
         create.on('error', function(err) {
             done();
@@ -91,7 +92,7 @@ exports.createProject = function(req, res) {
 exports.updateProject = function(req, res) {
 
     var results = [];
-
+    var path = (typeof req.file != "undefined")? req.file.path: null;
     if(req.session.username != req.body.username){
         return res.status(403).json({success: false})
     }
@@ -107,7 +108,7 @@ exports.updateProject = function(req, res) {
 
         // SQL Query > Update Data
         client.query("UPDATE project SET projectname = ($2), description = ($3), picture = ($4), fieldrelated=($5) WHERE projectid=($1)", 
-            [req.body.projectid, req.body.projectname, req.body.description, req.file.path, req.body.fieldrelated]);
+            [req.body.projectid, req.body.projectname, req.body.description, path, req.body.fieldrelated]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * project post where projectid=$1", [req.body.projectid]);
