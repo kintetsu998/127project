@@ -64,6 +64,9 @@ module.exports = function (router) {
 		.put(user.approveConnectUser) //body: username1, username2
 		.delete(user.unconnect); //body: username1, username2
 
+	router.route('/api/user-check-connected')
+		.get(user.checkConnection) //query: username1, username2
+
 	//----------------------- USERS NOTIF ----------------------
 	router.route('/api/user-notif/')
 		.get(notif.getNotifFromUser) //query: username
@@ -77,15 +80,21 @@ module.exports = function (router) {
 	router.route('/api/job-approved/')
 		.get(job.getApprovedJobs);
 
+	router.route('/api/job-pending/')
+		.get(job.getPendingJobs);
+
 	router.route('/api/job/')
 		.get(job.getJobOne) //query: jobid
-		.post(type, job.createJob) //body: name, country, company, username
+		.post(type, job.createJob) //body: name, country, company, username, description
 		.put(type, job.updateJob) //body: jobid, description, fieldofinterestid, company, picture, name
 		.delete(job.deleteJob); //body: jobid
 
+	router.route('/api/job-user')
+		.get(job.getJobsFromUsername) // query: username
+
 	//----------------------- JOB VIEW INCREMENT ----------------------
 	router.route('/api/job-increment')
-		.put(job.updateJobView);
+		.put(job.updateJobView); //body: jobid
 
 	//----------------------- RECOMMENDED JOBS ----------------------
 	router.route('/api/job-recommended')

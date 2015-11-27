@@ -1,3 +1,5 @@
+'use strict';
+
 const React = require('react');
 
 module.exports = React.createClass({
@@ -8,36 +10,45 @@ module.exports = React.createClass({
   },
   editProfile(e){
     e.preventDefault();
+
+    let fd = new FormData(e.target)
+
+    fd.append('username', this.props.profileName);
+
+    this.props.edit(fd);
   },
   render(){
     return(
       <div className="card-panel center">
-        {this.props.username != this.props.profileName?
-          <a className="waves-effect waves-light btn blue">Connect</a>
+        {this.props.username != this.props.profileName ?
+          !this.props.isConnected?
+            <a className="waves-effect waves-light btn blue" onClick={this.props.connect.bind(null, this.props.profileName, this.props.name)}>Connect</a>
+          :
+            <a className="waves-effect waves-light btn blue disabled">Connected</a>
           :''
         }
 
         {this.props.isAdmin || this.props.username == this.props.profileName?
-          <a className="waves-effect waves-light btn green modal-trigger" href="#modal1">Edit</a>
+          <a className="waves-effect waves-light btn green modal-trigger" href="#modal2">Edit</a>
           :''
         }
 
         {this.props.isAdmin || this.props.username == this.props.profileName?
-          <div id="modal1" className="modal">
+          <div id="modal2" className="modal">
             <form onSubmit={this.editProfile}>
               <div className="modal-content">
                 <h4>Edit profile</h4>
 
-                <input id="profile-fname" type="text" placeholder="First name"/>
-                <input id="profile-mname" type="text" placeholder="Middle name"/>
-                <input id="profile-lname" type="text" placeholder="Last name"/>
-                <input id="profile-occupation" type="text" placeholder="Occupation"/>
-                <input id="profile-company" type="text" placeholder="Company"/>
-                <input id="profile-college" type="text" placeholder="College"/>
-                <input id="profile-degree" type="text" placeholder="Degree"/>
-                <input id="profile-interest" type="text" placeholder="Interest"/>
+                <input id="profile-fname" type="text" name="fname" placeholder="First name"/>
+                <input id="profile-mname" type="text" name="mname" placeholder="Middle name"/>
+                <input id="profile-lname" type="text" name="lname" placeholder="Last name"/>
+                <input id="profile-occupation" type="text" name="occupation" placeholder="Occupation"/>
+                <input id="profile-company" type="text" name="company" placeholder="Company"/>
+                <input id="profile-college" type="text" name="college" placeholder="College"/>
+                <input id="profile-degree" type="text" name="degree" placeholder="Degree"/>
+                <input id="profile-fieldofinterest" type="text" name="fieldofinterest" placeholder="Interest"/>
                 <div className="input-field">
-                  <select id="job-country">
+                  <select id="job-country" name="country">
                     <option value="Afghanistan">Afghanistan</option>
                     <option value="Åland Islands">Åland Islands</option>
                     <option value="Albania">Albania</option>
@@ -257,7 +268,7 @@ module.exports = React.createClass({
         }
 
         {this.props.isAdmin?
-          <a className="waves-effect waves-light btn red">Delete</a>
+          <a className="waves-effect waves-light btn red" onClick={this.props.delete}>Delete</a>
           : ''
         }
       </div>

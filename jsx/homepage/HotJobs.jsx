@@ -22,6 +22,8 @@ module.exports = React.createClass({
     });
   },
   render() {
+    if(this.state.hotJobs.length == 0) return (<div></div>);
+
     return (
       <div className="card-panel">
         <h5>Recommended for you:</h5>

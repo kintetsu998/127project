@@ -6,7 +6,7 @@ const Help = require('../helpers.jsx');
 
 const NewsFeed = require('./NewsFeed.jsx');
 const HotJobs = require('./HotJobs.jsx');
-const ControlPanel = require('./ControlPanel.jsx');
+const JobWrapper = require('./JobWrapper.jsx');
 const DidYouKnow = require('./DidYouKnow.jsx');
 
 module.exports = React.createClass({
@@ -55,7 +55,7 @@ module.exports = React.createClass({
               </div>
             </div>
           </Link>
-          <ControlPanel/>
+          <JobWrapper username={this.props.username}/>
           <HotJobs/>
           <DidYouKnow/>
         </div>

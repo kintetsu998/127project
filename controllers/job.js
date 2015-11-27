@@ -45,7 +45,7 @@ exports.getPendingJobs = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT jobid, jobname, fname, mname, lname, job.fieldofinterest FROM JOB right join users on job.username = users.username where approvedat is null");
+        var query = client.query("SELECT jobid, jobname, fname, mname, lname, job.fieldofinterest FROM JOB join users on job.username = users.username where job.approvedat is null");
         query.on('row', function(row) {
             results.push(row);
         });
@@ -64,7 +64,6 @@ exports.getPendingJobs = function(req, res) {
 };
 
 exports.getJobOne = function(req, res) {
-    var results = [];
     pg.connect(conString, function (err, client, done) {
         if(err) {
           done();
@@ -72,14 +71,10 @@ exports.getJobOne = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT * FROM JOB where jobid = $1", [req.query.jobid]);
+        var query = client.query("SELECT * FROM JOB where jobid = $1 and approvedat is not null", [req.query.jobid]);
         query.on('row', function(row) {
-            results.push(row);
-        });
-
-        query.on('end', function() {
-            done();
-            return res.json(results);
+          done();
+          return res.json(row);
         });
 
         query.on('error', function(err) {
@@ -89,6 +84,35 @@ exports.getJobOne = function(req, res) {
         });
     });
 };
+
+exports.getJobsFromUsername = function(req, res) {
+    var results = [];
+
+    pg.connect(conString, function (err, client, done) {
+        if(err) {
+          done();
+          console.log(err);
+          return res.status(500).json({ success: false, data: err});
+        }
+
+        var query = client.query("SELECT * FROM JOB where username = $1 and approvedat is not null", [req.query.username]);
+        query.on('row', function(row) {
+          results.push(row);
+        });
+
+        query.on('end', function(){
+          done();
+          res.send(results);
+        });
+
+        query.on('error', function(err) {
+            done();
+            console.log(err);
+            return res.status(500).json({ success: false, data: err});
+        });
+    });
+};
+
 
 exports.createJob = function(req, res) {
 
@@ -109,8 +133,8 @@ exports.createJob = function(req, res) {
         }
 
         // SQL Query > Insert Data
-        client.query("INSERT INTO JOB(jobname, country, company, username, createdat, picture) values($1, $2, $3, $4, now(), $5)",
-            [req.body.jobname, req.body.country, req.body.company, req.body.username, path]);
+        client.query("INSERT INTO JOB(jobname, description, country, company, username, fieldofinterest, createdat) values($1, $2, $3, $4, $5, $6, now())",
+            [req.body.jobname, req.body.description, req.body.country, req.body.company, req.body.username, req.body.fieldofinterest]);
 
         // SQL Query > Select Data
         var query = client.query("SELECT * from job where jobid=currval('job_jobid_seq')");
@@ -186,10 +210,6 @@ exports.deleteJob = function(req, res) {
 
     var results = [];
 
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
-
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
         // Handle connection errors
@@ -200,7 +220,7 @@ exports.deleteJob = function(req, res) {
         }
 
         // SQL Query > Delete Data
-        var query = client.query("DELETE FROM jobs WHERE jobid=($1)", [req.body.jobid]);
+        var query = client.query("DELETE FROM job WHERE jobid=($1)", [req.body.jobid]);
 
         // After all data is returned, close connection and return results
         query.on('end', function() {
@@ -262,10 +282,6 @@ exports.approveJob = function(req, res) {
 exports.closeJob = function(req, res) {
 
     var results = [];
-
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
 
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
@@ -338,10 +354,6 @@ exports.addApplicant = function(req, res){
 exports.getApplicants = function(req, res){
     var results = [];
 
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
-
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
         // Handle connection errors
@@ -352,7 +364,7 @@ exports.getApplicants = function(req, res){
         }
 
         // SQL Query > Select Data
-        var query = client.query("SELECT * from job_applicant where jobid=$1", [req.query.jobid]);
+        var query = client.query("SELECT job_applicant.jobid, job_applicant.username, users.fname, users.mname, users.lname from job_applicant, users where job_applicant.username=users.username and jobid=$1", [req.query.jobid]);
 
         // Stream results back one row at a time
         query.on('row', function(row) {
@@ -435,10 +447,6 @@ exports.getRecommendedJobs = function(req, res) {
 exports.updateJobView = function(req, res) {
     var results = [];
 
-    if(req.session.username != req.body.username){
-        return res.status(403).json({success: false})
-    }
-
     // Get a Postgres client from the connection pool
     pg.connect(conString, function(err, client, done) {
         // Handle connection errors
@@ -478,7 +486,7 @@ exports.getHottestJobs = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        var query = client.query("SELECT jobid, jobname, fieldofinterest, numberofviews as count FROM job where numberofviews = (select MAX(numberofviews) from job)");
+        var query = client.query("SELECT jobid, jobname, fieldofinterest, numberofviews as count FROM job where numberofviews = (select MAX(numberofviews) from job) limit 1");
         query.on('row', function(row) {
           done();
           return res.json(row);

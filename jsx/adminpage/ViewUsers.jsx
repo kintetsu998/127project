@@ -25,8 +25,6 @@ module.exports = React.createClass({
       method: 'GET',
       success(users){
         self.setState({users});
-
-        console.log(self.state.users);
       }
     });
   },
@@ -46,17 +44,17 @@ module.exports = React.createClass({
         {this.state.users.length > 0?
           <ul className="collection">
             {this.state.users.map(user => {
-                let fullName = user.fname + ' ' + Help.parseMiddleName(user.mname) + ' ' + user.lname;
-                let url = '/profile/' + user.username;
+              let fullName = Help.getFullName(user.fname, user.mname, user.lname);
+              let url = '/profile/' + user.username;
 
-                return (
-                  <Link to={url}>
-                    <li className="collection-item avatar valign-wrapper" key={user.username}>
-                      <img src={user.picture} alt="" className="circle"/>
-                      <span className="title">{fullName}</span>
-                    </li>
-                  </Link>
-                );
+              return (
+                <Link to={url}>
+                  <li className="collection-item avatar valign-wrapper" key={user.username}>
+                    <img src={user.picture} alt="" className="circle"/>
+                    <span className="title">{fullName}</span>
+                  </li>
+                </Link>
+              );
             })}
           </ul>
           :''

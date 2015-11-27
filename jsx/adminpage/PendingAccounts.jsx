@@ -59,7 +59,7 @@ module.exports = React.createClass({
           {this.state.pendingUsers.length > 0?
             <ul className="collection">
               {this.state.pendingUsers.map((user)=>{
-                let fullName = user.fname + ' ' + Help.parseMiddleName(user.mname) + ' ' + user.lname;
+                let fullName = Help.getFullName(user.fname, user.mname, user.lname);
 
                 return (
                   <li className="collection-item avatar">

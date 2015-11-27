@@ -13,11 +13,6 @@ module.exports = React.createClass({
       username: '',
     };
   },
-  toggleNotifications(){
-    this.setState({
-      notifications: this.state.notifications? false: true
-    });
-  },
   search(e){
     e.preventDefault();
 
@@ -71,17 +66,11 @@ module.exports = React.createClass({
                 </li>
                 :''
               }
-              <li className="navbar-item-area">
-                <div className="navbar-item">
-                  <a href="#" onClick={this.toggleNotifications}><i className="material-icons">notifications</i></a>
-                </div>
-                {this.state.notifications? <Notifications/>:''}
-              </li>
             </ul>
             <div className="right tab-element tab-input hide-on-med-and-down">
               <form action="/search" onSubmit={this.search}>
                 <div className="">
-                  <input type="text" id="search" placeholder="Search"/>
+                  <input type="text" id="search" placeholder="Search" autoComplete="off"/>
                 </div>
               </form>
             </div>

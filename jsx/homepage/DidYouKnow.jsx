@@ -38,7 +38,7 @@ module.exports = React.createClass({
         <p>That...</p>
 
         {this.state.mostOccupation?
-          <p>...most of your connections are <Link to={"/s?keyword=Janitor".concat(this.state.mostOccupation.occupation)}><strong>{this.state.mostOccupation.occupation}</strong></Link>? ({this.state.mostOccupation.count} connections) </p>
+          <p>...most of your connections are <Link to={"/s?keyword=".concat(this.state.mostOccupation.occupation)}><strong>{this.state.mostOccupation.occupation}</strong></Link>? ({this.state.mostOccupation.count} connections) </p>
           :''
         }
 

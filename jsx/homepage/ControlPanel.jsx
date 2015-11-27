@@ -1,9 +1,22 @@
+'use strict';
+
 const React = require('react');
 
 module.exports = React.createClass({
   createJob(e){
     e.preventDefault();
-    alert('.');
+
+    let name = $('#job-name').val();
+    let description = $('#job-description').val();
+    let company = $('#job-company').val();
+    let field = $('#job-field').val();
+    let country = $('#job-country').val();
+
+    this.props.addJob(name, description, company, field, country);
+
+    $('#modal1').closeModal();
+    $('#create-job')[0].reset();
+    Materialize.toast('Job ' + name + ' created and is subject to an admin\'s approval.', 5000, 'green');
   },
   componentDidMount(){
     $('.modal-trigger').leanModal();
@@ -16,7 +29,7 @@ module.exports = React.createClass({
         <a className="waves-effect waves-light btn blue modal-trigger" href="#modal1">Create job</a>
 
         <div id="modal1" className="modal">
-          <form onSubmit={this.createJob}>
+          <form id="create-job" onSubmit={this.createJob}>
             <div className="modal-content">
               <h4>Create a job</h4>
 

@@ -7,5 +7,8 @@ module.exports = {
     a = a.join('');
     a += '.';
     return a;
+  },
+  getFullName(fname, mname, lname){
+    return fname + ' ' + this.parseMiddleName(mname) + ' ' + lname;
   }
 };

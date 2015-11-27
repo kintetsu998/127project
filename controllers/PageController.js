@@ -1,5 +1,6 @@
 //connecting to postgre
 var pg = require('pg');
+var async = require('async');
 var c = require('../config/config.js');
 var conString = "postgres://" + c.username +":" + c.password + "@localhost/" + c.database + "";
 
@@ -142,44 +143,54 @@ exports.search = function(req, res) {
           return res.status(500).json({ success: false, data: err});
         }
 
-        // SQL Query > Select Data
-        var query = client.query("SELECT name, fieldofinterest from job where LOWER(name)=LOWER($1) OR LOWER(fieldofinterest)=LOWER($1)",
-            [req.query.keyword], function (err, qry){
-            var query1 = client.query("SELECT fname, mname, lname, occupation, fieldofinterest from users where LOWER(fname)=LOWER($1) OR LOWER(mname)=LOWER($1) OR LOWER(lname)=LOWER($1) OR LOWER(fname::text||' '||lname::text)=LOWER($1) OR LOWER(fname::text||' '||mname::text||' '||lname::text)=LOWER($1) OR LOWER(occupation)=LOWER($1) OR LOWER(fieldofinterest)=LOWER($1)",
-                [req.query.keyword]);
+        async.parallel({
+          users: function(callback){
+            var results = [];
 
-            query1.on('row', function(row) {
-                console.log(row);
+            var query = client.query("SELECT fname, mname, lname, occupation, fieldofinterest, picture, username, company FROM users where (LOWER(username) = LOWER($1) or LOWER(fieldofinterest) = LOWER($1) or LOWER(occupation) = LOWER($1) or LOWER(fname) = LOWER($1) or LOWER(mname) = LOWER($1) or LOWER(lname) = LOWER($1) or LOWER(company) = LOWER($1) or LOWER(college) = LOWER($1) or LOWER(degree) = LOWER($1)) and approvedat is not null", [req.query.keyword]);
+
+            // Stream results back one row at a time
+            query.on('row', function(row) {
                 results.push(row);
             });
 
-            query1.on('end', function() {
+            // After all data is returned, close connection and return results
+            query.on('end', function() {
                 done();
-                return res.json(results);
+                callback(null, results)
             });
 
-            query1.on('error', function(err) {
+            query.on('error', function(err) {
                 done();
                 console.log(err);
                 return res.status(500).json({ success: false, data: err});
             });
-        });
+          },
+          jobs: function(callback){
+            var results = [];
 
-        query.on('row', function(row) {
-            console.log(row);
-            results.push(row);
-        });
+            var query = client.query("SELECT jobname, jobid FROM job where (LOWER(company) = LOWER($1) or LOWER(username) = LOWER($1) or LOWER(jobname) = LOWER($1) or LOWER(fieldofinterest) = LOWER($1)) and approvedat is not null", [req.query.keyword]);
 
-        // After all data is returned, close connection and return results
-        query.on('end', function() {
-            done();
-        });
+            // Stream results back one row at a time
+            query.on('row', function(row) {
+                results.push(row);
+            });
 
-        query.on('error', function(err) {
-            done();
-            console.log(err);
-            return res.status(500).json({ success: false, data: err});
-        });
+            // After all data is returned, close connection and return results
+            query.on('end', function() {
+                done();
+                callback(null, results)
+            });
+
+            query.on('error', function(err) {
+                done();
+                console.log(err);
+                return res.status(500).json({ success: false, data: err});
+            });
+          }
+        }, function(err, results){
+          res.send(results);
+        })
     });
 };
 
