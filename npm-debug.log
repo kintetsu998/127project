@@ -1,0 +1,433 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   '--save',
+1 verbose cli   'cookie-parser' ]
+2 info using npm@2.10.1
+3 info using node@v0.12.4
+4 verbose install initial load of C:\Users\Peter\Documents\Programs\webApp\Node\127project\package.json
+5 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\async\package.json
+6 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\babel-preset-react\package.json
+7 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\babelify\package.json
+8 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\body-parser\package.json
+9 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\package.json
+10 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\ejs\package.json
+11 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\express\package.json
+12 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\express-session\package.json
+13 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\git\package.json
+14 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\history\package.json
+15 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\method-override\package.json
+16 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\mocha\package.json
+17 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\moment\package.json
+18 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\multer\package.json
+19 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\mysql\package.json
+20 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\pg\package.json
+21 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\pg-native\package.json
+22 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\pg-promise\package.json
+23 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\pg-query\package.json
+24 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\promise\package.json
+25 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\react\package.json
+26 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\react-addons-css-transition-group\package.json
+27 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\react-addons-update\package.json
+28 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\react-dom\package.json
+29 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\react-router\package.json
+30 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\reactify\package.json
+31 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\should\package.json
+32 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\should-http\package.json
+33 verbose installManyTop reading scoped package data from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\supertest\package.json
+34 info package.json async@0.9.0 No license field.
+35 info package.json git@0.1.5 No license field.
+36 info package.json react-addons-css-transition-group@0.14.2 No repository field.
+37 verbose readDependencies loading dependencies from C:\Users\Peter\Documents\Programs\webApp\Node\127project\package.json
+38 verbose install cookie-parser is installed as 1.4.0
+39 silly cache add args [ 'cookie-parser', null ]
+40 verbose cache add spec cookie-parser
+41 silly cache add parsed spec { raw: 'cookie-parser',
+41 silly cache add   scope: null,
+41 silly cache add   name: 'cookie-parser',
+41 silly cache add   rawSpec: '',
+41 silly cache add   spec: '*',
+41 silly cache add   type: 'range' }
+42 silly addNamed cookie-parser@*
+43 verbose addNamed "*" is a valid semver range for cookie-parser
+44 silly addNameRange { name: 'cookie-parser', range: '*', hasData: false }
+45 silly mapToRegistry name cookie-parser
+46 silly mapToRegistry using default registry
+47 silly mapToRegistry registry https://registry.npmjs.org/
+48 silly mapToRegistry uri https://registry.npmjs.org/cookie-parser
+49 verbose addNameRange registry:https://registry.npmjs.org/cookie-parser not in flight; fetching
+50 verbose request uri https://registry.npmjs.org/cookie-parser
+51 verbose request no auth needed
+52 info attempt registry request try #1 at 12:15:00 PM
+53 verbose request id 8378236871730a1c
+54 verbose etag "EY9G5SIXF5JDOA3AF7RU530KN"
+55 http request GET https://registry.npmjs.org/cookie-parser
+56 http 200 https://registry.npmjs.org/cookie-parser
+57 silly get cb [ 200,
+57 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+57 silly get     etag: '"4W945W7U3U761FPWUN6PK3QU"',
+57 silly get     'content-type': 'application/json',
+57 silly get     'cache-control': 'max-age=60',
+57 silly get     'content-length': '20279',
+57 silly get     'accept-ranges': 'bytes',
+57 silly get     date: 'Fri, 27 Nov 2015 04:16:28 GMT',
+57 silly get     via: '1.1 varnish',
+57 silly get     age: '37',
+57 silly get     connection: 'keep-alive',
+57 silly get     'x-served-by': 'cache-lax1423-LAX',
+57 silly get     'x-cache': 'HIT',
+57 silly get     'x-cache-hits': '44',
+57 silly get     'x-timer': 'S1448597788.425897,VS0,VE0',
+57 silly get     vary: 'Accept' } ]
+58 verbose get saving cookie-parser to C:\Users\Peter\AppData\Roaming\npm-cache\registry.npmjs.org\cookie-parser\.cache.json
+59 silly addNameRange number 2 { name: 'cookie-parser', range: '*', hasData: true }
+60 silly addNameRange versions [ 'cookie-parser',
+60 silly addNameRange   [ '1.0.0',
+60 silly addNameRange     '1.0.1',
+60 silly addNameRange     '1.1.0',
+60 silly addNameRange     '1.2.0',
+60 silly addNameRange     '1.3.0',
+60 silly addNameRange     '1.3.1',
+60 silly addNameRange     '1.3.2',
+60 silly addNameRange     '1.3.3',
+60 silly addNameRange     '1.3.4',
+60 silly addNameRange     '1.3.5',
+60 silly addNameRange     '1.4.0' ] ]
+61 silly addNamed cookie-parser@1.4.0
+62 verbose addNamed "1.4.0" is a plain semver version for cookie-parser
+63 silly mapToRegistry name cookie-parser
+64 silly mapToRegistry using default registry
+65 silly mapToRegistry registry https://registry.npmjs.org/
+66 silly mapToRegistry uri https://registry.npmjs.org/cookie-parser
+67 verbose addRemoteTarball https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.0.tgz not in flight; adding
+68 verbose addRemoteTarball [ 'https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.0.tgz',
+68 verbose addRemoteTarball   '73323d5a7de341078c446109c622d2f7008164ee' ]
+69 info retry fetch attempt 1 at 12:15:04 PM
+70 info attempt registry request try #1 at 12:15:04 PM
+71 http fetch GET https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.0.tgz
+72 http fetch 200 https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.0.tgz
+73 silly fetchAndShaCheck shasum 73323d5a7de341078c446109c622d2f7008164ee
+74 verbose addTmpTarball C:\Users\Peter\AppData\Local\Temp\npm-36956-5eac3edb\registry.npmjs.org\cookie-parser\-\cookie-parser-1.4.0.tgz not in flight; adding
+75 verbose addTmpTarball already have metadata; skipping unpack for cookie-parser@1.4.0
+76 silly cache afterAdd cookie-parser@1.4.0
+77 verbose afterAdd C:\Users\Peter\AppData\Roaming\npm-cache\cookie-parser\1.4.0\package\package.json not in flight; writing
+78 verbose afterAdd C:\Users\Peter\AppData\Roaming\npm-cache\cookie-parser\1.4.0\package\package.json written
+79 silly install resolved [ { name: 'cookie-parser',
+79 silly install resolved     description: 'cookie parsing with signatures',
+79 silly install resolved     version: '1.4.0',
+79 silly install resolved     author:
+79 silly install resolved      { name: 'TJ Holowaychuk',
+79 silly install resolved        email: 'tj@vision-media.ca',
+79 silly install resolved        url: 'http://tjholowaychuk.com' },
+79 silly install resolved     contributors: [ [Object] ],
+79 silly install resolved     license: 'MIT',
+79 silly install resolved     repository:
+79 silly install resolved      { type: 'git',
+79 silly install resolved        url: 'https://github.com/expressjs/cookie-parser' },
+79 silly install resolved     keywords: [ 'cookie', 'middleware' ],
+79 silly install resolved     dependencies: { cookie: '0.2.2', 'cookie-signature': '1.0.6' },
+79 silly install resolved     devDependencies: { istanbul: '0.3.20', mocha: '2.2.5', supertest: '1.1.0' },
+79 silly install resolved     files: [ 'LICENSE', 'HISTORY.md', 'index.js' ],
+79 silly install resolved     engines: { node: '>= 0.8.0' },
+79 silly install resolved     scripts:
+79 silly install resolved      { test: 'mocha --reporter spec --bail --check-leaks test/',
+79 silly install resolved        'test-cov': 'istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/',
+79 silly install resolved        'test-travis': 'istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/' },
+79 silly install resolved     gitHead: '7defc09815f04dc7b665fd220b8705fba8d9573d',
+79 silly install resolved     bugs: { url: 'https://github.com/expressjs/cookie-parser/issues' },
+79 silly install resolved     homepage: 'https://github.com/expressjs/cookie-parser',
+79 silly install resolved     _id: 'cookie-parser@1.4.0',
+79 silly install resolved     _shasum: '73323d5a7de341078c446109c622d2f7008164ee',
+79 silly install resolved     _from: 'cookie-parser@*',
+79 silly install resolved     _npmVersion: '1.4.28',
+79 silly install resolved     _npmUser: { name: 'dougwilson', email: 'doug@somethingdoug.com' },
+79 silly install resolved     maintainers: [ [Object], [Object] ],
+79 silly install resolved     dist:
+79 silly install resolved      { shasum: '73323d5a7de341078c446109c622d2f7008164ee',
+79 silly install resolved        tarball: 'http://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.0.tgz' },
+79 silly install resolved     directories: {},
+79 silly install resolved     _resolved: 'https://registry.npmjs.org/cookie-parser/-/cookie-parser-1.4.0.tgz' } ]
+80 info install cookie-parser@1.4.0 into C:\Users\Peter\Documents\Programs\webApp\Node\127project
+81 info installOne cookie-parser@1.4.0
+82 verbose installOne of cookie-parser to C:\Users\Peter\Documents\Programs\webApp\Node\127project not in flight; installing
+83 verbose lock using C:\Users\Peter\AppData\Roaming\npm-cache\_locks\cookie-parser-dbf527aa0b6229fa.lock for C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+84 silly install write writing cookie-parser 1.4.0 to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+85 verbose unbuild node_modules\cookie-parser
+86 info preuninstall cookie-parser@1.4.0
+87 info uninstall cookie-parser@1.4.0
+88 verbose unbuild rmStuff cookie-parser@1.4.0 from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules
+89 info postuninstall cookie-parser@1.4.0
+90 silly gentlyRm C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser is being purged from base C:\Users\Peter\Documents\Programs\webApp\Node\127project
+91 verbose gentlyRm don't care about contents; nuking C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+92 silly vacuum-fs purging C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+93 silly vacuum-fs quitting because other entries in C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules
+94 verbose tar unpack C:\Users\Peter\AppData\Roaming\npm-cache\cookie-parser\1.4.0\package.tgz
+95 verbose tar unpacking to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+96 silly gentlyRm C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser is being purged
+97 verbose gentlyRm don't care about contents; nuking C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+98 silly gunzTarPerm modes [ '777', '666' ]
+99 silly gunzTarPerm extractEntry package.json
+100 silly gunzTarPerm extractEntry README.md
+101 silly gunzTarPerm extractEntry LICENSE
+102 silly gunzTarPerm extractEntry index.js
+103 silly gunzTarPerm extractEntry HISTORY.md
+104 verbose write writing to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\package.json
+105 info preinstall cookie-parser@1.4.0
+106 verbose readDependencies loading dependencies from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\package.json
+107 silly prepareForInstallMany adding cookie@0.2.2 from cookie-parser dependencies
+108 silly prepareForInstallMany adding cookie-signature@1.0.6 from cookie-parser dependencies
+109 verbose readDependencies loading dependencies from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\package.json
+110 silly cache add args [ 'cookie-signature@1.0.6', null ]
+111 verbose cache add spec cookie-signature@1.0.6
+112 silly cache add parsed spec { raw: 'cookie-signature@1.0.6',
+112 silly cache add   scope: null,
+112 silly cache add   name: 'cookie-signature',
+112 silly cache add   rawSpec: '1.0.6',
+112 silly cache add   spec: '1.0.6',
+112 silly cache add   type: 'version' }
+113 silly addNamed cookie-signature@1.0.6
+114 verbose addNamed "1.0.6" is a plain semver version for cookie-signature
+115 silly mapToRegistry name cookie-signature
+116 silly mapToRegistry using default registry
+117 silly mapToRegistry registry https://registry.npmjs.org/
+118 silly mapToRegistry uri https://registry.npmjs.org/cookie-signature
+119 verbose addNameVersion registry:https://registry.npmjs.org/cookie-signature not in flight; fetching
+120 silly cache add args [ 'cookie@0.2.2', null ]
+121 verbose cache add spec cookie@0.2.2
+122 silly cache add parsed spec { raw: 'cookie@0.2.2',
+122 silly cache add   scope: null,
+122 silly cache add   name: 'cookie',
+122 silly cache add   rawSpec: '0.2.2',
+122 silly cache add   spec: '0.2.2',
+122 silly cache add   type: 'version' }
+123 silly addNamed cookie@0.2.2
+124 verbose addNamed "0.2.2" is a plain semver version for cookie
+125 silly mapToRegistry name cookie
+126 silly mapToRegistry using default registry
+127 silly mapToRegistry registry https://registry.npmjs.org/
+128 silly mapToRegistry uri https://registry.npmjs.org/cookie
+129 verbose addNameVersion registry:https://registry.npmjs.org/cookie not in flight; fetching
+130 verbose request uri https://registry.npmjs.org/cookie
+131 verbose request no auth needed
+132 info attempt registry request try #1 at 12:15:06 PM
+133 verbose etag "5XRBISM4XVV9W7HS1I1XDUM6R"
+134 http request GET https://registry.npmjs.org/cookie
+135 verbose request uri https://registry.npmjs.org/cookie-signature
+136 verbose request no auth needed
+137 info attempt registry request try #1 at 12:15:06 PM
+138 verbose etag "8NE2NNIH2V0SABXWGZXHH3U6K"
+139 http request GET https://registry.npmjs.org/cookie-signature
+140 http 304 https://registry.npmjs.org/cookie
+141 silly get cb [ 304,
+141 silly get   { date: 'Fri, 27 Nov 2015 04:16:32 GMT',
+141 silly get     via: '1.1 varnish',
+141 silly get     'cache-control': 'max-age=60',
+141 silly get     etag: '"5XRBISM4XVV9W7HS1I1XDUM6R"',
+141 silly get     age: '16',
+141 silly get     connection: 'keep-alive',
+141 silly get     'x-served-by': 'cache-lax1433-LAX',
+141 silly get     'x-cache': 'HIT',
+141 silly get     'x-cache-hits': '1',
+141 silly get     'x-timer': 'S1448597792.742533,VS0,VE0',
+141 silly get     vary: 'Accept' } ]
+142 verbose etag https://registry.npmjs.org/cookie from cache
+143 verbose get saving cookie to C:\Users\Peter\AppData\Roaming\npm-cache\registry.npmjs.org\cookie\.cache.json
+144 silly mapToRegistry name cookie
+145 silly mapToRegistry using default registry
+146 silly mapToRegistry registry https://registry.npmjs.org/
+147 silly mapToRegistry uri https://registry.npmjs.org/cookie
+148 verbose addRemoteTarball https://registry.npmjs.org/cookie/-/cookie-0.2.2.tgz not in flight; adding
+149 verbose addRemoteTarball [ 'https://registry.npmjs.org/cookie/-/cookie-0.2.2.tgz',
+149 verbose addRemoteTarball   '579ef8bc9b2d6f7e975a16bf4164d572e752e540' ]
+150 info retry fetch attempt 1 at 12:15:08 PM
+151 info attempt registry request try #1 at 12:15:08 PM
+152 http fetch GET https://registry.npmjs.org/cookie/-/cookie-0.2.2.tgz
+153 http 304 https://registry.npmjs.org/cookie-signature
+154 silly get cb [ 304,
+154 silly get   { date: 'Fri, 27 Nov 2015 04:16:33 GMT',
+154 silly get     via: '1.1 varnish',
+154 silly get     'cache-control': 'max-age=60',
+154 silly get     etag: '"8NE2NNIH2V0SABXWGZXHH3U6K"',
+154 silly get     age: '0',
+154 silly get     connection: 'keep-alive',
+154 silly get     'x-served-by': 'cache-lax1426-LAX',
+154 silly get     'x-cache': 'HIT',
+154 silly get     'x-cache-hits': '1',
+154 silly get     'x-timer': 'S1448597793.976394,VS0,VE43',
+154 silly get     vary: 'Accept' } ]
+155 verbose etag https://registry.npmjs.org/cookie-signature from cache
+156 verbose get saving cookie-signature to C:\Users\Peter\AppData\Roaming\npm-cache\registry.npmjs.org\cookie-signature\.cache.json
+157 silly cache afterAdd cookie-signature@1.0.6
+158 verbose afterAdd C:\Users\Peter\AppData\Roaming\npm-cache\cookie-signature\1.0.6\package\package.json not in flight; writing
+159 verbose afterAdd C:\Users\Peter\AppData\Roaming\npm-cache\cookie-signature\1.0.6\package\package.json written
+160 http fetch 200 https://registry.npmjs.org/cookie/-/cookie-0.2.2.tgz
+161 silly fetchAndShaCheck shasum 579ef8bc9b2d6f7e975a16bf4164d572e752e540
+162 verbose addTmpTarball C:\Users\Peter\AppData\Local\Temp\npm-36956-5eac3edb\registry.npmjs.org\cookie\-\cookie-0.2.2.tgz not in flight; adding
+163 verbose addTmpTarball already have metadata; skipping unpack for cookie@0.2.2
+164 silly cache afterAdd cookie@0.2.2
+165 verbose afterAdd C:\Users\Peter\AppData\Roaming\npm-cache\cookie\0.2.2\package\package.json not in flight; writing
+166 verbose afterAdd C:\Users\Peter\AppData\Roaming\npm-cache\cookie\0.2.2\package\package.json written
+167 silly install resolved [ { name: 'cookie-signature',
+167 silly install resolved     version: '1.0.6',
+167 silly install resolved     description: 'Sign and unsign cookies',
+167 silly install resolved     keywords: [ 'cookie', 'sign', 'unsign' ],
+167 silly install resolved     author: { name: 'TJ Holowaychuk', email: 'tj@learnboost.com' },
+167 silly install resolved     license: 'MIT',
+167 silly install resolved     repository:
+167 silly install resolved      { type: 'git',
+167 silly install resolved        url: 'git+https://github.com/visionmedia/node-cookie-signature.git' },
+167 silly install resolved     dependencies: {},
+167 silly install resolved     devDependencies: { mocha: '*', should: '*' },
+167 silly install resolved     scripts: { test: 'mocha --require should --reporter spec' },
+167 silly install resolved     main: 'index',
+167 silly install resolved     gitHead: '391b56cf44d88c493491b7e3fc53208cfb976d2a',
+167 silly install resolved     bugs: { url: 'https://github.com/visionmedia/node-cookie-signature/issues' },
+167 silly install resolved     homepage: 'https://github.com/visionmedia/node-cookie-signature',
+167 silly install resolved     _id: 'cookie-signature@1.0.6',
+167 silly install resolved     _shasum: 'e303a882b342cc3ee8ca513a79999734dab3ae2c',
+167 silly install resolved     _from: 'cookie-signature@1.0.6',
+167 silly install resolved     _npmVersion: '2.3.0',
+167 silly install resolved     _nodeVersion: '0.10.36',
+167 silly install resolved     _npmUser: { name: 'natevw', email: 'natevw@yahoo.com' },
+167 silly install resolved     maintainers: [ [Object], [Object] ],
+167 silly install resolved     dist:
+167 silly install resolved      { shasum: 'e303a882b342cc3ee8ca513a79999734dab3ae2c',
+167 silly install resolved        tarball: 'http://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz' },
+167 silly install resolved     directories: {},
+167 silly install resolved     _resolved: 'https://registry.npmjs.org/cookie-signature/-/cookie-signature-1.0.6.tgz',
+167 silly install resolved     readme: 'ERROR: No README data found!' },
+167 silly install resolved   { name: 'cookie',
+167 silly install resolved     description: 'cookie parsing and serialization',
+167 silly install resolved     version: '0.2.2',
+167 silly install resolved     author: { name: 'Roman Shtylman', email: 'shtylman@gmail.com' },
+167 silly install resolved     contributors: [ [Object] ],
+167 silly install resolved     license: 'MIT',
+167 silly install resolved     keywords: [ 'cookie', 'cookies' ],
+167 silly install resolved     repository: { type: 'git', url: 'https://github.com/jshttp/cookie' },
+167 silly install resolved     devDependencies: { istanbul: '0.3.20', mocha: '1.21.5' },
+167 silly install resolved     files: [ 'HISTORY.md', 'LICENSE', 'README.md', 'index.js' ],
+167 silly install resolved     engines: { node: '>= 0.6' },
+167 silly install resolved     scripts:
+167 silly install resolved      { test: 'mocha --reporter spec --bail --check-leaks test/',
+167 silly install resolved        'test-ci': 'istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/',
+167 silly install resolved        'test-cov': 'istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/' },
+167 silly install resolved     gitHead: '9b481be547730c5f487364b720ab298d097541d5',
+167 silly install resolved     bugs: { url: 'https://github.com/jshttp/cookie/issues' },
+167 silly install resolved     homepage: 'https://github.com/jshttp/cookie',
+167 silly install resolved     _id: 'cookie@0.2.2',
+167 silly install resolved     _shasum: '579ef8bc9b2d6f7e975a16bf4164d572e752e540',
+167 silly install resolved     _from: 'cookie@0.2.2',
+167 silly install resolved     _npmVersion: '1.4.28',
+167 silly install resolved     _npmUser: { name: 'dougwilson', email: 'doug@somethingdoug.com' },
+167 silly install resolved     maintainers: [ [Object], [Object], [Object] ],
+167 silly install resolved     dist:
+167 silly install resolved      { shasum: '579ef8bc9b2d6f7e975a16bf4164d572e752e540',
+167 silly install resolved        tarball: 'http://registry.npmjs.org/cookie/-/cookie-0.2.2.tgz' },
+167 silly install resolved     directories: {},
+167 silly install resolved     _resolved: 'https://registry.npmjs.org/cookie/-/cookie-0.2.2.tgz' } ]
+168 info install cookie-signature@1.0.6 into C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+169 info install cookie@0.2.2 into C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+170 info installOne cookie-signature@1.0.6
+171 verbose installOne of cookie-signature to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser not in flight; installing
+172 info installOne cookie@0.2.2
+173 verbose installOne of cookie to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser not in flight; installing
+174 verbose lock using C:\Users\Peter\AppData\Roaming\npm-cache\_locks\cookie-d869b45bc00cb196.lock for C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+175 verbose lock using C:\Users\Peter\AppData\Roaming\npm-cache\_locks\cookie-signature-b4a835f70cc40126.lock for C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+176 silly install write writing cookie 0.2.2 to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+177 silly install write writing cookie-signature 1.0.6 to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+178 verbose unbuild node_modules\cookie-parser\node_modules\cookie
+179 verbose unbuild node_modules\cookie-parser\node_modules\cookie-signature
+180 silly gentlyRm C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie is being purged from base C:\Users\Peter\Documents\Programs\webApp\Node\127project
+181 verbose gentlyRm don't care about contents; nuking C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+182 silly gentlyRm C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature is being purged from base C:\Users\Peter\Documents\Programs\webApp\Node\127project
+183 verbose gentlyRm don't care about contents; nuking C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+184 verbose tar unpack C:\Users\Peter\AppData\Roaming\npm-cache\cookie\0.2.2\package.tgz
+185 verbose tar unpacking to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+186 silly gentlyRm C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie is being purged
+187 verbose gentlyRm don't care about contents; nuking C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+188 verbose tar unpack C:\Users\Peter\AppData\Roaming\npm-cache\cookie-signature\1.0.6\package.tgz
+189 verbose tar unpacking to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+190 silly gentlyRm C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature is being purged
+191 verbose gentlyRm don't care about contents; nuking C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+192 silly gunzTarPerm modes [ '777', '666' ]
+193 silly gunzTarPerm modes [ '777', '666' ]
+194 silly gunzTarPerm extractEntry package.json
+195 silly gunzTarPerm extractEntry README.md
+196 silly gunzTarPerm extractEntry LICENSE
+197 silly gunzTarPerm extractEntry index.js
+198 silly gunzTarPerm extractEntry HISTORY.md
+199 silly gunzTarPerm extractEntry package.json
+200 silly gunzTarPerm modified mode [ 'package.json', 420, 438 ]
+201 silly gunzTarPerm extractEntry .npmignore
+202 silly gunzTarPerm modified mode [ '.npmignore', 420, 438 ]
+203 silly gunzTarPerm extractEntry index.js
+204 silly gunzTarPerm modified mode [ 'index.js', 420, 438 ]
+205 silly gunzTarPerm extractEntry History.md
+206 silly gunzTarPerm modified mode [ 'History.md', 420, 438 ]
+207 silly gunzTarPerm extractEntry Readme.md
+208 silly gunzTarPerm modified mode [ 'Readme.md', 420, 438 ]
+209 verbose write writing to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie\package.json
+210 info preinstall cookie@0.2.2
+211 verbose readDependencies loading dependencies from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie\package.json
+212 verbose readDependencies loading dependencies from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie\package.json
+213 silly install resolved []
+214 verbose about to build C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+215 info build C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+216 info linkStuff cookie@0.2.2
+217 silly linkStuff cookie@0.2.2 has C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules as its parent node_modules
+218 verbose linkBins cookie@0.2.2
+219 verbose linkMans cookie@0.2.2
+220 verbose rebuildBundles cookie@0.2.2
+221 info install cookie@0.2.2
+222 info postinstall cookie@0.2.2
+223 verbose unlock done using C:\Users\Peter\AppData\Roaming\npm-cache\_locks\cookie-d869b45bc00cb196.lock for C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie
+224 verbose write writing to C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature\package.json
+225 info preinstall cookie-signature@1.0.6
+226 verbose readDependencies loading dependencies from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature\package.json
+227 verbose readDependencies loading dependencies from C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature\package.json
+228 silly install resolved []
+229 verbose about to build C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+230 info build C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+231 info linkStuff cookie-signature@1.0.6
+232 silly linkStuff cookie-signature@1.0.6 has C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules as its parent node_modules
+233 verbose linkBins cookie-signature@1.0.6
+234 verbose linkMans cookie-signature@1.0.6
+235 verbose rebuildBundles cookie-signature@1.0.6
+236 info install cookie-signature@1.0.6
+237 info postinstall cookie-signature@1.0.6
+238 verbose unlock done using C:\Users\Peter\AppData\Roaming\npm-cache\_locks\cookie-signature-b4a835f70cc40126.lock for C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser\node_modules\cookie-signature
+239 verbose about to build C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+240 info build C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+241 info linkStuff cookie-parser@1.4.0
+242 silly linkStuff cookie-parser@1.4.0 has C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules as its parent node_modules
+243 verbose linkBins cookie-parser@1.4.0
+244 verbose linkMans cookie-parser@1.4.0
+245 verbose rebuildBundles cookie-parser@1.4.0
+246 verbose rebuildBundles [ 'cookie', 'cookie-signature' ]
+247 info install cookie-parser@1.4.0
+248 info postinstall cookie-parser@1.4.0
+249 verbose unlock done using C:\Users\Peter\AppData\Roaming\npm-cache\_locks\cookie-parser-dbf527aa0b6229fa.lock for C:\Users\Peter\Documents\Programs\webApp\Node\127project\node_modules\cookie-parser
+250 verbose validateInstall loading C:\Users\Peter\Documents\Programs\webApp\Node\127project\package.json for validation
+251 verbose stack Error: The package react does not satisfy its siblings' peerDependencies requirements!
+251 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\install.js:125:32
+251 verbose stack     at C:\Program Files\nodejs\node_modules\npm\lib\install.js:267:7
+251 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:138:5
+251 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+251 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+251 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+251 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+251 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+251 verbose stack     at cb (C:\Program Files\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:47:24)
+251 verbose stack     at C:\Program Files\nodejs\node_modules\npm\node_modules\read-installed\read-installed.js:251:14
+252 verbose cwd C:\Users\Peter\Documents\Programs\webApp\Node\127project
+253 error Windows_NT 6.2.9200
+254 error argv "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "--save" "cookie-parser"
+255 error node v0.12.4
+256 error npm  v2.10.1
+257 error code EPEERINVALID
+258 error peerinvalid The package react does not satisfy its siblings' peerDependencies requirements!
+258 error peerinvalid Peer react-addons-css-transition-group@0.14.2 wants react@^0.14.2
+258 error peerinvalid Peer react-dom@0.14.2 wants react@^0.14.2
+258 error peerinvalid Peer react-addons-update@0.14.3 wants react@^0.14.3
+259 verbose exit [ 1, true ]
